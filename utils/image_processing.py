@@ -444,7 +444,7 @@ def combile_label_prob(label_list,prob_list):
     :param prob_list:
     :return:
     '''
-    info = [l + str(p) for l, p in zip(label_list,prob_list)]
+    info = [l +":"+ str(p) for l, p in zip(label_list,prob_list)]
     return info
 if __name__=="__main__":
     # image_path="../dataset/test_images/lena1.jpg"
