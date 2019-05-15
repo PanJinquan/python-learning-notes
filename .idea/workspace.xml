@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88efb9f5-66a1-431c-8523-5ee5db6c7ecd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/tools.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/tools.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/voc/train.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/voc/val.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eval/pr.py" beforeDir="false" afterPath="$PROJECT_DIR$/eval/pr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vocDemo.py" beforeDir="false" afterPath="$PROJECT_DIR$/vocDemo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/file_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/file_processing.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +28,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/debug.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
+            <state relative-caret-position="440">
               <caret line="22" column="77" selection-start-line="22" selection-start-column="77" selection-end-line="22" selection-end-column="77" />
               <folding>
                 <element signature="e#162#177#0" expanded="true" />
@@ -45,7 +40,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vocDemo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="638">
+            <state relative-caret-position="3420">
               <caret line="171" column="13" selection-start-line="171" selection-start-column="13" selection-end-line="171" selection-end-column="13" />
               <folding>
                 <element signature="e#168#202#0" expanded="true" />
@@ -57,8 +52,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utils/file_processing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="40" column="28" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="28" />
+            <state relative-caret-position="460">
+              <caret line="193" column="53" selection-start-line="193" selection-start-column="53" selection-end-line="193" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -66,7 +61,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/eval/pr.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1840">
+            <state relative-caret-position="1900">
               <caret line="95" column="28" selection-start-line="95" selection-start-column="28" selection-end-line="95" selection-end-column="28" />
               <folding>
                 <element signature="e#159#190#0" expanded="true" />
@@ -104,6 +99,7 @@
         <option value="$PROJECT_DIR$/utils/debug.py" />
         <option value="$PROJECT_DIR$/eval/pr.py" />
         <option value="$PROJECT_DIR$/vocDemo.py" />
+        <option value="$PROJECT_DIR$/utils/file_processing.py" />
       </list>
     </option>
   </component>
@@ -273,7 +269,8 @@
       <workItem from="1557473483803" duration="1541000" />
       <workItem from="1557479261531" duration="6892000" />
       <workItem from="1557707717910" duration="6065000" />
-      <workItem from="1557799531335" duration="1190000" />
+      <workItem from="1557799531335" duration="1202000" />
+      <workItem from="1557901019753" duration="720000" />
     </task>
     <servers />
   </component>
@@ -283,13 +280,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15688000" />
+    <option name="totallyTimeSpent" value="16420000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.118336886" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11940298" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -381,7 +378,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/debug.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
+        <state relative-caret-position="440">
           <caret line="22" column="77" selection-start-line="22" selection-start-column="77" selection-end-line="22" selection-end-column="77" />
           <folding>
             <element signature="e#162#177#0" expanded="true" />
@@ -389,9 +386,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/vocDemo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3420">
+          <caret line="171" column="13" selection-start-line="171" selection-start-column="13" selection-end-line="171" selection-end-column="13" />
+          <folding>
+            <element signature="e#168#202#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/eval/pr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1840">
+        <state relative-caret-position="1900">
           <caret line="95" column="28" selection-start-line="95" selection-start-column="28" selection-end-line="95" selection-end-column="28" />
           <folding>
             <element signature="e#159#190#0" expanded="true" />
@@ -406,20 +413,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vocDemo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="171" column="13" selection-start-line="171" selection-start-column="13" selection-end-line="171" selection-end-column="13" />
-          <folding>
-            <element signature="e#168#202#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/file_processing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="40" column="28" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="28" />
+        <state relative-caret-position="460">
+          <caret line="193" column="53" selection-start-line="193" selection-start-column="53" selection-end-line="193" selection-end-column="53" />
         </state>
       </provider>
     </entry>
