@@ -93,7 +93,7 @@ def plot_classification_pr_curve(true_label, prob_data, plot_pr=True):
         recall_list = [recall]
         precision_list = [precision]
         auc_list = [AUC]
-        line_names = [""]
+        line_names = ["line_name"]
         plot_pr_curve(recall_list, precision_list, auc_list, line_names)
 
 def plot_object_detection_pr_curve(iou_data, prob_data, iou_threshold, plot_pr=True):

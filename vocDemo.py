@@ -17,6 +17,7 @@ from voctools import pascal_voc
 classes = ["BACKGROUND","aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
 
 # classes=["BACKGROUND",'PCwall']
+print("class_name:{}".format(classes))
 
 def convert_annotation_list(annotations_list, image_dir, label_out_dir, class_names, image_type='.jpg', show=True):
     '''
@@ -93,7 +94,7 @@ def convert_annotation_image(image_list, annotations_dir, label_out_dir, class_n
             print("processing {}/{}".format(i+1, nums))
     return name_id_list
 
-def convert_voc_label_annotations(annotations_dir, image_dir, label_out_dir, class_names, show=True):
+def convert_voc_label_annotations(annotations_dir, image_dir, label_out_dir,out_train_val_path, class_names, show=True):
     annotations_list=file_processing.get_files_list(annotations_dir,postfix=["*.xml"])
     print("have {} annotations files".format(len(annotations_list)))
     # 分割成train和val数据集
@@ -110,11 +111,11 @@ def convert_voc_label_annotations(annotations_dir, image_dir, label_out_dir, cla
     print("done...ok!")
 
     # 保存图片id数据
-    train_id_path="data/voc/train.txt"
-    val_id_path="data/voc/val.txt"
+    train_id_path=os.path.join(out_train_val_path, "train.txt")
+    val_id_path=os.path.join(out_train_val_path, "val.txt")
     save_id(train_id_path, train_image_id, val_id_path, val_image_id)
 
-def convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, class_names, show=True):
+def convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, class_names, show=True):
     image_list=file_processing.get_files_list(image_dir,postfix=["*.jpg"])
     print("have {} images".format(len(image_list)))
     # 分割成train和val数据集
@@ -131,8 +132,8 @@ def convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, class
     print("done...ok!")
 
     # 保存图片id数据
-    train_id_path="data/voc/train.txt"
-    val_id_path="data/voc/val.txt"
+    train_id_path=os.path.join(out_train_val_path, "train.txt")
+    val_id_path=os.path.join(out_train_val_path, "val.txt")
     save_id(train_id_path, train_image_id, val_id_path, val_image_id)
 
 def save_id(train_id_path,train_id,val_id_path,val_id):
@@ -158,13 +159,19 @@ def label_test(image_dir, filename,class_names):
     name_list=file_processing.decode_label(label_list,class_names)
     image_processing.show_image_rects_text("object2", image, rect_list, name_list)
 
+
+def batch_label_test(label_dir,image_dir,classes):
+    file_list=file_processing.get_files_list(label_dir,postfix=[".txt"])
+    for filename in file_list:
+        label_test(image_dir, filename,class_names=classes)
+
 if __name__=="__main__":
     annotations_dir='./dataset/VOC/Annotations'
     label_out_dir= './dataset/VOC/label'
     image_dir="./dataset/VOC/JPEGImages"
+    out_train_val_path= "./data/voc"# 输出 train/val 文件
     show=False
-    convert_voc_label_annotations(annotations_dir, image_dir, label_out_dir,classes,show=show)
-    convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, classes, show=show)
+    # convert_voc_label_annotations(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, show=show)
+    convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, show=show)
 
-    filename='./dataset/VOC/label/000002.txt'
-    label_test(image_dir, filename,class_names=classes)
+    batch_label_test(label_out_dir,image_dir,classes)
