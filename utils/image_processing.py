@@ -446,6 +446,70 @@ def combile_label_prob(label_list,prob_list):
     '''
     info = [l +":"+ str(p) for l, p in zip(label_list,prob_list)]
     return info
+
+
+def nms_bboxes_cv2(bboxes_list,scores_list, labels_list, width=None, height=None, score_threshold=0.5, nms_threshold=0.45):
+    '''
+    NMS
+    fix a bug: cv2.dnn.NMSBoxe bboxes, scores params must be list and float data,can not be float32 or int
+    :param bboxes_list: must be list->float
+    :param scores_list: must be list->float
+    :param labels_list: must be list
+    :param width:
+    :param height:
+    :param score_threshold:
+    :param nms_threshold:
+    :return:
+    '''
+    assert isinstance(scores_list,list),"scores_list must be list"
+    assert isinstance(bboxes_list,list),"bboxes_list must be list"
+    assert isinstance(labels_list,list),"labels_list must be list"
+
+    dest_bboxes_list=[]
+    dest_scores_list=[]
+    dest_labels_list=[]
+    # bboxes_list,scores_list, labels_list=filtering_scores(bboxes_list, scores_list, labels_list, score_threshold=score_threshold)
+    if width is not None and height is not None:
+        for i,box in enumerate(bboxes_list):
+            x1 = box[0]*width
+            y1 = box[1]*height
+            x2= box[2]*width
+            y2 = box[3]*height
+            bboxes_list[i]=[x1, y1, x2, y2]
+    scores_list=np.asarray(scores_list, dtype=np.float).tolist()
+    # fix a bug: cv2.dnn.NMSBoxe bboxes, scores params must be list and float data,can not be float32 or int
+    indices = cv2.dnn.NMSBoxes(bboxes_list, scores_list, score_threshold, nms_threshold)
+    for i in indices:
+        i=i[0]
+        dest_bboxes_list.append(bboxes_list[i])
+        dest_scores_list.append(scores_list[i])
+        dest_labels_list.append(labels_list[i])
+    return dest_bboxes_list,dest_scores_list,dest_labels_list
+
+
+def filtering_scores(bboxes_list,scores_list, labels_list, score_threshold=0.0):
+    '''
+    filtering low score bbox
+    :param bboxes_list:
+    :param scores_list:
+    :param labels_list:
+    :param score_threshold:
+    :return:
+    '''
+    dest_scores_list=[]
+    dest_labels_list=[]
+    dest_bboxes_list=[]
+    for i in range(len(scores_list)):
+        score = scores_list[i]
+        if score < score_threshold:
+            continue
+        dest_scores_list.append(scores_list[i])
+        dest_labels_list.append(labels_list[i])
+        dest_bboxes_list.append(bboxes_list[i])
+    return dest_bboxes_list,dest_scores_list,dest_labels_list
+
+
+
 if __name__=="__main__":
     # image_path="../dataset/test_images/lena1.jpg"
     # image_path="E:/git/dataset/tgs-salt-identification-challenge/train/my_masks/4.png"
