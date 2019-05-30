@@ -14,6 +14,12 @@ from os.path import join
 from utils import file_processing,image_processing
 
 def convert(size, box):
+    '''
+    [x_center/img_width ,y_center/img_height ,width/img_width ,height/img_height]
+    :param size:
+    :param box:
+    :return:
+    '''
     dw = 1./size[0]
     dh = 1./size[1]
     x = (box[0] + box[1])/2.0
@@ -27,6 +33,12 @@ def convert(size, box):
     return [x,y,w,h]
 
 def convert_rect(size, box):
+    '''
+    [x y width height]
+    :param size:
+    :param box:
+    :return:
+    '''
     #box=[xmin,xmax,ymin,ymax]
     dw = 1
     dh = 1
@@ -40,7 +52,7 @@ def convert_rect(size, box):
     h = h*dh
     return [x,y,w,h]
 
-def get_annotation(annotations_file, classes):
+def get_annotation(annotations_file, classes,coordinatesType="SSD"):
     tree=ET.parse(annotations_file)
     root = tree.getroot()
     size = root.find('size')
@@ -58,8 +70,12 @@ def get_annotation(annotations_file, classes):
         xmlbox = obj.find('bndbox')
         # b=[xmin,xmax,ymin,ymax]
         b = (float(xmlbox.find('xmin').text), float(xmlbox.find('xmax').text), float(xmlbox.find('ymin').text), float(xmlbox.find('ymax').text))
-        #bb = convert((w,h), b)
-        rect = convert_rect((w,h), b)
+        if coordinatesType=="SSD":
+            rect = convert_rect((w,h), b)
+        elif coordinatesType=="YOLO":
+            rect = convert((w,h), b)
+        else:
+            print("Error:coordinatesType={},must be SSD or YOLO".format(coordinatesType))
         rects.append(rect)
         class_name.append(cls)
         class_id.append(cls_id)

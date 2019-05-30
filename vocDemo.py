@@ -13,9 +13,12 @@ from os import listdir, getcwd
 from os.path import join
 from utils import file_processing,image_processing
 from voctools import pascal_voc
-#for SSD，the first label is BACKGROUND：
-classes = ["BACKGROUND","aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
-
+# for SSD  label，the first label is BACKGROUND：
+# classes = ["BACKGROUND","aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
+# for YOLO label,ignore the BACKGROUND
+classes = ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
+# for wall
+# classes = ["PCwall"]
 # classes=["BACKGROUND",'PCwall']
 print("class_name:{}".format(classes))
 
@@ -57,7 +60,7 @@ def convert_annotation_list(annotations_list, image_dir, label_out_dir, class_na
             print("processing {}/{}".format(i+1, nums))
     return name_id_list
 
-def convert_annotation_image(image_list, annotations_dir, label_out_dir, class_names, show=True):
+def convert_annotation_image(image_list, annotations_dir, label_out_dir, class_names,coordinatesType,show=True):
     '''
 
     :param image_list: 图片列表
@@ -83,7 +86,10 @@ def convert_annotation_image(image_list, annotations_dir, label_out_dir, class_n
             print("no annotations:{}".format(annotations_file))
             continue
         out_file = os.path.join(label_out_dir, name_id + ".txt")
-        rects, class_name, class_id = pascal_voc.get_annotation(annotations_file, class_names)
+        rects, class_name, class_id = pascal_voc.get_annotation(annotations_file, class_names,coordinatesType)
+        if len(rects)==0 or len(class_name)==0 or len(class_id)==0:
+            print("no class in annotations:{}".format(annotations_file))
+            continue
         content_list = [[c] + r for c, r in zip(class_id, rects)]
         name_id_list.append(name_id)
         file_processing.write_data(out_file, content_list, mode='w')
@@ -115,7 +121,7 @@ def convert_voc_label_annotations(annotations_dir, image_dir, label_out_dir,out_
     val_id_path=os.path.join(out_train_val_path, "val.txt")
     save_id(train_id_path, train_image_id, val_id_path, val_image_id)
 
-def convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, class_names, show=True):
+def convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, class_names,coordinatesType, show=True):
     image_list=file_processing.get_files_list(image_dir,postfix=["*.jpg"])
     print("have {} images".format(len(image_list)))
     # 分割成train和val数据集
@@ -126,9 +132,9 @@ def convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, out_t
 
     # 转换label数据
     print("doing train data .....")
-    train_image_id=convert_annotation_image(train_image_list, annotations_dir, label_out_dir, class_names, show=show)
+    train_image_id=convert_annotation_image(train_image_list, annotations_dir, label_out_dir, class_names, coordinatesType,show=show)
     print("doing val data .....")
-    val_image_id=convert_annotation_image(val_image_list, annotations_dir, label_out_dir, class_names, show=show)
+    val_image_id=convert_annotation_image(val_image_list, annotations_dir, label_out_dir, class_names, coordinatesType,show=show)
     print("done...ok!")
 
     # 保存图片id数据
@@ -170,8 +176,20 @@ if __name__=="__main__":
     label_out_dir= './dataset/VOC/label'
     image_dir="./dataset/VOC/JPEGImages"
     out_train_val_path= "./data/voc"# 输出 train/val 文件
+    #
+    # annotations_dir='/media/dm/dm/project/dataset/VOCdevkit/VOC2007/Annotations'
+    # label_out_dir= '/media/dm/dm/project/dataset/VOCdevkit/VOC2007/label'
+    # image_dir="/media/dm/dm/project/dataset/VOCdevkit/VOC2007/JPEGImages"
+    # out_train_val_path= "/media/dm/dm/project/dataset/VOCdevkit/VOC2007"# 输出 train/val 文件
+
+    # annotations_dir='/media/dm/dm/project/dataset/VOC_wall/Annotations'
+    # label_out_dir= '/media/dm/dm/project/dataset/VOC_wall/label'
+    # image_dir="/media/dm/dm/project/dataset/VOC_wall/JPEGImages"
+    # out_train_val_path= "/media/dm/dm/project/dataset/VOC_wall"# 输出 train/val 文件
+
+    coordinatesType="YOLO"
     show=False
     # convert_voc_label_annotations(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, show=show)
-    convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, show=show)
+    convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,show=show)
 
-    batch_label_test(label_out_dir,image_dir,classes)
+    # batch_label_test(label_out_dir,image_dir,classes)
