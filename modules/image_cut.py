@@ -219,8 +219,9 @@ def one_image_cut_for_pjq():
     mask2 = cv2.erode(mask2, kernel)
 
     # convert mask from 1-channel to 3-channel so as to multiply matrices
-    mask2=cv2.cvtColor(mask2,cv2.COLOR_GRAY2BGR)
-    out1 = image * mask2
+    # mask2=cv2.cvtColor(mask2,cv2.COLOR_GRAY2BGR)
+    out1 = image*mask2[:, :, np.newaxis]
+
     # blur mask by Gaussian filter
     ksize=9
     mask3 = cv2.GaussianBlur(mask2, (ksize, ksize), 0, 0, cv2.BORDER_DEFAULT)
@@ -228,17 +229,18 @@ def one_image_cut_for_pjq():
 
     # can not use medianBlur
     # mask3 = cv2.medianBlur(mask2*255,15)
-    out2 = image * mask3
+    out2 = image * mask3[:, :, np.newaxis]
 
-    mask4=cv2.cvtColor(mask3,cv2.COLOR_BGR2GRAY)
 
     # seamlessClone,have some bug to fix
     # dest_image = cv2.seamlessClone(out2,brg, mask2, center, cv2.NORMAL_CLONE)
 
     # split bgr-image to 3-channels
-    b_channel, g_channel, r_channel = cv2.split(out2)
+    b_channel, g_channel, r_channel = cv2.split(image)
     # merge imgae by 4 channels[r,g,b,a],mask as transparent channel
-    out3 = cv2.merge((b_channel, g_channel, r_channel, mask4))
+    out3 = cv2.merge((b_channel, g_channel, r_channel, mask3))
+    out3=np.asarray(out3*255,dtype=np.uint8)
+    cv2.imwrite("1.png",out3)
 
     cv2.imshow("mask2", mask2)
     cv2.imshow("mask3", mask3)

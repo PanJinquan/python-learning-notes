@@ -1,0 +1,8 @@
+timestamp,url,emotion,direction,action
+0,"url/to/image0.jpg","平淡",0,"阅读/书写"
+1,"url/to/image1.jpg","生气",0,"举手"
+2,"url/to/image2.jpg","厌恶",0,"起立"
+3,"url/to/image3.jpg","害怕",0,"听讲"
+4,"url/to/image4.jpg","开心",0,"阅读/书写"
+5,"url/to/image5.jpg","伤心",0,"举手"
+6,"url/to/image6.jpg","惊讶",0,"起立"
