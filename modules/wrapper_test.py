@@ -19,10 +19,14 @@ def print_name(value, *args, **kwargs):
     print(value)
     print(args)
     print(kwargs)
-
+import enum
 if __name__=="__main__":
-    print_name('name')  # 输出 Find Name: David Coco
-    print("-------------------------")
-    print_name(10,11,12,name="pjq",age=21)  # 输出 Find Name: David Coco
+    # print_name('name')  # 输出 Find Name: David Coco
+    # print("-------------------------")
+    # print_name(10,11,12,name="pjq",age=21)  # 输出 Find Name: David Coco
+    #
+    d=enum.Enum('type', ('student', 'teacher'))
+    print(d)
+
 
 
