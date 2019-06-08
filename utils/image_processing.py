@@ -13,6 +13,10 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
+import re
+import requests
+import PIL
+from io import BytesIO
 
 def show_batch_image(title,batch_imgs,index=0):
     image = batch_imgs[index, :]
@@ -161,9 +165,46 @@ def read_image_gbk(filename, resize_height=None, resize_width=None, normalizatio
         image=image_normalization(image)
     # show_image("src resize image",image)
     return image
+def requests_url(url):
+    try:
+        res = requests.get(url, timeout=15)
+        if res.status_code == 200:
+            stream = res.content
+    except Exception as e:
+        print(e)
+        return None
+    return stream
 
-
-
+def read_images_url(url, resize_height=None, resize_width=None, normalization=False,colorSpace='RGB'):
+    if re.match(r'^https?:/{2}\w.+$', url):
+        stream = requests_url(url)
+        # content = np.asarray(bytearray(content), dtype="uint8")
+        # bgr_image = cv2.imdecode(content, cv2.IMREAD_COLOR)
+        pil_image = PIL.Image.open(BytesIO(stream))
+        bgr_image = cv2.cvtColor(np.asarray(pil_image), cv2.COLOR_RGB2BGR)
+    else:
+        bgr_image = cv2.imread(url)
+    # bgr_image=cv2.imdecode(np.fromfile(filename,dtype=np.uint8),cv2.IMREAD_COLOR)
+    if bgr_image is None:
+        print("Warning:不存在:{}", url)
+        return None
+    if len(bgr_image.shape) == 2:  # 若是灰度图则转为三通道
+        print("Warning:gray image", url)
+        bgr_image = cv2.cvtColor(bgr_image, cv2.COLOR_GRAY2BGR)
+    if colorSpace == 'RGB':
+        image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)  # 将BGR转为RGB
+    elif colorSpace == "BGR":
+        image = bgr_image
+    else:
+        exit(0)
+    # show_image(filename,image)
+    # image=Image.open(filename)
+    image = resize_image(image, resize_height, resize_width)
+    image = np.asanyarray(image)
+    if normalization:
+        image = image_normalization(image)
+    # show_image("src resize image",image)
+    return image
 
 def fast_read_image_roi(filename, orig_rect, ImreadModes=cv2.IMREAD_COLOR, normalization=False,colorSpace='RGB'):
     '''
@@ -513,12 +554,14 @@ def filtering_scores(bboxes_list,scores_list, labels_list, score_threshold=0.0):
 if __name__=="__main__":
     # image_path="../dataset/test_images/lena1.jpg"
     # image_path="E:/git/dataset/tgs-salt-identification-challenge/train/my_masks/4.png"
-    image_path = 'E:/Face/dataset/bzl/test3/test_dataset/陈思远_716/8205_0.936223.jpg'
-
+    # image_path = 'E:/Face/dataset/bzl/test3/test_dataset/陈思远_716/8205_0.936223.jpg'
+    # image_path="https://farm3.staticflickr.com/2099/1791684639_044827f860_o.jpg"
+    image_path="http://192.168.4.50:8000/image/000000010.jpg"
     # target_rect=main.select_user_roi(target_path)#rectangle=[x,y,w,h]
     # orig_rect = [50, 50, 100000, 10000]
 
-    image = read_image_gbk(image_path, resize_height=None, resize_width=None)
+    # image = read_image_gbk(image_path, resize_height=None, resize_width=None)
+    image =read_images_url(image_path)
     # orig_image=get_rect_image(image,orig_rect)
 
     # show_image_rects("image",image,[orig_rect])

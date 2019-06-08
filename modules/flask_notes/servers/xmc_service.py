@@ -8,6 +8,7 @@
 """
 from flask import Flask, request, redirect, url_for, render_template, jsonify
 import err_msg
+import json
 app = Flask(__name__)
 
 imageprocesscb_api='/v1/engine/pipelinemanager/imageprocesscb'
@@ -19,11 +20,14 @@ def http_api_async_imageprocesscb(request):
     if request.method == 'POST':
         # TODO
         params = request.json
-        print("imageprocesscb:{}".format(params))
+        json_data=json.dumps(params, sort_keys=True, indent=2,ensure_ascii=False)  # 排序并且缩进两个字符输出
+        print("imageprocesscb:{}".format(json_data))
+        with open("xmc.json", 'w',encoding="UTF-8") as f:
+            json.dump(params, f)
         return err_msg.util_make_response(err_msg.get_err_msg_dict(0))
 
 
-def start_flask_server(host='127.0.0.1', port=8888, debug=True):
+def start_flask_server(host='127.0.0.1', port=8889, debug=True):
     app.run(host,port=port)
 
 if __name__ == '__main__':
