@@ -11,8 +11,8 @@ import err_msg
 import json
 app = Flask(__name__)
 
-imageprocesscb_api='/v1/engine/pipelinemanager/imageprocesscb'
-@app.route(imageprocesscb_api, methods=['POST'])
+metricservice_api="/v1/engine/pipelinemanager/imageprocesscb"
+@app.route(metricservice_api, methods=['POST'])
 def handle_async_cv_imageprocesscb():
     return http_api_async_imageprocesscb(request)
 
@@ -22,6 +22,9 @@ def http_api_async_imageprocesscb(request):
         params = request.json
         json_data=json.dumps(params, sort_keys=True, indent=2,ensure_ascii=False)  # 排序并且缩进两个字符输出
         print("imageprocesscb:{}".format(json_data))
+        request_id = params.get('request_id')
+        source_id = params.get('source_id')
+        print("request_id={},source_id={}".format(request_id,source_id))
         with open("xmc.json", 'w',encoding="UTF-8") as f:
             json.dump(params, f)
         return err_msg.util_make_response(err_msg.get_err_msg_dict(0))

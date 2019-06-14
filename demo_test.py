@@ -7,9 +7,10 @@
     @Date   : 2019-06-07 13:57:29
 """
 import cv2
+import pjq.image_process as image_process
 
-image_path="https://farm3.staticflickr.com/2099/1791684639_044827f860_o.jpg"
-image=cv2.imread(image_path)
-
-cv2.imshow("ii",image)
-cv2.waitKey(0)
+if __name__=="__main__":
+    image_path="./dataset/test_image/1.jpg"
+    image = image_process.read_image(image_path)
+    cv2.imshow("image",image)
+    cv2.waitKey(0)

@@ -20,10 +20,10 @@ def task(n):
 
 if __name__=="__main__":
     nums_thread=5
-    pool = ThreadPool(nums_thread)
+    pool = ThreadPool(processes=nums_thread)
     for i in range(500):
-        pool.apply_async(func=task,args=(i,))
-        # pool.apply(func=task,args=(i,))
+        # pool.apply_async(func=task,args=(i,)) # 异步
+        pool.apply(func=task,args=(i,))     #同步
     print('test')
     pool.close()
     pool.join()

@@ -13,8 +13,11 @@ import threading
 import time
 
 threadLock = threading.Lock()#创建线程锁
+class cvThread(threading.Thread):
+    '''
+    CV多线程
+    '''
 
-class customThread(threading.Thread):
     def __init__(self, thread_id, func, args=()):
         '''
         :param thread_id:
@@ -25,18 +28,29 @@ class customThread(threading.Thread):
         self.thread_id = thread_id
         self.func = func
         self.args = args
+        self.result = None
 
     def run(self):
+        '''
+        重载Thread的方法run
+        :return:
+        '''
         print("Starting thread_id:{} ".format(self.thread_id))
         # 获得锁，成功获得锁定后返回True， 可选的timeout参数不填时将一直阻塞直到获得锁定， 否则超时后将返回False
         # threadLock.acquire() #线程加锁
         self.result = self.func(*self.args)
         # threadLock.release()# 释放锁
+
     def get_result(self):
+        '''
+        获得线程返回结果
+        :return:
+        '''
         try:
             return self.result
         except Exception:
             return None
+
 
 def fun_test(images_list):
     time.sleep(2)
