@@ -7,7 +7,6 @@
     @Date   : 2019-06-12 19:56:01
 """
 import cv2
-import ddm
 
 
 def read_image(image_path):

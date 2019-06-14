@@ -5,23 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88efb9f5-66a1-431c-8523-5ee5db6c7ecd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/tools.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/tools.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/flask_notes/servers/xmc.json" beforeDir="false" afterPath="$PROJECT_DIR$/modules/flask_notes/servers/xmc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/flask_notes/servers/xmc_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/flask_notes/servers/xmc_cv_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/flask_notes/servers/xmc_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/flask_notes/servers/xmc_cv_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/multiThread/ThreadPool_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/multiThread/ThreadPool_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/multiThread/download_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/multiThread/download_image.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/multiThread/image/1791684639_044827f860_o.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/modules/multiThread/image/1791684639_044827f860_o.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/multiThread/image/1792526652_8f37410561_o.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/modules/multiThread/image/1792526652_8f37410561_o.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/multiThread/image/1828778894_271415878a_o.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/modules/multiThread/image/1828778894_271415878a_o.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/multiThread/image/2355285447_290193393a_o.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/modules/multiThread/image/2355285447_290193393a_o.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/multiThread/queue_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/multiThread/queue_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/multiThread/thread_operate.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/multiThread/thread_operate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/pypi/pyinstaller_demo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/debug.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/debug.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/image_processing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/pypi/pjq/read_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/pypi/pjq/read_image.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,76 +61,22 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/multiThread/custom_queue.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="94" column="41" lean-forward="true" selection-start-line="94" selection-start-column="41" selection-end-line="94" selection-end-column="41" />
-              <folding>
-                <element signature="e#187#203#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="220">
+              <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_read_image.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1024">
               <caret line="82" column="141" selection-start-line="82" selection-start-column="141" selection-end-line="82" selection-end-column="141" />
               <folding>
                 <element signature="e#247#259#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-400">
-              <caret line="10" column="40" lean-forward="true" selection-start-line="10" selection-end-line="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/flask_notes/servers/xmc_metric_service.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="12" column="62" selection-start-line="12" selection-start-column="62" selection-end-line="12" selection-end-column="62" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/pypi/setup.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/pypi/pjq/image_process.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="11" selection-end-line="18" selection-end-column="14" />
-              <folding>
-                <element signature="e#176#186#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/pypi/pjq/read_image.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" column="33" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
-              <folding>
-                <element signature="e#176#186#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -198,7 +129,6 @@
         <option value="$PROJECT_DIR$/modules/multiThread/task_queue.py" />
         <option value="$PROJECT_DIR$/modules/flask_notes/servers/xmc_service.py" />
         <option value="$PROJECT_DIR$/modules/multiThread/queue_for_read_image.py" />
-        <option value="$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py" />
         <option value="$PROJECT_DIR$/utils/debug.py" />
         <option value="$PROJECT_DIR$/modules/singleton.py" />
         <option value="$PROJECT_DIR$/modules/mysingleton.py" />
@@ -219,11 +149,12 @@
         <option value="$PROJECT_DIR$/demo_test.py" />
         <option value="$PROJECT_DIR$/modules/pypi/README.md" />
         <option value="$PROJECT_DIR$/modules/pypi/pjq/image_process.py" />
-        <option value="$PROJECT_DIR$/modules/pypi/pjq/read_image.py" />
         <option value="$PROJECT_DIR$/modules/pypi/setup.py" />
         <option value="$PROJECT_DIR$/modules/flask_notes/servers/xmc_cv_service.py" />
         <option value="$PROJECT_DIR$/modules/multiThread/queue_for_threadPool.py" />
         <option value="$PROJECT_DIR$/modules/multiThread/custom_queue.py" />
+        <option value="$PROJECT_DIR$/modules/pypi/pjq/read_image.py" />
+        <option value="$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py" />
       </list>
     </option>
   </component>
@@ -245,17 +176,6 @@
             <path>
               <item name="python-learning-notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="python-learning-notes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="python-learning-notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="python-learning-notes" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="python-learning-notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="python-learning-notes" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="multiThread" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -451,7 +371,7 @@
       <workItem from="1557901019753" duration="7413000" />
       <workItem from="1559696838217" duration="2133000" />
       <workItem from="1559704966881" duration="25144000" />
-      <workItem from="1559884585711" duration="106491000" />
+      <workItem from="1559884585711" duration="107331000" />
     </task>
     <task id="LOCAL-00001" summary="增加队列多线程处理">
       <created>1559978034279</created>
@@ -460,7 +380,14 @@
       <option name="project" value="LOCAL" />
       <updated>1559978034279</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="增加队列多线程处理">
+      <created>1560493328071</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1560493328071</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -496,24 +423,24 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="156881000" />
+    <option name="totallyTimeSpent" value="157721000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1988273" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1988273" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4989339" weight="0.3286334" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.84808105" visible="true" weight="0.28416485" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.84808105" weight="0.28416485" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6759062" weight="0.30585682" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49840087" weight="0.329718" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49840087" visible="true" weight="0.329718" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.17590618" side_tool="true" weight="0.3438178" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.8240938" weight="0.3438178" />
@@ -933,40 +860,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/pypi/pjq/image_process.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" selection-end-line="18" selection-end-column="14" />
-          <folding>
-            <element signature="e#176#186#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/pypi/pjq/read_image.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="33" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
-          <folding>
-            <element signature="e#176#186#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/pypi/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/flask_notes/servers/xmc_metric_service.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="12" column="62" selection-start-line="12" selection-start-column="62" selection-end-line="12" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/multiThread/ThreadPool_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
@@ -984,23 +877,6 @@
           <folding>
             <element signature="e#184#261#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_read_image.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1024">
-          <caret line="82" column="141" selection-start-line="82" selection-start-column="141" selection-end-line="82" selection-end-column="141" />
-          <folding>
-            <element signature="e#247#259#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-400">
-          <caret line="10" column="40" lean-forward="true" selection-start-line="10" selection-end-line="11" />
         </state>
       </provider>
     </entry>
@@ -1023,10 +899,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/multiThread/custom_queue.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="94" column="41" lean-forward="true" selection-start-line="94" selection-start-column="41" selection-end-line="94" selection-end-column="41" />
+        <state relative-caret-position="220">
+          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/pypi/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/flask_notes/servers/xmc_metric_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="12" column="62" selection-start-line="12" selection-start-column="62" selection-end-line="12" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/pypi/pjq/image_process.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="11" selection-end-line="18" selection-end-column="14" />
           <folding>
-            <element signature="e#187#203#0" expanded="true" />
+            <element signature="e#176#186#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/pypi/pjq/read_image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-100">
+          <caret line="10" column="40" selection-end-line="123" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_read_image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1024">
+          <caret line="82" column="141" selection-start-line="82" selection-start-column="141" selection-end-line="82" selection-end-column="141" />
+          <folding>
+            <element signature="e#247#259#0" expanded="true" />
           </folding>
         </state>
       </provider>
