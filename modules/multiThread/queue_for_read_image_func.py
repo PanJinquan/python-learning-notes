@@ -11,30 +11,33 @@ import queue
 from modules.multiThread.thread_operate import customThread
 import os
 import cv2
+
 # 定义producer和consumer线程完成的标识
-PRODUCER_EXIT_FLAG=False
-CONSUMER_EXIT_FLAG=False
+PRODUCER_EXIT_FLAG = False
+CONSUMER_EXIT_FLAG = False
 queue_container = queue.Queue(maxsize=5)
 
+
 def producer(image_list, queue_container):
-    for i,image_path in enumerate(image_list):
+    for i, image_path in enumerate(image_list):
         queue_container.put(image_path)
-        print("setp:{},将图片添加到队列中:{}".format(i,image_path))
+        print("setp:{},将图片添加到队列中:{}".format(i, image_path))
         # time.sleep(3)
 
-def consumer(batch_size, queue_container,func):
+
+def consumer(batch_size, queue_container, func):
     '''
     队列消费线程consumer
     :param batch_size:一次从队列读取数据个数
     :param queue_container:队列
     :return: 返回数据由func函数决定，但必须是dict类型
     '''
-    timeout_Flag=False
-    result_dict=None
+    timeout_Flag = False
+    result_dict = None
     while True:
-        image_list=[]
+        image_list = []
         for i in range(batch_size):
-            if len(image_list)>0 and queue_container.empty() :
+            if len(image_list) > 0 and queue_container.empty():
                 # 当队列为空时，并且image_list不为零，说明剩余的数据不足拼接成一个完整的batch,
                 # 为避免堵塞后续处理，这时应该跳过堵塞
                 continue
@@ -43,14 +46,14 @@ def consumer(batch_size, queue_container,func):
                 image_list.append(image_path)
             except Exception as e:
                 print("get timeout...")
-                timeout_Flag=True
+                timeout_Flag = True
                 break
 
-        if len(image_list)>0:
+        if len(image_list) > 0:
             qsize = queue_container.qsize()
             print("取出一个batch的数据：{},剩余：{}".format(image_list, qsize))
             func_result = func(image_list)
-            assert isinstance(func_result, dict),"func return must be dict"
+            assert isinstance(func_result, dict), "func return must be dict"
             if result_dict is None:
                 result_dict = func_result
                 continue
@@ -62,53 +65,56 @@ def consumer(batch_size, queue_container,func):
         # time.sleep(3)
     # 告知这个任务执行完了
     queue_container.task_done()  # 用于通知queue_container.join()可以继续干其他事啦
-    return  result_dict
+    return result_dict
+
 
 def image_process_func(image_list):
     image_batch, image_list_batch = read_image_batch(image_list)
-    result_dict={"image_batch":image_batch,
-                 "image_list_batch":image_list_batch
-                 }
+    result_dict = {"image_batch": image_batch,
+                   "image_list_batch": image_list_batch
+                   }
     return result_dict
 
 
 def read_image_batch(image_list):
-    image_batch=[]
-    out_image_list=[]
+    image_batch = []
+    out_image_list = []
     for image_path in image_list:
-        image=cv2.imread(image_path)
+        image = cv2.imread(image_path)
         if image is None:
             print("no image:{}".format(image_path))
             continue
         image_batch.append(image)
         out_image_list.append(image_path)
-    return image_batch,out_image_list
+    return image_batch, out_image_list
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     # 请求输入队列：最多存入10个
     queue_container = queue.Queue(maxsize=5)
-    image_id_list=["000001.jpg","000002.jpg","000003.jpg","000004.jpg","000005.jpg","000006.jpg","000007.jpg","000008.jpg","000009.jpg","000010.jpg"]
+    image_id_list = ["000001.jpg", "000002.jpg", "000003.jpg", "000004.jpg", "000005.jpg", "000006.jpg", "000007.jpg",
+                     "000008.jpg", "000009.jpg", "000010.jpg"]
     # image_id_list=["000001.jpg","000002.jpg","000003.jpg"]
-    image_dir="../../dataset/VOC/JPEGImages"
+    image_dir = "../../dataset/VOC/JPEGImages"
 
-    image_list=[os.path.join(image_dir,id) for id in image_id_list]
-    batch_size=3
+    image_list = [os.path.join(image_dir, id) for id in image_id_list]
+    batch_size = 3
     # 创建队列产生线程producer
-    producer_thread = customThread(thread_id="producer_thread",func=producer, args=(image_list,queue_container))
+    producer_thread = customThread(thread_id="producer_thread", func=producer, args=(image_list, queue_container))
     # 创建队列消费线程consumer
-    consumer_thread = customThread(thread_id="consumer_thread",func=consumer, args=(batch_size, queue_container,image_process_func))
+    consumer_thread = customThread(thread_id="consumer_thread", func=consumer,
+                                   args=(batch_size, queue_container, image_process_func))
     # consumer_thread2 = threading.Thread(target=consumer, args=(batch_size, queue_container))
 
     # 执行线程
     producer_thread.start()
     consumer_thread.start()
     producer_thread.join()
-    PRODUCER_EXIT_FLAG=True
+    PRODUCER_EXIT_FLAG = True
     print("producer_thread线程:完成")
     consumer_thread.join()
 
-    CONSUMER_EXIT_FLAG=True
+    CONSUMER_EXIT_FLAG = True
     # dest_image,dest_image_list = consumer_thread.get_result()
     # print(dest_image_list)
     # cv2.imshow("image", dest_image[0])
