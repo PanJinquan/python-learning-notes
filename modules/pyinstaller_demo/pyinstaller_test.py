@@ -8,14 +8,10 @@
 """
 from utils import image_processing
 
-
-
-
-
-if __name__=="__main__":
+if __name__ == "__main__":
     '''
     cmd:pyinstaller -F -w  pyinstaller_demo.py
     '''
-    image_path="E:/git/tools/dataset/VOC/JPEGImages/000002.jpg"
-    image=image_processing.read_image(image_path)
-    image_processing.cv_show_image("image",image)
+    image_path = "E:/git/tools/dataset/VOC/JPEGImages/000002.jpg"
+    image = image_processing.read_image(image_path)
+    image_processing.cv_show_image("image", image)

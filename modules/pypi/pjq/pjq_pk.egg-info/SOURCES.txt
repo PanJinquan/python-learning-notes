@@ -1,0 +1,7 @@
+README.md
+setup.py
+pjq/pjq_pk.egg-info/PKG-INFO
+pjq/pjq_pk.egg-info/SOURCES.txt
+pjq/pjq_pk.egg-info/dependency_links.txt
+pjq/pjq_pk.egg-info/not-zip-safe
+pjq/pjq_pk.egg-info/top_level.txt
