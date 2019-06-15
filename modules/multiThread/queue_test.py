@@ -24,7 +24,7 @@ def producer(queue_container, max_nums):
         queue_container.put(image_path)
         print("下载图片：{},放入队列中".format(image_path))
         count += 1
-        time.sleep(0.3)
+        time.sleep(1)
         if count == max_nums:
             break
     print("下载完成....................")
@@ -34,8 +34,9 @@ def consumer(queue_container):
     while True:
         image_path = queue_container.get()
         print("从队列取出图片，并处理图片：{}".format(image_path))
-        time.sleep(1)
-    # 用于通知queue_container.join()可以继续干其他事啦
+        time.sleep()
+        print(queue_container.empty())
+        # 用于通知queue_container.join()可以继续干其他事啦
     queue_container.task_done()
 
 

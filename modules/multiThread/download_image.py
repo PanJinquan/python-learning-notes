@@ -93,17 +93,8 @@ if __name__ == "__main__":
                 "https://farm4.staticflickr.com/3149/2355285447_290193393a_o.jpg",
                 "https://farm3.staticflickr.com/2090/1792526652_8f37410561_o.jpg",
                 "https://farm3.staticflickr.com/2099/1791684639_044827f860_o.jpg"]
-    #
-    # id_list= ["000000001.jpg", "000000002.jpg", "000000003.jpg", "000000004.jpg"]
-    # storage_url="http://192.168.4.50:8000/image/"
-    # url_list=[os.path.join(storage_url,id) for id in id_list]
-    # url_list=[storage_url+id for id in id_list]
     startTime = time.time()
-    # 不开启多线程
-    # length = len(url_list);
-    # for i in range(length):
-    #     download_image(url_list[i])
-    image_list = download_image_thread(url_list, our_dir=our_dir, num_processes=2, remove_bad=True, Async=True)
+    image_list = download_image_thread(url_list, our_dir=our_dir, num_processes=4, remove_bad=True, Async=True)
     endTime = time.time()
     consumeTime = endTime - startTime
     print("程序运行时间：" + str(consumeTime) + " 秒")
