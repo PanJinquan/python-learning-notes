@@ -71,7 +71,7 @@ def convert_annotation_image(image_list, annotations_dir, label_out_dir, class_n
     :param annotations_dir: 图片对应annotations所在目录
     :param label_out_dir: label输出目录
     :param class_names:
-    :param coordinatesType: 坐标类型：SSD,YOLO格式
+    :param coordinatesType: 坐标类型：SSD,YOLO,MMDET格式
     :param show: 显示
     :return:
     '''
@@ -149,7 +149,7 @@ def convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, out_t
     :param label_out_dir:
     :param out_train_val_path:
     :param class_names:
-    :param coordinatesType: 坐标类型：SSD,YOLO格式
+    :param coordinatesType: 坐标类型：SSD,YOLO,MMDET格式
     :param show:
     :return:
     '''
