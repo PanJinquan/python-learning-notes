@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88efb9f5-66a1-431c-8523-5ee5db6c7ecd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/pypi/pjq/read_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/pypi/pjq/read_image.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vocDemo.py" beforeDir="false" afterPath="$PROJECT_DIR$/vocDemo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/voctools/pascal_voc.py" beforeDir="false" afterPath="$PROJECT_DIR$/voctools/pascal_voc.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,25 +39,84 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/flask_notes/servers/xmc_cv_service.py">
+        <entry file="file://$PROJECT_DIR$/modules/env_path/env_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
+            <state relative-caret-position="160">
+              <caret line="8" selection-start-line="8" selection-end-line="33" />
               <folding>
-                <element signature="e#184#261#0" expanded="true" />
+                <element signature="e#181#191#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/vocDemo.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="738">
+              <caret line="110" column="7" selection-end-line="231" />
+              <folding>
+                <element signature="e#168#202#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/voctools/pascal_voc.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="235">
+              <caret line="59" column="41" lean-forward="true" selection-start-line="59" selection-end-line="60" />
+              <folding>
+                <element signature="e#171#205#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_threadPool.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1378">
+            <state relative-caret-position="1640">
               <caret line="85" selection-start-line="85" selection-end-line="88" selection-end-column="34" />
               <folding>
                 <element signature="e#247#263#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="680">
+              <caret line="35" column="52" selection-start-line="35" selection-start-column="52" selection-end-line="35" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1140">
+              <caret line="60" column="27" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="27" />
+              <folding>
+                <element signature="e#247#259#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/flask_notes/err_msg.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="400">
+              <caret line="20" selection-end-line="20" />
             </state>
           </provider>
         </entry>
@@ -70,10 +130,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_read_image.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1024">
+            <state relative-caret-position="1580">
               <caret line="82" column="141" selection-start-line="82" selection-start-column="141" selection-end-line="82" selection-end-column="141" />
               <folding>
                 <element signature="e#247#259#0" expanded="true" />
@@ -104,9 +164,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/image_cut.py" />
-        <option value="$PROJECT_DIR$/flask_notes/flask_test2.py" />
-        <option value="$PROJECT_DIR$/flask_notes/flask_test.py" />
         <option value="$PROJECT_DIR$/data/xmc.csv" />
         <option value="$PROJECT_DIR$/data/xmc2.csv" />
         <option value="$PROJECT_DIR$/pandas_test.py" />
@@ -132,11 +189,9 @@
         <option value="$PROJECT_DIR$/utils/debug.py" />
         <option value="$PROJECT_DIR$/modules/singleton.py" />
         <option value="$PROJECT_DIR$/modules/mysingleton.py" />
-        <option value="$PROJECT_DIR$/modules/multiThread/queue_test.py" />
         <option value="$PROJECT_DIR$/modules/Singleton/singleton01.py" />
         <option value="$PROJECT_DIR$/modules/multiThread/thread_lock.py" />
         <option value="$PROJECT_DIR$/modules/multiThread/ThreadPool_test.py" />
-        <option value="$PROJECT_DIR$/modules/multiThread/download_image.py" />
         <option value="$PROJECT_DIR$/modules/Singleton/singleton02.py" />
         <option value="$PROJECT_DIR$/modules/Singleton/singleton_test.py" />
         <option value="$PROJECT_DIR$/modules/Singleton/singleton03.py" />
@@ -155,14 +210,18 @@
         <option value="$PROJECT_DIR$/modules/multiThread/custom_queue.py" />
         <option value="$PROJECT_DIR$/modules/pypi/pjq/read_image.py" />
         <option value="$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py" />
+        <option value="$PROJECT_DIR$/modules/multiThread/queue_test.py" />
+        <option value="$PROJECT_DIR$/modules/multiThread/download_image.py" />
+        <option value="$PROJECT_DIR$/modules/env_path/env_test.py" />
+        <option value="$PROJECT_DIR$/voctools/pascal_voc.py" />
+        <option value="$PROJECT_DIR$/vocDemo.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1022" />
-    <option name="y" value="191" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="153" />
     <option name="width" value="1678" />
-    <option name="height" value="878" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -176,6 +235,11 @@
             <path>
               <item name="python-learning-notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="python-learning-notes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="python-learning-notes" type="b2602c69:ProjectViewProjectNode" />
+              <item name="python-learning-notes" type="462c0819:PsiDirectoryNode" />
+              <item name="voctools" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -226,7 +290,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.custom_queue">
+  <component name="RunManager" selected="Python.env_test">
     <configuration name="custom_queue" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="tools" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -249,7 +313,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="demo_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="download_image" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="tools" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -257,12 +321,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modules/multiThread" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo_test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modules/multiThread/download_image.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -271,7 +335,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="json_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="env_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="tools" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -279,12 +343,34 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modules/pandas_json" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modules/env_path" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modules/pandas_json/json_test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modules/env_path/env_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="queue_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="tools" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modules/multiThread" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modules/multiThread/queue_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -315,42 +401,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="xmc_metric_service" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="tools" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modules/flask_notes/servers" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modules/flask_notes/servers/xmc_metric_service.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.xmc_cv_service" />
-      <item itemvalue="Python.json_test" />
-      <item itemvalue="Python.xmc_metric_service" />
-      <item itemvalue="Python.demo_test" />
       <item itemvalue="Python.custom_queue" />
+      <item itemvalue="Python.queue_test" />
+      <item itemvalue="Python.download_image" />
+      <item itemvalue="Python.env_test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.env_test" />
+        <item itemvalue="Python.download_image" />
+        <item itemvalue="Python.queue_test" />
         <item itemvalue="Python.custom_queue" />
         <item itemvalue="Python.xmc_cv_service" />
-        <item itemvalue="Python.xmc_metric_service" />
-        <item itemvalue="Python.demo_test" />
-        <item itemvalue="Python.json_test" />
       </list>
     </recent_temporary>
   </component>
@@ -371,7 +435,8 @@
       <workItem from="1557901019753" duration="7413000" />
       <workItem from="1559696838217" duration="2133000" />
       <workItem from="1559704966881" duration="25144000" />
-      <workItem from="1559884585711" duration="107331000" />
+      <workItem from="1559884585711" duration="114452000" />
+      <workItem from="1560733709663" duration="1528000" />
     </task>
     <task id="LOCAL-00001" summary="增加队列多线程处理">
       <created>1559978034279</created>
@@ -387,7 +452,14 @@
       <option name="project" value="LOCAL" />
       <updated>1560493328071</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="增加队列多线程处理">
+      <created>1560579591397</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1560579591397</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -423,24 +495,24 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157721000" />
+    <option name="totallyTimeSpent" value="166370000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="153" y="0" width="1678" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1988273" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23362176" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4989339" weight="0.3286334" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.84808105" weight="0.28416485" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.84808105" visible="true" weight="0.28368017" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6759062" weight="0.30585682" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49840087" visible="true" weight="0.329718" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49840087" weight="0.33296824" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.17590618" side_tool="true" weight="0.3438178" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.8240938" weight="0.3438178" />
@@ -550,11 +622,12 @@
     <SUITE FILE_PATH="coverage/python_learning_notes$queue_for_threadPool.coverage" NAME="queue_for_threadPool Coverage Results" MODIFIED="1560236249280" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/multiThread" />
     <SUITE FILE_PATH="coverage/tools$pr.coverage" NAME="pr Coverage Results" MODIFIED="1557491652234" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/eval" />
     <SUITE FILE_PATH="coverage/python_learning_notes$singleton_test.coverage" NAME="singleton_test Coverage Results" MODIFIED="1560216623138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/Singleton" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$env_test.coverage" NAME="env_test Coverage Results" MODIFIED="1560659424433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/env_path" />
     <SUITE FILE_PATH="coverage/python_learning_notes$singleton03.coverage" NAME="singleton03 Coverage Results" MODIFIED="1560220061874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/Singleton" />
     <SUITE FILE_PATH="coverage/tools$pyinstaller_demo.coverage" NAME="pyinstaller_demo Coverage Results" MODIFIED="1557969820988" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python_learning_notes$image_processing.coverage" NAME="image_processing Coverage Results" MODIFIED="1560240762990" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/python_learning_notes$ThreadPool_test.coverage" NAME="ThreadPool_test Coverage Results" MODIFIED="1560157190338" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/multiThread" />
-    <SUITE FILE_PATH="coverage/python_learning_notes$queue_test.coverage" NAME="queue_test Coverage Results" MODIFIED="1559979245474" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/multiThread" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$queue_test.coverage" NAME="queue_test Coverage Results" MODIFIED="1560507067714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/multiThread" />
     <SUITE FILE_PATH="coverage/python_learning_notes$xmc_service.coverage" NAME="xmc_service Coverage Results" MODIFIED="1559979677819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/flask_notes/servers" />
     <SUITE FILE_PATH="coverage/python_learning_notes$queue_for_read_image_func.coverage" NAME="queue_for_read_image_func Coverage Results" MODIFIED="1559989445302" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/multiThread" />
     <SUITE FILE_PATH="coverage/python_learning_notes$xmc_service__1_.coverage" NAME="xmc_service (1) Coverage Results" MODIFIED="1559885716189" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/flask_notes/servers" />
@@ -566,7 +639,7 @@
     <SUITE FILE_PATH="coverage/python_learning_notes$xmc_metric_service.coverage" NAME="xmc_metric_service Coverage Results" MODIFIED="1560404892912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/flask_notes/servers" />
     <SUITE FILE_PATH="coverage/python_learning_notes$xmc_cv_service.coverage" NAME="xmc_cv_service Coverage Results" MODIFIED="1560405553066" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/flask_notes/servers" />
     <SUITE FILE_PATH="coverage/python_learning_notes$pytest_in_test_api_py.coverage" NAME="pytest in xmc_api.py Coverage Results" MODIFIED="1559825491085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/flask_notes/servers" />
-    <SUITE FILE_PATH="coverage/python_learning_notes$download_image.coverage" NAME="download_image Coverage Results" MODIFIED="1560159729465" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/multiThread" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$download_image.coverage" NAME="download_image Coverage Results" MODIFIED="1560579532157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/multiThread" />
     <SUITE FILE_PATH="coverage/python_learning_notes$singleton01.coverage" NAME="singleton01 Coverage Results" MODIFIED="1560151225329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/Singleton" />
     <SUITE FILE_PATH="coverage/tools$vocDemo.coverage" NAME="vocDemo Coverage Results" MODIFIED="1557718971897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/tools$pytest_in_pr_py.coverage" NAME="pytest in pr.py Coverage Results" MODIFIED="1557479958319" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/eval" />
@@ -581,29 +654,6 @@
     <SUITE FILE_PATH="coverage/python_learning_notes$json_test.coverage" NAME="json_test Coverage Results" MODIFIED="1560252381170" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/pandas_json" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/multiThread/thread_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="16" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/site-packages/cv2/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/39610433/cv2/cv2/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="7400" column="4" selection-start-line="7400" selection-start-column="4" selection-end-line="7400" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataset/VOC/JPEGImages/000005.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -625,16 +675,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="564">
           <caret line="189" column="4" selection-start-line="189" selection-start-column="4" selection-end-line="189" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="18" column="40" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
-          <folding>
-            <element signature="e#247#268#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -731,33 +771,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/multiThread/download_image.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="100" column="27" selection-start-line="100" selection-end-line="101" />
-          <folding>
-            <element signature="e#188#199#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/debug.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
           <caret line="13" selection-start-line="13" selection-end-line="13" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-741" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/multiThread/thread_operate.py">
@@ -783,11 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3180" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-13">
@@ -797,26 +810,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/pypi/mypack.spec">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="120">
-            <caret line="6" selection-start-line="6" selection-end-line="17" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/pypi/pyinstaller_demo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/pypi/mypack.spec" />
+    <entry file="file://$PROJECT_DIR$/modules/pypi/pyinstaller_demo.py" />
     <entry file="file://$PROJECT_DIR$/modules/pandas_json/json_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
@@ -870,37 +865,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/flask_notes/servers/xmc_cv_service.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
-          <folding>
-            <element signature="e#184#261#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/threading.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="863" selection-start-line="863" selection-end-line="863" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_threadPool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1378">
-          <caret line="85" selection-start-line="85" selection-end-line="88" selection-end-column="34" />
-          <folding>
-            <element signature="e#247#263#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/multiThread/custom_queue.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -935,19 +903,119 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/convert_image_format.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="320">
+            <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/flask_notes/servers/xmc_cv_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
+          <folding>
+            <element signature="e#184#261#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/multiThread/download_image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1160">
+          <caret line="65" column="21" selection-start-line="65" selection-start-column="11" selection-end-line="65" selection-end-column="21" />
+          <folding>
+            <element signature="e#188#199#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_threadPool.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1640">
+          <caret line="85" selection-start-line="85" selection-end-line="88" selection-end-column="34" />
+          <folding>
+            <element signature="e#247#263#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="35" column="52" selection-start-line="35" selection-start-column="52" selection-end-line="35" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_read_image_func.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-100">
-          <caret line="10" column="40" selection-end-line="123" />
+        <state relative-caret-position="1140">
+          <caret line="60" column="27" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="27" />
+          <folding>
+            <element signature="e#247#259#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/flask_notes/err_msg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/multiThread/custom_queue.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_read_image.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1024">
+        <state relative-caret-position="1580">
           <caret line="82" column="141" selection-start-line="82" selection-start-column="141" selection-end-line="82" selection-end-column="141" />
           <folding>
             <element signature="e#247#259#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/env_path/env_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" selection-start-line="8" selection-end-line="33" />
+          <folding>
+            <element signature="e#181#191#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/voctools/pascal_voc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="59" column="41" lean-forward="true" selection-start-line="59" selection-end-line="60" />
+          <folding>
+            <element signature="e#171#205#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vocDemo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="738">
+          <caret line="110" column="7" selection-end-line="231" />
+          <folding>
+            <element signature="e#168#202#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -53,6 +53,13 @@ def convert_rect(size, box):
     return [x,y,w,h]
 
 def get_annotation(annotations_file, classes,coordinatesType="SSD"):
+    '''
+
+    :param annotations_file:
+    :param classes:
+    :param coordinatesType: 坐标类型：SSD,YOLO格式
+    :return:
+    '''
     tree=ET.parse(annotations_file)
     root = tree.getroot()
     size = root.find('size')
