@@ -5,12 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88efb9f5-66a1-431c-8523-5ee5db6c7ecd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/VOC/label/000001.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/VOC/label/000001.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/VOC/label/000002.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/VOC/label/000002.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/VOC/label/000003.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/VOC/label/000003.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/VOC/label/000006.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/VOC/label/000006.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/VOC/label/000007.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/VOC/label/000007.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/VOC/label/000008.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/VOC/label/000008.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/VOC/label/000009.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/VOC/label/000009.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/VOC/label/000010.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/VOC/label/000010.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vocDemo.py" beforeDir="false" afterPath="$PROJECT_DIR$/vocDemo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/voctools/pascal_voc.py" beforeDir="false" afterPath="$PROJECT_DIR$/voctools/pascal_voc.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,11 +27,13 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/python_learning_notes$image_cut.coverage" NAME="image_cut Coverage Results" MODIFIED="1559275562253" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$demo_test.coverage" NAME="demo_test Coverage Results" MODIFIED="1560766795358" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/tools$image_cut.coverage" NAME="image_cut Coverage Results" MODIFIED="1559094678915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/tools$grabCut_test.coverage" NAME="grabCut_test Coverage Results" MODIFIED="1559048833672" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/tools$convert_image_format.coverage" NAME="convert_image_format Coverage Results" MODIFIED="1558929429250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python_learning_notes$json_test.coverage" NAME="json_test Coverage Results" MODIFIED="1559445964115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/pandas_json" />
     <SUITE FILE_PATH="coverage/python_learning_notes$flask_test.coverage" NAME="flask_test Coverage Results" MODIFIED="1559565423768" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/flask_notes" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$vocDemo.coverage" NAME="vocDemo Coverage Results" MODIFIED="1560770554805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python_learning_notes$flask_test2__1_.coverage" NAME="flask_test2 (1) Coverage Results" MODIFIED="1559565079290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/flask_notes" />
     <SUITE FILE_PATH="coverage/tools$vocDemo.coverage" NAME="vocDemo Coverage Results" MODIFIED="1559012598928" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python_learning_notes$flask_test2.coverage" NAME="flask_test2 Coverage Results" MODIFIED="1559281124304" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/flask_notes" />
@@ -39,20 +50,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/custom_class/student.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="20" column="34" lean-forward="true" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file leaf-file-name="vocDemo.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vocDemo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3405">
-              <caret line="24" column="38" lean-forward="true" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
+            <state relative-caret-position="269">
+              <caret line="224" column="29" selection-start-line="224" selection-start-column="29" selection-end-line="224" selection-end-column="29" />
               <folding>
                 <element signature="e#168#202#0" expanded="true" />
               </folding>
@@ -60,11 +62,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file leaf-file-name="file_processing.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/file_processing.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="720">
+              <caret line="53" selection-start-line="53" selection-end-line="56" selection-end-column="73" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="000001.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataset/VOC/label/000001.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="2" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pascal_voc.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/voctools/pascal_voc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+            <state relative-caret-position="179">
+              <caret line="97" column="33" lean-forward="true" selection-start-line="97" selection-start-column="33" selection-end-line="97" selection-end-column="33" />
               <folding>
                 <element signature="e#171#205#0" expanded="true" />
               </folding>
@@ -72,10 +92,31 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file leaf-file-name="demo_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/demo_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+              <folding>
+                <element signature="e#182#192#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ntpath.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/envs/pytorch-py36/lib/python3.6/ntpath.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="74" column="4" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="person.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/custom_class/person.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
+            <state relative-caret-position="240">
               <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
             </state>
           </provider>
@@ -138,7 +179,6 @@
         <option value="$PROJECT_DIR$/modules/pypi/SICA/setup.py" />
         <option value="$PROJECT_DIR$/modules/pypi/mypack/fun.py" />
         <option value="$PROJECT_DIR$/modules/pypi/pyinstaller_demo.py" />
-        <option value="$PROJECT_DIR$/demo_test.py" />
         <option value="$PROJECT_DIR$/modules/pypi/README.md" />
         <option value="$PROJECT_DIR$/modules/pypi/pjq/image_process.py" />
         <option value="$PROJECT_DIR$/modules/pypi/setup.py" />
@@ -152,15 +192,26 @@
         <option value="$PROJECT_DIR$/modules/env_path/env_test.py" />
         <option value="$PROJECT_DIR$/modules/custom_class/person.py" />
         <option value="$PROJECT_DIR$/modules/custom_class/student.py" />
+        <option value="$PROJECT_DIR$/demo_test.py" />
         <option value="$PROJECT_DIR$/vocDemo.py" />
         <option value="$PROJECT_DIR$/voctools/pascal_voc.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="150" />
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="160" />
+    <option name="y" value="136" />
     <option name="width" value="1680" />
-    <option name="height" value="1050" />
+    <option name="height" value="1022" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -174,11 +225,6 @@
             <path>
               <item name="python-learning-notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="python-learning-notes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="python-learning-notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="python-learning-notes" type="462c0819:PsiDirectoryNode" />
-              <item name="voctools" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -229,8 +275,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.student">
-    <configuration name="custom_queue" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.vocDemo">
+    <configuration name="demo_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="tools" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -238,19 +284,16 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modules/multiThread" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modules/multiThread/custom_queue.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
     </configuration>
     <configuration name="download_image" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="tools" />
@@ -270,9 +313,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
     </configuration>
     <configuration name="env_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="tools" />
@@ -292,31 +332,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="queue_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="tools" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modules/multiThread" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modules/multiThread/queue_test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
     </configuration>
     <configuration name="student" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="tools" />
@@ -336,24 +351,40 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
+    </configuration>
+    <configuration name="vocDemo" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="tools" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vocDemo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
     <list>
-      <item itemvalue="Python.custom_queue" />
-      <item itemvalue="Python.queue_test" />
       <item itemvalue="Python.download_image" />
       <item itemvalue="Python.env_test" />
       <item itemvalue="Python.student" />
+      <item itemvalue="Python.vocDemo" />
+      <item itemvalue="Python.demo_test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.vocDemo" />
+        <item itemvalue="Python.demo_test" />
         <item itemvalue="Python.student" />
         <item itemvalue="Python.env_test" />
         <item itemvalue="Python.download_image" />
-        <item itemvalue="Python.queue_test" />
-        <item itemvalue="Python.custom_queue" />
       </list>
     </recent_temporary>
   </component>
@@ -441,61 +472,64 @@
     <option name="totallyTimeSpent" value="170243000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="160" y="136" width="1680" height="1022" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2124665" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4989339" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.84808105" weight="0.12464589" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6759062" weight="0.30585682" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49840087" weight="0.33296824" />
-      <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.17590618" side_tool="true" weight="0.3438178" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.8240938" weight="0.3438178" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.84808105" visible="true" weight="0.42505592" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49840087" weight="0.33296824" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49814585" weight="0.329718" />
-      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32903227" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.8240938" weight="0.3438178" />
+      <window_info anchor="right" id="Remote Host" order="3" weight="0.113970585" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23748474" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="right" id="SciView" order="4" weight="0.071428575" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6759062" weight="0.30536914" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Remote Host" order="3" weight="0.113970585" />
-      <window_info anchor="right" id="SciView" order="4" weight="0.071428575" />
-      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32903227" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4989339" weight="0.3286119" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1988273" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4989339" weight="0.3286334" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.84808105" weight="0.31561822" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6759062" weight="0.21366595" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49840087" weight="0.329718" />
-      <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.17590618" side_tool="true" visible="true" weight="0.3438178" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.8240938" visible="true" weight="0.3438178" />
-      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49814585" weight="0.329718" />
-      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32903227" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Remote Host" order="3" weight="0.113970585" />
-      <window_info anchor="right" id="SciView" order="4" visible="true" weight="0.071428575" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1988273" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.84808105" weight="0.31561822" />
+      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49814585" weight="0.329718" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6759062" weight="0.21366595" />
       <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.17590618" side_tool="true" visible="true" weight="0.3438178" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32903227" />
+      <window_info anchor="right" id="SciView" order="4" visible="true" weight="0.071428575" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4989339" weight="0.3286334" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.8240938" visible="true" weight="0.3438178" />
+      <window_info id="Favorites" order="2" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="增加队列多线程处理" />
@@ -545,7 +579,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/demo_test.py</url>
-          <line>11</line>
+          <line>10</line>
           <option name="timeStamp" value="62" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -553,7 +587,13 @@
           <line>20</line>
           <option name="timeStamp" value="78" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/voctools/pascal_voc.py</url>
+          <line>102</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
       </breakpoints>
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -598,37 +638,40 @@
     <SUITE FILE_PATH="coverage/python_learning_notes$flask_test.coverage" NAME="flask_test Coverage Results" MODIFIED="1559697702083" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/flask_notes" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/logging/__init__.py">
+    <entry file="file://$PROJECT_DIR$/vocDemo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="564">
-          <caret line="189" column="4" selection-start-line="189" selection-start-column="4" selection-end-line="189" selection-end-column="4" />
+        <state relative-caret-position="270">
+          <caret line="24" column="38" lean-forward="true" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
+          <folding>
+            <element signature="e#168#202#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/concurrent/futures/__init__.py">
+    <entry file="file://$PROJECT_DIR$/modules/custom_class/person.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="17" column="44" lean-forward="true" selection-start-line="17" selection-start-column="44" selection-end-line="17" selection-end-column="44" />
+        <state relative-caret-position="240">
+          <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/concurrent/futures/thread.py">
+    <entry file="file://$PROJECT_DIR$/voctools/pascal_voc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" column="16" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="16" />
+        <state relative-caret-position="285">
+          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+          <folding>
+            <element signature="e#171#205#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/multiThread/download_image_for_map.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/logging/__init__.py" />
+    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/concurrent/futures/__init__.py" />
+    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/concurrent/futures/thread.py" />
     <entry file="file://$PROJECT_DIR$/modules/multiThread/thread_lock.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="21" column="17" lean-forward="true" selection-start-line="21" selection-end-line="22" />
-          <folding>
-            <element signature="e#184#195#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -639,13 +682,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/multiprocessing/pool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="569" selection-start-line="569" selection-end-line="569" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/multiprocessing/pool.py" />
     <entry file="file://$PROJECT_DIR$/modules/Singleton/singleton02.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="284">
@@ -668,20 +705,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/queue.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="152" column="27" selection-start-line="152" selection-start-column="18" selection-end-line="152" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/concurrent/futures/_base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="378" selection-start-line="378" selection-end-line="378" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/queue.py" />
+    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/concurrent/futures/_base.py" />
     <entry file="file://$PROJECT_DIR$/utils/debug.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
@@ -693,14 +718,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="693">
           <caret line="52" selection-start-line="52" selection-end-line="52" />
-          <folding>
-            <element signature="e#189#239#0" expanded="true" />
-          </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/pandas_json/result.json">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/flask_notes/servers/xmc_cv_api.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -730,24 +749,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/pypi/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/pypi/LICENCE">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/site-packages/pjq/__init__.py" />
     <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/site-packages/pjq/image_process.py" />
-    <entry file="file://$PROJECT_DIR$/demo_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
-          <folding>
-            <element signature="e#182#192#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/pypi/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -762,19 +765,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="24" selection-start-line="24" selection-end-line="25" selection-end-column="47" />
-          <folding>
-            <element signature="e#174#217#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/threading.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="863" selection-start-line="863" selection-end-line="863" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://D:/ProgramData/Anaconda3/envs/pytorch-py36/Lib/threading.py" />
     <entry file="file://$PROJECT_DIR$/modules/pypi/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
@@ -793,9 +787,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="11" selection-end-line="18" selection-end-column="14" />
-          <folding>
-            <element signature="e#176#186#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -805,9 +796,6 @@
           <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/convert_image_format.py">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -823,9 +811,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="460">
           <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
-          <folding>
-            <element signature="e#184#261#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -833,9 +818,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1160">
           <caret line="65" column="21" selection-start-line="65" selection-start-column="11" selection-end-line="65" selection-end-column="21" />
-          <folding>
-            <element signature="e#188#199#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -850,9 +832,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1501">
           <caret line="82" column="141" selection-start-line="82" selection-start-column="141" selection-end-line="82" selection-end-column="141" />
-          <folding>
-            <element signature="e#247#259#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -860,22 +839,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
           <caret line="8" selection-start-line="8" selection-end-line="33" />
-          <folding>
-            <element signature="e#181#191#0" expanded="true" />
-          </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/multiThread/queue_for_threadPool.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="618">
           <caret line="85" selection-start-line="85" selection-end-line="88" selection-end-column="34" />
-          <folding>
-            <element signature="e#247#263#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -890,9 +860,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="618">
           <caret line="60" column="27" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="27" />
-          <folding>
-            <element signature="e#247#259#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -907,33 +874,61 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="627">
           <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
-          <folding>
-            <element signature="e#183#194#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/custom_class/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/custom_class/person.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
+        <state relative-caret-position="240">
           <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/custom_class/student.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="20" column="34" lean-forward="true" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+        <state relative-caret-position="300">
+          <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/voc/train.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/VOC/label/000001.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="2" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/pytorch-py36/lib/python3.6/ntpath.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="74" column="4" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding>
+            <element signature="e#182#192#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/file_processing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="53" selection-start-line="53" selection-end-line="56" selection-end-column="73" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vocDemo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3405">
-          <caret line="24" column="38" lean-forward="true" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
+        <state relative-caret-position="269">
+          <caret line="224" column="29" selection-start-line="224" selection-start-column="29" selection-end-line="224" selection-end-column="29" />
           <folding>
             <element signature="e#168#202#0" expanded="true" />
           </folding>
@@ -942,8 +937,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/voctools/pascal_voc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+        <state relative-caret-position="179">
+          <caret line="97" column="33" lean-forward="true" selection-start-line="97" selection-start-column="33" selection-end-line="97" selection-end-column="33" />
           <folding>
             <element signature="e#171#205#0" expanded="true" />
           </folding>

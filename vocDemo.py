@@ -21,7 +21,7 @@ classes = ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat"
            "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
 # for wall
 # classes = ["PCwall"]
-# classes=["BACKGROUND",'PCwall']
+classes=["BACKGROUND",'PCwall']
 print("class_name:{}".format(classes))
 
 
@@ -207,22 +207,22 @@ def batch_label_test(label_dir, image_dir, classes):
 
 
 if __name__ == "__main__":
-    annotations_dir = './dataset/VOC/Annotations'
-    label_out_dir = './dataset/VOC/label'
-    image_dir = "./dataset/VOC/JPEGImages"
-    out_train_val_path = "./data/voc"  # 输出 train/val 文件
+    # annotations_dir = './dataset/VOC/Annotations'
+    # label_out_dir = './dataset/VOC/label'
+    # image_dir = "./dataset/VOC/JPEGImages"
+    # out_train_val_path = "./data/voc"  # 输出 train/val 文件
     #
     # annotations_dir='/media/dm/dm/project/dataset/VOCdevkit/VOC2007/Annotations'
     # label_out_dir= '/media/dm/dm/project/dataset/VOCdevkit/VOC2007/label'
     # image_dir="/media/dm/dm/project/dataset/VOCdevkit/VOC2007/JPEGImages"
     # out_train_val_path= "/media/dm/dm/project/dataset/VOCdevkit/VOC2007"# 输出 train/val 文件
 
-    # annotations_dir='/media/dm/dm/project/dataset/VOC_wall/Annotations'
-    # label_out_dir= '/media/dm/dm/project/dataset/VOC_wall/label'
-    # image_dir="/media/dm/dm/project/dataset/VOC_wall/JPEGImages"
-    # out_train_val_path= "/media/dm/dm/project/dataset/VOC_wall"# 输出 train/val 文件
+    annotations_dir='/media/dm/dm2/project/dataset/VOC_wall/Annotations'
+    label_out_dir= '/media/dm/dm2/project/dataset/VOC_wall/mmdet_label'
+    image_dir="/media/dm/dm2/project/dataset/VOC_wall/JPEGImages"
+    out_train_val_path= "/media/dm/dm2/project/dataset/VOC_wall"# 输出 train/val 文件
 
-    coordinatesType = "YOLO"
+    coordinatesType = "MMDET1"
     show = False
     # convert_voc_label_annotations(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, show=show)
     convert_voc_label_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,

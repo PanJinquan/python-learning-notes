@@ -103,7 +103,7 @@ def get_annotation(annotations_file, classes, coordinatesType="SSD"):
         elif coordinatesType == "MMDET":
             rect = convert_mmdet((w, h), b)
         else:
-            print("Error:coordinatesType={},must be SSD or YOLO".format(coordinatesType))
+            raise "Error:coordinatesType={},must be SSD,YOLO or MMDET".format(coordinatesType)
         rects.append(rect)
         class_name.append(cls)
         class_id.append(cls_id)
