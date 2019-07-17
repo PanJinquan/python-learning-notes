@@ -14,6 +14,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import requests
+import matplotlib
 
 
 def show_batch_image(title, batch_imgs, index=0):
@@ -54,7 +55,7 @@ def show_image(title, rgb_image):
     plt.show()
 
 
-def cv_show_image(title, image, type='rgb'):
+def cv_show_image(title, image, type='rgb', waitKey=0):
     '''
     调用OpenCV显示RGB图片
     :param title: 图像标题
@@ -66,7 +67,8 @@ def cv_show_image(title, image, type='rgb'):
     if channels == 3 and type == 'rgb':
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)  # 将BGR转为RGB
     cv2.imshow(title, image)
-    cv2.waitKey(0)
+    cv2.waitKey(waitKey)
+    return image
 
 
 def show_batch_image(title, batch_imgs, index=0):
@@ -336,7 +338,7 @@ def fast_read_image_roi(filename, orig_rect, ImreadModes=cv2.IMREAD_COLOR, norma
     return roi_image
 
 
-def resize_image(image, resize_height, resize_width):
+def resize_image(image, resize_height=None, resize_width=None):
     '''
     :param image:
     :param resize_height:
@@ -377,6 +379,7 @@ def get_rect_image(image, rect):
     width = shape[1]
     image_rect = (0, 0, width, height)
     rect = get_rect_intersection(rect, image_rect)
+    rect = [int(i) for i in rect]
     x, y, w, h = rect
     cut_img = image[y:(y + h), x:(x + w)]
     return cut_img
@@ -477,33 +480,32 @@ def get_rect_intersection(rec1, rec2):
     return (x1, y1, w, h)
 
 
-def show_image_bboxes_text(title, rgb_image, boxes, boxes_name):
+def convert_color_map(color, colorType="BGR"):
     '''
-    :param boxes_name:
-    :param bgr_image: bgr image
-    :param boxes: [[x1,y1,x2,y2],[x1,y1,x2,y2]]
+    :param color:
+    :param colorType:
     :return:
     '''
-    bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
-    for name, box in zip(boxes_name, boxes):
-        box = [int(b) for b in box]
-        cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
-        cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
-    # cv2.imshow(title, bgr_image)
-    # cv2.waitKey(0)
-    rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
-    cv_show_image(title, rgb_image)
+    assert (len(color) == 7 and color[0] == "#"), "input color error:color={}".format(color)
+    R = color[1:3]
+    G = color[3:5]
+    B = color[5:7]
+
+    R = int(R, 16)
+    G = int(G, 16)
+    B = int(B, 16)
+    if colorType == "BGR":
+        return (B, G, R)
+    elif colorType == "RGB":
+        return (R, G, B)
+    else:
+        assert "colorType error "
 
 
-def show_image_rects_text(title, rgb_image, rects_list, boxes_name):
-    '''
-    :param boxes_name:
-    :param bgr_image: bgr image
-    :param boxes: [[x1,y1,w,h],[x1,y1,w,h]]
-    :return:
-    '''
-    bbox_list = rects2bboxes(rects_list)
-    show_image_bboxes_text(title, rgb_image, bbox_list, boxes_name)
+def get_color_map():
+    colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF",
+              "#4169E1", "#FF9912", "#FF6100", "#00FF00", "#FF8000"]
+    return colors
 
 
 def show_image_rects(win_name, image, rect_list):
@@ -518,10 +520,146 @@ def show_image_rects(win_name, image, rect_list):
         point1 = (int(x), int(y))
         point2 = (int(x + w), int(y + h))
         cv2.rectangle(image, point1, point2, (0, 0, 255), thickness=2)
-    cv_show_image(win_name, image)
+    image = cv_show_image(win_name, image)
+    return image
 
 
-def show_landmark_boxex(win_name, img, landmarks_list, boxes):
+def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, color=None, drawType="text", waitKey=0):
+    '''
+    :param boxes_name:
+    :param bgr_image: bgr image
+    :param color: BGR color:[B,G,R]
+    :param boxes: [[x1,y1,x2,y2],[x1,y1,x2,y2]]
+    :return:
+    '''
+    bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
+    # color_map=list(matplotlib.colors.cnames.values())
+    # color_map=list(reversed(color_map))
+    class_set = list(set(boxes_name))
+    color_map = get_color_map() * len(class_set)
+    for name, box in zip(boxes_name, boxes):
+        if not color:
+            cls_id = class_set.index(name)
+            color = convert_color_map(color_map[cls_id])
+        box = [int(b) for b in box]
+        # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
+        # cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
+        # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), color, 2, 8, 0)
+        # cv2.putText(bgr_image, str(name), (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, thickness=2)
+        custom_bbox_line(bgr_image, box, color, name, drawType)
+    # cv2.imshow(title, bgr_image)
+    # cv2.waitKey(0)
+    rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
+    cv_show_image(title, rgb_image, waitKey=waitKey)
+    return rgb_image
+
+
+def show_image_rects_text(title, rgb_image, rects_list, rects_name, color=None, drawType="text", waitKey=0):
+    '''
+    :param rects_name:
+    :param bgr_image: bgr image
+    :param rects: [[x1,y1,w,h],[x1,y1,w,h]]
+    :return:
+    '''
+    bbox_list = rects2bboxes(rects_list)
+    rgb_image = show_image_bboxes_text(title, rgb_image, bbox_list, rects_name, color, drawType, waitKey)
+    return rgb_image
+
+
+def show_image_detection_rects(title, rgb_image, rects, probs, lables, color=None, waitKey=0):
+    '''
+    :param title:
+    :param rgb_image:
+    :param rects: [[x1,y1,w,h],[x1,y1,w,h]]
+    :param probs:
+    :param lables:
+    :return:
+    '''
+    bboxes = rects2bboxes(rects)
+    rgb_image = show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, color, waitKey)
+    return rgb_image
+
+
+def show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, color=None, waitKey=0):
+    '''
+    :param title:
+    :param rgb_image:
+    :param bboxes:  [[x1,y1,x2,y2],[x1,y1,x2,y2]]
+    :param probs:
+    :param lables:
+    :return:
+    '''
+    class_set = list(set(lables))
+    boxes_name = combile_label_prob(lables, probs)
+    bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
+    # color_map=list(matplotlib.colors.cnames.values())
+    # color_map=list(reversed(color_map))
+    color_map = get_color_map()
+    for l, name, box in zip(lables, boxes_name, bboxes):
+        if not color:
+            cls_id = class_set.index(name)
+            color = convert_color_map(color_map[cls_id])
+        box = [int(b) for b in box]
+        # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
+        # cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
+        # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), color, 2, 8, 0)
+        # cv2.putText(bgr_image, str(name), (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, thickness=2)
+        custom_bbox_line(bgr_image, box, color, name, drawType="text")
+    # cv2.imshow(title, bgr_image)
+    # cv2.waitKey(0)
+    rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
+    cv_show_image(title, rgb_image, waitKey=waitKey)
+    return rgb_image
+
+
+def custom_bbox_line(img, bbox, color, name, drawType="text"):
+    if drawType == "simple":
+        fontScale = 0.4
+        thickness = 1
+        cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), color, thickness, 8, 0)
+        cv2.putText(img, str(name), (bbox[0], bbox[1]), cv2.FONT_HERSHEY_SIMPLEX, fontScale, color, thickness)
+    elif drawType == "text":
+        cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), color, 2)
+        # draw score roi
+        fontScale = 0.4
+        thickness = 1
+        text_size, baseline = cv2.getTextSize(str(name), cv2.FONT_HERSHEY_SIMPLEX, fontScale, thickness)
+        text_loc = (bbox[0], bbox[1] - text_size[1])
+        cv2.rectangle(img, (text_loc[0] - 2 // 2, text_loc[1] - 2 - baseline),
+                      (text_loc[0] + text_size[0], text_loc[1] + text_size[1]), color, -1)
+        # draw score value
+        cv2.putText(img, str(name), (text_loc[0], text_loc[1] + baseline), cv2.FONT_HERSHEY_SIMPLEX, fontScale,
+                    (255, 255, 255), thickness, 8)
+    return img
+
+
+def show_boxList(title, boxList, rgb_image):
+    '''
+    [xmin,ymin,xmax,ymax]
+    :param title:
+    :param boxList:
+    :param rgb_image:
+    :return:
+    '''
+    bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
+    for item in boxList:
+        name = item["label"]
+        xmin = item["xtl"]
+        xmax = item["xbr"]
+        ymin = item["ytl"]
+        ymax = item["ybr"]
+        # box=[xbr,ybr,xtl,ytl]
+        box = [xmin, ymin, xmax, ymax]
+        box = [int(float(b)) for b in box]
+        cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
+        cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
+    # cv2.imshow(title, bgr_image)
+    # cv2.waitKey(0)
+    rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
+    cv_show_image(title, rgb_image)
+
+
+def show_landmark_boxes(win_name, img, landmarks_list, boxes):
     '''
     显示landmark和boxex
     :param win_name:
@@ -537,7 +675,7 @@ def show_landmark_boxex(win_name, img, landmarks_list, boxes):
     for landmarks in landmarks_list:
         for landmark in landmarks:
             # 要画的点的坐标
-            point = (landmark[0], landmark[1])
+            point = (int(landmark[0]), int(landmark[1]))
             cv2.circle(image, point, point_size, point_color, thickness)
     show_image_boxes(win_name, image, boxes)
 
@@ -554,7 +692,7 @@ def show_image_boxes(win_name, image, boxes_list):
         point1 = (int(x1), int(y1))
         point2 = (int(x2), int(y2))
         cv2.rectangle(image, point1, point2, (0, 0, 255), thickness=2)
-    show_image(win_name, image)
+    cv_show_image(win_name, image)
 
 
 def rgb_to_gray(image):
@@ -567,7 +705,21 @@ def rgb_to_gray(image):
     return image
 
 
-def save_image(image_path, rgb_image, toUINT8=True):
+def convert_color_space(image, colorSpace='RGB'):
+    if colorSpace == 'RGB':
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    elif colorSpace == 'BGR':
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+    elif colorSpace == 'GRAY':
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+    elif colorSpace == 'COLOR':
+        image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+    else:
+        raise Exception("colorSpace error:{}".format(colorSpace))
+    return image
+
+
+def save_image(image_path, rgb_image, toUINT8=False):
     '''
     保存图片
     :param image_path:
@@ -575,6 +727,9 @@ def save_image(image_path, rgb_image, toUINT8=True):
     :param toUINT8:
     :return:
     '''
+    save_dir = os.path.dirname(image_path)
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
     if toUINT8:
         rgb_image = np.asanyarray(rgb_image * 255, dtype=np.uint8)
     if len(rgb_image.shape) == 2:  # 若是灰度图则转为三通道
@@ -582,6 +737,15 @@ def save_image(image_path, rgb_image, toUINT8=True):
     else:
         bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
     cv2.imwrite(image_path, bgr_image)
+
+
+def save_image_lable_dir(save_root, image_list, image_ids, index):
+    for i, (image, id) in enumerate(zip(image_list, image_ids)):
+        image_path = os.path.join(save_root, str(id))
+        if not os.path.exists(image_path):
+            os.makedirs(image_path)
+        image_path = os.path.join(image_path, str(index) + "_" + str(i) + ".jpg")
+        save_image(image_path, image, toUINT8=False)
 
 
 def combime_save_image(orig_image, dest_image, out_dir, name, prefix):
@@ -608,7 +772,7 @@ def combile_label_prob(label_list, prob_list):
     :param prob_list:
     :return:
     '''
-    info = [l + ":" + str(p) for l, p in zip(label_list, prob_list)]
+    info = [l + ":" + str(p)[:5] for l, p in zip(label_list, prob_list)]
     return info
 
 

@@ -8,8 +8,15 @@
 """
 import cv2
 import os
-if __name__=="__main__":
-    image_path="1"+os.getcwd()
-    print(image_path)
-    path1=os.path.join(image_path,image_path)
-    print(path1)
+import torch
+from torch.autograd import Variable
+import numpy as np
+from utils import debug
+
+from memory_profiler import profile
+
+data = np.asarray([[6, 4, 10],
+                  [3, 2, 9],
+                  [0, 1, 5]])
+data=data[np.lexsort(data.T)]
+print(data)

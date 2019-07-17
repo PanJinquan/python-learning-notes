@@ -10,8 +10,20 @@ import glob
 import os
 import os,shutil
 import numpy as np
-
+import json
 import pandas as pd
+
+
+def read_json_data(json_path):
+    # 读取数据
+    with open(json_path, 'r') as f:
+        json_data = json.load(f)
+    return json_data
+
+def write_json_path(out_json_path,json_data):
+    # 写入 JSON 数据
+    with open(out_json_path, 'w') as f:
+        json.dump(json_data, f)
 
 def write_data(filename, content_list,mode='w'):
     """保存list[list[]]的数据到txt文件
@@ -37,6 +49,8 @@ def write_list_data(filename, list_data,mode='w'):
         for line in list_data:
             # 将list转为string
             f.write(str(line)+"\n")
+
+
 
 def read_data(filename,split=" ",convertNum=True):
     """
@@ -201,7 +215,7 @@ def get_files_list(file_dir, postfix=None):
     return file_list
 
 
-def gen_files_labels(files_dir,postfix=None):
+def get_files_labels(files_dir, postfix=None):
     '''
     获取files_dir路径下所有文件路径，以及labels,其中labels用子级文件名表示
     files_dir目录下，同一类别的文件放一个文件夹，其labels即为文件的名

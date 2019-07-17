@@ -8,6 +8,7 @@
 """
 
 from modules.custom_class.person import Person
+from utils import debug
 
 
 class Student(Person):
@@ -17,10 +18,17 @@ class Student(Person):
         super(Student, self).__init__(name)
         self.age = age
 
+    @debug.run_time_decorator
     def print_student(self):
         print("name:{}".format(self.name))
         print("age :{}".format(self.age))
         print("classes :{}".format(self.classes))
+        self.print_test(a=1)
+
+    @staticmethod
+    @debug.run_time_decorator
+    def print_test(a):
+        print("print_test",a)
 
 
 if __name__ == "__main__":

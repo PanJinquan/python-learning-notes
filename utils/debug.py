@@ -66,6 +66,22 @@ def TIME():
     return datetime.datetime.now()
 
 
+def run_time_decorator(title=""):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            T0 = TIME()
+            result = func(*args, **kwargs)
+            T1 = TIME()
+            logger.debug("{}-- function : {}-- rum time : {}ms ".format(title, func.__name__, RUN_TIME(T1 - T0)))
+            return result
+
+        return wrapper
+
+    return decorator
+
+
+logger = set_logging(name="FBPyramidBox", level="debug", logfile=None)
+
 if __name__ == '__main__':
     T0 = TIME()
     # do something

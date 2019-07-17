@@ -1,7 +1,14 @@
 # tools
 > 自己封装的工具类函数
 
-## 
+## Linux
+```bash
+nohup python custom_train.py --batch_size=8 1>> train.log &
+jobs -l
+ps aux|grep python
+kill 7080
+nvidia-smi
+```
 
 
 
