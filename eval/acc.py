@@ -15,7 +15,7 @@ from sklearn import metrics
 import numpy as np
 
 
-def plot_roc_curve(acc_list, threshold_list, line_names):
+def plot_acc_curve(acc_list, threshold_list, line_names):
     '''
     绘制roc曲线
     :param acc_list:
@@ -85,8 +85,8 @@ def get_accuracy_list(y_true, y_pred, threshold_list, invert=False, plot_acc=Tru
         acc_list = [acc_list]
         threshold_list = [threshold_list]
         line_names = [""]
-        plot_roc_curve(acc_list, threshold_list, line_names)
-    return acc_list
+        plot_acc_curve(acc_list, threshold_list, line_names)
+    return max_acc,best_threshold
 
 
 if __name__ == "__main__":

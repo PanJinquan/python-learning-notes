@@ -6,6 +6,8 @@
     @E-mail : pan_jinquan@163.com
     @Date   : 2019-05-10 17:10:56
 """
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from sklearn import metrics
 import numpy as np
@@ -202,6 +204,7 @@ def plot_classification_pr_curve(true_label, prob_data, invert=False, plot_pr=Tr
         auc_list = [AUC]
         line_names = ["line_name"]
         plot_pr_curve(recall_list, precision_list, auc_list, line_names)
+    return precision, recall, AUC
 
 
 def plot_object_detection_pr_curve(iou_data, prob_data, iou_threshold, plot_pr=True):
@@ -221,8 +224,7 @@ def precision_recall_demo():
     pred_labels = [0, 2, 1, 0, 0, 1]
     # true_labels = [0, 1, 3, 2, 1]
     # pred_labels = [0, 1, 1, 0, 0]
-    precision, recall = get_precision_recall_acc(true_labels, pred_labels, average="macro")
-    acc = get_accuracy(true_labels, pred_labels)
+    precision, recall, acc = get_precision_recall_acc(true_labels, pred_labels, average="macro")
     print("precision:{},recall:{},acc:{}".format(precision, recall, acc))
 
 

@@ -10,8 +10,8 @@
 import os
 import numpy as np
 import itertools
-from utils import file_processing
-
+from utils import file_processing,image_processing
+import tqdm
 
 def get_combinations_pair_data(image_dir, weight=1):
     '''
@@ -21,6 +21,8 @@ def get_combinations_pair_data(image_dir, weight=1):
     '''
     _ID = True
     image_list = file_processing.get_files_list(image_dir, postfix=["*.jpg"])
+    nums=len(image_list)
+    print("have {} images and {} combinations".format(nums,nums*(nums-1)/2))
     pair_issame = []
     for paths in itertools.combinations(image_list, 2):
         image_path1, image_path2 = paths
@@ -50,10 +52,13 @@ def get_combinations_pair_data(image_dir, weight=1):
         per = np.random.permutation(num_pair_issame_0)[:select_nums]  # 打乱后的行号
         pair_issame_0 = pair_issame_0[per, :]  # 获取打乱后的训练数据
         pair_issame = np.concatenate([pair_issame_0, pair_issame_1], axis=0)
+        print("pair_issame_0 nums:{}".format(len(pair_issame_0)))
+        print("pair_issame_1 nums:{}".format(len(pair_issame_1)))
+
     # image_list1 = pair_issame[:, 0]
     # image_list2 = pair_issame[:, 1]
     # issame_list = pair_issame[:, 2]
-    print("have images:{},combinations :{} pairs".format(len(image_list), len(pair_issame)))
+    print("have {} pairs".format(len(pair_issame)))
     return pair_issame
 
 
@@ -61,10 +66,22 @@ def save_pair_data(filename, content_list):
     file_processing.write_data(filename, content_list, mode='w')
 
 
+
 if __name__ == "__main__":
-    print(type(np.asarray([0])))
-    # data="ABCD"
-    data = ["A", "B", "C", "D"]
-    image_dir = "/media/dm/dm/project/dataset/face_recognition/NVR/facebank/NVR_3_20190605_1005_VAL"
+    # NVR VAL faceDataset
+    # dataset="/media/dm/dm/project/dataset/face_recognition/NVR/facebank/"
+    # image_dir = dataset+"NVR_3_20190605_1005_VAL"
+    # pair_issame = get_combinations_pair_data(image_dir)
+    # save_pair_data(dataset+"nvr_pair_data.txt",pair_issame)
+
+    # CASIA-FaceV5 faceDataset
+    dataset="/media/dm/dm2/project/dataset/face_recognition/CASIA-FaceV5/"
+    image_dir = dataset+"CASIA-Faces"
     pair_issame = get_combinations_pair_data(image_dir)
-    save_pair_data("pair_data.txt",pair_issame)
+    save_pair_data(dataset+"casia_pair_data.txt",pair_issame)
+
+    #
+    # dataset="/media/dm/dm2/project/dataset/face_recognition/celebs_add_movies/"
+    # image_dir = dataset+"Asian_Faces"
+    # pair_issame = get_combinations_pair_data(image_dir)
+    # save_pair_data(dataset+"asian_faces_pair_data.txt",pair_issame)

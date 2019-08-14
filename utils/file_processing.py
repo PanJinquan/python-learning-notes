@@ -8,7 +8,7 @@
 """
 import glob
 import os
-import os,shutil
+import os, shutil
 import numpy as np
 import json
 import pandas as pd
@@ -20,12 +20,14 @@ def read_json_data(json_path):
         json_data = json.load(f)
     return json_data
 
-def write_json_path(out_json_path,json_data):
+
+def write_json_path(out_json_path, json_data):
     # 写入 JSON 数据
     with open(out_json_path, 'w') as f:
         json.dump(json_data, f)
 
-def write_data(filename, content_list,mode='w'):
+
+def write_data(filename, content_list, mode='w'):
     """保存list[list[]]的数据到txt文件
     :param filename:文件名
     :param content_list:需要保存的数据,type->list
@@ -35,10 +37,11 @@ def write_data(filename, content_list,mode='w'):
     with open(filename, mode=mode, encoding='utf-8') as f:
         for line_list in content_list:
             # 将list转为string
-            line=" ".join('%s' % id for id in line_list)
-            f.write(line+"\n")
+            line = " ".join('%s' % id for id in line_list)
+            f.write(line + "\n")
 
-def write_list_data(filename, list_data,mode='w'):
+
+def write_list_data(filename, list_data, mode='w'):
     """保存list[]的数据到txt文件，每个元素分行
     :param filename:文件名
     :param list_data:需要保存的数据,type->list
@@ -48,11 +51,10 @@ def write_list_data(filename, list_data,mode='w'):
     with open(filename, mode=mode, encoding='utf-8') as f:
         for line in list_data:
             # 将list转为string
-            f.write(str(line)+"\n")
+            f.write(str(line) + "\n")
 
 
-
-def read_data(filename,split=" ",convertNum=True):
+def read_data(filename, split=" ", convertNum=True):
     """
     读取txt数据函数
     :param filename:文件名
@@ -65,7 +67,7 @@ def read_data(filename,split=" ",convertNum=True):
     rstrip：用来去除结尾字符、空白符(包括\n、\r、\t、' '，即：换行、回车、制表符、空格)
     注意：这些函数都只会删除头和尾的字符，中间的不会删除。
     """
-    with open(filename, mode="r",encoding='utf-8') as f:
+    with open(filename, mode="r", encoding='utf-8') as f:
         content_list = f.readlines()
         if split is None:
             content_list = [content.rstrip() for content in content_list]
@@ -73,8 +75,8 @@ def read_data(filename,split=" ",convertNum=True):
         else:
             content_list = [content.rstrip().split(split) for content in content_list]
         if convertNum:
-            for i,line in enumerate(content_list):
-                line_data=[]
+            for i, line in enumerate(content_list):
+                line_data = []
                 for l in line:
                     if is_int(l):  # isdigit() 方法检测字符串是否只由数字组成,只能判断整数
                         line_data.append(int(l))
@@ -82,7 +84,7 @@ def read_data(filename,split=" ",convertNum=True):
                         line_data.append(float(l))
                     else:
                         line_data.append(l)
-                content_list[i]=line_data
+                content_list[i] = line_data
     return content_list
 
 
@@ -105,13 +107,14 @@ def is_float(str):
 
 
 def list2str(content_list):
-    content_str_list=[]
+    content_str_list = []
     for line_list in content_list:
         line_str = " ".join('%s' % id for id in line_list)
         content_str_list.append(line_str)
     return content_str_list
 
-def get_images_list(image_dir,postfix=['*.jpg'],basename=False):
+
+def get_images_list(image_dir, postfix=['*.jpg'], basename=False):
     '''
     获得文件列表
     :param image_dir: 图片文件目录
@@ -119,33 +122,52 @@ def get_images_list(image_dir,postfix=['*.jpg'],basename=False):
     :param basename: 返回的列表是文件名（True），还是文件的完整路径(False)
     :return:
     '''
-    images_list=[]
+    images_list = []
     for format in postfix:
-        image_format=os.path.join(image_dir,format)
-        image_list=glob.glob(image_format)
-        if not image_list==[]:
-            images_list+=image_list
-    images_list=sorted(images_list)
+        image_format = os.path.join(image_dir, format)
+        image_list = glob.glob(image_format)
+        if not image_list == []:
+            images_list += image_list
+    images_list = sorted(images_list)
     if basename:
-        images_list=get_basename(images_list)
+        images_list = get_basename(images_list)
     return images_list
 
+
 def get_basename(file_list):
-    dest_list=[]
+    dest_list = []
     for file_path in file_list:
-        basename=os.path.basename(file_path)
+        basename = os.path.basename(file_path)
         dest_list.append(basename)
     return dest_list
 
-def copyfile(srcfile,dstfile):
+
+def copyfile(srcfile, dstfile):
     if not os.path.isfile(srcfile):
-        print("%s not exist!"%(srcfile))
+        print("%s not exist!" % (srcfile))
     else:
-        fpath,fname=os.path.split(dstfile)    #分离文件名和路径
+        fpath, fname = os.path.split(dstfile)  # 分离文件名和路径
         if not os.path.exists(fpath):
-            os.makedirs(fpath)                #创建路径
-        shutil.copyfile(srcfile,dstfile)      #复制文件
+            os.makedirs(fpath)  # 创建路径
+        shutil.copyfile(srcfile, dstfile)  # 复制文件
         # print("copy %s -> %s"%( srcfile,dstfile))
+
+
+def create_dir(parent_dir, dir1=None, filename=None):
+    out_path = parent_dir
+    if dir1:
+        out_path = os.path.join(parent_dir, dir1)
+    if not os.path.exists(out_path):
+        os.makedirs(out_path)
+    if filename:
+        out_path = os.path.join(out_path, filename)
+    return out_path
+
+
+def create_file_path(filename):
+    basename = os.path.basename(filename)
+    dirname = os.path.dirname(filename)
+    create_dir(dirname, dir1=None, filename=basename)
 
 
 def merge_list(data1, data2):
@@ -224,7 +246,7 @@ def get_files_labels(files_dir, postfix=None):
     :return:filePath_list所有文件的路径,label_list对应的labels
     '''
     # filePath_list = getFilePathList(files_dir)
-    filePath_list=get_files_list(files_dir, postfix=postfix)
+    filePath_list = get_files_list(files_dir, postfix=postfix)
     print("files nums:{}".format(len(filePath_list)))
     # 获取所有样本标签
     label_list = []
@@ -233,26 +255,28 @@ def get_files_labels(files_dir, postfix=None):
         label_list.append(label)
 
     labels_set = list(set(label_list))
-    print("labels:{}".format(labels_set))
+    # print("labels:{}".format(labels_set))
 
     # 标签统计计数
     # print(pd.value_counts(label_list))
     return filePath_list, label_list
 
-def decode_label(label_list,name_table):
+
+def decode_label(label_list, name_table):
     '''
     根据name_table解码label
     :param label_list:
     :param name_table:
     :return:
     '''
-    name_list=[]
+    name_list = []
     for label in label_list:
         name = name_table[label]
         name_list.append(name)
     return name_list
 
-def encode_label(name_list,name_table,unknow=0):
+
+def encode_label(name_list, name_table, unknow=0):
     '''
     根据name_table，编码label
     :param name_list:
@@ -260,7 +284,8 @@ def encode_label(name_list,name_table,unknow=0):
     :param unknow :未知的名称，默认label为0,一般在name_table中index=0是背景，未知的label也当做背景处理
     :return:
     '''
-    label_list=[]
+    label_list = []
+    # name_table = {name_table[i]: i for i in range(len(name_table))}
     for name in name_list:
         if name in name_table:
             index = name_table.index(name)
@@ -269,10 +294,28 @@ def encode_label(name_list,name_table,unknow=0):
         label_list.append(index)
     return label_list
 
-if __name__=='__main__':
+
+def list2dict(data):
+    data = {data[i]: i for i in range(len(data))}
+    return data
+
+
+def print_dict(dict_data, save_path):
+    list_config = []
+    for key in dict_data:
+        info = "conf.{}={}".format(key, dict_data[key])
+        print(info)
+        list_config.append(info)
+    if save_path is not None:
+        with open(save_path, "w") as f:
+            for info in list_config:
+                f.writelines(info + "\n")
+
+
+if __name__ == '__main__':
     filename = 'test.txt'
     w_data = [['1.jpg', 'dog', 200, 300, 1.0], ['2.jpg', 'dog', 20, 30, -2]]
     print("w_data=", w_data)
-    write_data(filename,w_data, mode='w')
+    write_data(filename, w_data, mode='w')
     r_data = read_data(filename)
     print('r_data=', r_data)

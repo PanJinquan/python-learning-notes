@@ -182,10 +182,13 @@ def read_image_gbk(filename, resize_height=None, resize_width=None, normalizatio
     :param colorSpace 输出格式：RGB or BGR
     :return: 返回的RGB图片数据
     '''
-    with open(filename, 'rb') as f:
-        data = f.read()
-        data = np.asarray(bytearray(data), dtype="uint8")
-        bgr_image = cv2.imdecode(data, cv2.IMREAD_COLOR)
+    try:
+        with open(filename, 'rb') as f:
+            data = f.read()
+            data = np.asarray(bytearray(data), dtype="uint8")
+            bgr_image = cv2.imdecode(data, cv2.IMREAD_COLOR)
+    except Exception as e:
+        bgr_image = None
     # 或者：
     # bgr_image=cv2.imdecode(np.fromfile(filename,dtype=np.uint8),cv2.IMREAD_COLOR)
     if bgr_image is None:
@@ -524,7 +527,7 @@ def show_image_rects(win_name, image, rect_list):
     return image
 
 
-def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, color=None, drawType="text", waitKey=0):
+def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, set_color=None, drawType="text", waitKey=0):
     '''
     :param boxes_name:
     :param bgr_image: bgr image
@@ -538,9 +541,11 @@ def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, color=None, draw
     class_set = list(set(boxes_name))
     color_map = get_color_map() * len(class_set)
     for name, box in zip(boxes_name, boxes):
-        if not color:
+        if not set_color:
             cls_id = class_set.index(name)
             color = convert_color_map(color_map[cls_id])
+        else:
+            color=set_color
         box = [int(b) for b in box]
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
         # cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
@@ -580,7 +585,7 @@ def show_image_detection_rects(title, rgb_image, rects, probs, lables, color=Non
     return rgb_image
 
 
-def show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, color=None, waitKey=0):
+def show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, set_color=None, waitKey=0):
     '''
     :param title:
     :param rgb_image:
@@ -596,9 +601,11 @@ def show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, color=N
     # color_map=list(reversed(color_map))
     color_map = get_color_map()
     for l, name, box in zip(lables, boxes_name, bboxes):
-        if not color:
-            cls_id = class_set.index(name)
+        if not set_color:
+            cls_id = class_set.index(l)
             color = convert_color_map(color_map[cls_id])
+        else:
+            color=set_color
         box = [int(b) for b in box]
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
         # cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
