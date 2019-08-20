@@ -269,9 +269,10 @@ if __name__ == "__main__":
     # image_dir = "/media/dm/dm2/project/dataset/VOC_wall/JPEGImages"
     # out_train_val_path = "/media/dm/dm2/project/dataset/VOC_wall"  # 输出 train/val 文件
 
-    classes = list(range(1, 50, 1))
-    classes = [str(i) for i in classes]
-    DATASET_ROOT = "/media/dm/dm2/project/dataset/face_recognition/NVR/"
+    # classes = list(range(1, 50, 1))
+    # classes = [str(i) for i in classes]
+    classes = ["BACKGROUND","body", 'face']
+    DATASET_ROOT = "/media/dm/dm/project/dataset/face_recognition/NVR/face/NVR-T2/"
     annotations_dir = DATASET_ROOT + 'Annotations'
     label_out_dir = DATASET_ROOT + 'label'
     image_dir = DATASET_ROOT + "JPEGImages"
@@ -285,8 +286,8 @@ if __name__ == "__main__":
     coordinatesType = "SSD"
     show = True
     labelType="class_name"
-    # text_dataset_for_annotation(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,labelType=labelType,
-    #                             show=show)
+    text_dataset_for_annotation(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,labelType=labelType,
+                                show=show)
     # text_dataset_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,
     #                        show=show)
 

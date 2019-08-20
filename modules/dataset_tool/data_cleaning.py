@@ -16,19 +16,22 @@ import pandas as pd
 import PIL.Image as Image
 
 
-def data_cleaning(src_image_dir, dest_image_dir, nums_threashold=0):
+def data_cleaning(src_image_dir, dest_image_dir, min_nums=0):
     '''
-    clear data
+    clear sample data in src_image_dir,which sample nums must be more than min_num
     :param src_image_dir:
-    :return:
+    :param dest_image_dir: 
+    :param min_nums: 
+    :return: 
     '''
+
     image_list, image_label = file_processing.get_files_labels(src_image_dir, postfix=["*.jpg"])
     p = sample_statistics.count_data_info_pd(image_label, plot=False)
     for i, (image_path, label) in enumerate(zip(image_list, image_label)):
         name = os.path.basename(image_path)
         # label_nums = image_label.count(label)
         label_nums = p[label]
-        if label_nums < nums_threashold:
+        if label_nums < min_nums:
             continue
         out_path = os.path.join(dest_image_dir, label)
         if not os.path.exists(out_path):
@@ -40,27 +43,29 @@ def data_cleaning(src_image_dir, dest_image_dir, nums_threashold=0):
         time.sleep(0.01)
 
 
-def move_merge_dirs(source_root, dest_root):
+def move_merge_dirs(source_dir, dest_dir, merge_same=False):
     '''
-    move source_root file to dest_root
-    :param source_root:
-    :param dest_root:
+    move and merge files, move/merge files from source_dir to dest_dir, set merge_same True or False to ignore the same dir
+    :param source_dir:
+    :param dest_dir:
     :return:
     '''
-    for path, dirs, files in os.walk(source_root, topdown=False):
-        dest_dir = os.path.join(
-            dest_root,
-            os.path.relpath(path, source_root)
+    for path, dirs, files in os.walk(source_dir, topdown=False):
+        dest_path = os.path.join(
+            dest_dir,
+            os.path.relpath(path, source_dir)
         )
-        if not os.path.exists(dest_dir):
-            os.makedirs(dest_dir)
+        if not os.path.exists(dest_path):
+            os.makedirs(dest_path)
         else:
-            id = os.path.basename(dest_dir)
-            print("have exists same dir:{} ".format(id))
+            id = os.path.basename(dest_path)
+            print("have exists same dir:{}, merge_same:{}".format(id, merge_same))
+            if not merge_same:
+                continue
         for filename in files:
             os.rename(
                 os.path.join(path, filename),
-                os.path.join(dest_dir, filename)
+                os.path.join(dest_path, filename)
             )
 
 
@@ -103,11 +108,8 @@ def isValidImage(images_list, sizeTh=1000, isRemove=False):
 
 
 if __name__ == "__main__":
-    # image_dir = "/data/yehongjiang/douban/celebs_add_movies"
-    # # dest_image_dir = "/data/panjinquan/douban/celebs_add_movies"
-    # image_dir = "/media/dm/dm2/project/dataset/face_recognition/celebs_add_movies/val_face"
-    # dest_image_dir = "/media/dm/dm2/project/dataset/face_recognition/celebs_add_movies/Asian_Faces"
-    # data_cleaning(image_dir, dest_image_dir, nums_threashold=10)
-    file_dir = '/media/dm/dm1/project/backup/log/1498491877124107'
-    images_list = file_processing.get_files_list(file_dir, postfix=['*.jpg'])
-    isValidImage(images_list, sizeTh=1000, isRemove=False)
+    source_dir = '/media/dm/dm1/git/python-learning-notes/dataset/dataset2'
+    dest_dir = '/media/dm/dm1/git/python-learning-notes/dataset/dataset'
+    move_merge_dirs(source_dir, dest_dir, merge_same=False)
+    # images_list = file_processing.get_files_list(file_dir, postfix=['*.jpg'])
+    # isValidImage(images_list, sizeTh=1000, isRemove=False)

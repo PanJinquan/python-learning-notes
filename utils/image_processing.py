@@ -511,22 +511,6 @@ def get_color_map():
     return colors
 
 
-def show_image_rects(win_name, image, rect_list):
-    '''
-    :param win_name:
-    :param image:
-    :param rect_list:[[ x, y, w, h],[ x, y, w, h]]
-    :return:
-    '''
-    for rect in rect_list:
-        x, y, w, h = rect
-        point1 = (int(x), int(y))
-        point2 = (int(x + w), int(y + h))
-        cv2.rectangle(image, point1, point2, (0, 0, 255), thickness=2)
-    image = cv_show_image(win_name, image)
-    return image
-
-
 def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, set_color=None, drawType="text", waitKey=0):
     '''
     :param boxes_name:
@@ -545,7 +529,7 @@ def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, set_color=None, 
             cls_id = class_set.index(name)
             color = convert_color_map(color_map[cls_id])
         else:
-            color=set_color
+            color = set_color
         box = [int(b) for b in box]
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
         # cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
@@ -605,7 +589,7 @@ def show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, set_col
             cls_id = class_set.index(l)
             color = convert_color_map(color_map[cls_id])
         else:
-            color=set_color
+            color = set_color
         box = [int(b) for b in box]
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
         # cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
@@ -687,7 +671,43 @@ def show_landmark_boxes(win_name, img, landmarks_list, boxes):
     show_image_boxes(win_name, image, boxes)
 
 
-def show_image_boxes(win_name, image, boxes_list):
+def show_landmark(win_name, img, landmarks_list):
+    '''
+    显示landmark和boxex
+    :param win_name:
+    :param image:
+    :param landmarks_list: [[x1, y1], [x2, y2]]
+    :return:
+    '''
+    image = copy.copy(img)
+    point_size = 1
+    point_color = (0, 0, 255)  # BGR
+    thickness = 4  # 可以为 0 、4、8
+    for landmarks in landmarks_list:
+        for landmark in landmarks:
+            # 要画的点的坐标
+            point = (int(landmark[0]), int(landmark[1]))
+            cv2.circle(image, point, point_size, point_color, thickness)
+    cv_show_image(win_name, image)
+
+
+def show_image_rects(win_name, image, rect_list, color=(0, 0, 255), waitKey=0):
+    '''
+    :param win_name:
+    :param image:
+    :param rect_list:[[ x, y, w, h],[ x, y, w, h]]
+    :return:
+    '''
+    for rect in rect_list:
+        x, y, w, h = rect
+        point1 = (int(x), int(y))
+        point2 = (int(x + w), int(y + h))
+        cv2.rectangle(image, point1, point2, color, thickness=2)
+    image = cv_show_image(win_name, image, waitKey=waitKey)
+    return image
+
+
+def show_image_boxes(win_name, image, boxes_list, color=(0, 0, 255), waitKey=0):
     '''
     :param win_name:
     :param image:
@@ -698,8 +718,9 @@ def show_image_boxes(win_name, image, boxes_list):
         x1, y1, x2, y2 = box
         point1 = (int(x1), int(y1))
         point2 = (int(x2), int(y2))
-        cv2.rectangle(image, point1, point2, (0, 0, 255), thickness=2)
-    cv_show_image(win_name, image)
+        cv2.rectangle(image, point1, point2, color, thickness=2)
+    cv_show_image(win_name, image, waitKey=waitKey)
+    return image
 
 
 def rgb_to_gray(image):

@@ -11,7 +11,7 @@ import os.path
 from utils import file_processing
 
 
-def rename(image_list, prefix="ID_"):
+def rename_image_dir(image_list, prefix="ID_"):
     for image_path in image_list:
         dirname = os.path.dirname(image_path)
         label = image_path.split(os.sep)[-2]
@@ -30,6 +30,7 @@ def rename(image_list, prefix="ID_"):
 
 
 if __name__ == '__main__':
-    dir = '/media/dm/dm2/project/dataset/face_recognition/NVR/face/NVR-Teacher/trainval'
-    image_list = file_processing.get_files_list(dir, postfix=['*.jpeg'])
-    rename(image_list)
+    # dir = '/media/dm/dm/project/dataset/face_recognition/NVR/face/NVRS/trainval'
+    dataset_dir = "/media/dm/dm/project/dataset/face_recognition/X4/X4_Face20/"
+    image_list = file_processing.get_files_list(dataset_dir, postfix=['*.jpg'])
+    rename_image_dir(image_list)

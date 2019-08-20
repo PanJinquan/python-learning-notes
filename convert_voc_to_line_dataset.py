@@ -72,7 +72,7 @@ def convert_voc_to_linedataset(annotations_dir, image_list, class_names, out_fil
                 image = image_processing.read_image(image_path)
                 image_processing.show_image_rects_text("image", image, rects, class_name)
             if i % 10 == 0 or i == len(image_list) - 1:
-                print("processing image:{}/{}".format(i, len(image_list)-1))
+                print("processing image:{}/{}".format(i, len(image_list) - 1))
 
 
 def linedataset_for_image(shuffle=True):
@@ -105,14 +105,12 @@ def linedataset_for_image(shuffle=True):
     # train_filename = DATA_ROOT+"train.txt"
     # val_filename = DATA_ROOT+"val.txt"
 
-
     # widerface
-    DATA_ROOT="/media/dm/dm2/project/dataset/face/wider_face_voc/"
-    annotations_dir=DATA_ROOT+'Annotations'
-    image_dir=DATA_ROOT+"JPEGImages"
-    train_filename = DATA_ROOT+"train.txt"
-    val_filename = DATA_ROOT+"val.txt"
-
+    DATA_ROOT = "/media/dm/dm2/project/dataset/face/wider_face_voc/"
+    annotations_dir = DATA_ROOT + 'Annotations'
+    image_dir = DATA_ROOT + "JPEGImages"
+    train_filename = DATA_ROOT + "train.txt"
+    val_filename = DATA_ROOT + "val.txt"
 
     image_list = file_processing.get_files_list(image_dir, postfix=["*.jpg"])
     print("have {} images".format(len(image_list)))
@@ -137,7 +135,6 @@ def linedataset_for_image(shuffle=True):
     print("done...ok!")
     # test
     linedataset_test(train_filename, classes, image_dir=image_dir, show=True)
-
 
 
 def linedataset_test(filename, classes, image_dir=None, show=True):
@@ -167,6 +164,15 @@ if __name__ == "__main__":
     # classes = ["BACKGROUND", 'PCwall']
     # classes = ["BACKGROUND","aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
     # classes=pascal_voc.VOC_CLASSES_BG
-    classes=["BACKGROUND","face"]
-    print("class_name:{}".format(classes))
-    linedataset_for_image()
+
+    # classes=["BACKGROUND","face"]
+    # print("class_name:{}".format(classes))
+    # linedataset_for_image()
+    classes = ["BACKGROUND", 'face', "body"]
+    DATASET_ROOT = "/media/dm/dm/project/dataset/face_recognition/NVR/face/NVR-T2/"
+    annotations_dir = DATASET_ROOT + 'Annotations'
+    label_out_dir = DATASET_ROOT + 'label'
+    image_dir = DATASET_ROOT + "JPEGImages"
+
+    filename = DATASET_ROOT + "face_body_annotation.txt"
+    linedataset_test(filename, classes, image_dir)

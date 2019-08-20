@@ -1,0 +1,40 @@
+SEED: 1337  # random seed for reproduce results
+# local
+DATA_ROOT:
+- 'path/to/train/images1'
+- 'path/to/train/images2'
+
+VAL_ROOT: "/data/panjinquan/FaceData/val"
+VAL_DATASET: ["X4", "NVR1", "lfw", "agedb_30"]
+
+BACKBONE_NAME: 'IR_18'
+# support: ['ResNet_50', 'ResNet_101', 'ResNet_152', 'IR_50', 'IR_101', 'IR_152', 'IR_SE_50', 'IR_SE_101', 'IR_SE_152',
+# 'IR_MB_V1','IR_MB_V2','MB_V1','MB_V2','ResNet_18','IR_18','IR_SE_18','MixNet_M']
+WIDTH_MULT: null  # [1.5,1.4,1.3,1.2,1.0,0.75,0.5,0.35]
+conf.HEAD_NAME: 'Softmax'  # support:  ['Softmax', 'ArcFace', 'CosFace', 'SphereFace', 'Am_softmax']
+LOSS_NAME: 'Softmax'  # support: ['Focal', 'Softmax']
+INPUT_SIZE: [64, 64]  # support: [112, 112] and [224, 224]
+EMBEDDING_SIZE: 8  # feature dimension
+BATCH_SIZE: 512
+MULTI_GPU: True
+NUM_WORKERS: 24
+# flag to use multiple GPUs; if you choose to train with single GPU, you should first run "export CUDA_VISILE_DEVICES=device_id" to specify the GPU card you want to use
+# conf.GPU_ID = [1,0]  # specify your GPU ids
+GPU_ID: [0]  # specify your GPU ids
+TRANSFORM_TYPE: "default"  # [default,scale20_50,scale20_112,scale30] TRANSFORM_TYPE
+
+VAL_DATA_RESIZE: [64, 30]  # VAL_DATA_RESIZE
+TIME: True
+PIN_MEMORY: True
+RGB_MEAN: [0.5, 0.5, 0.5]  # for normalize inputs to [-1, 1]
+RGB_STD: [0.5, 0.5, 0.5]
+DROP_LAST: True  # whether drop the last batch to ensure consistent batch_norm statistics
+LR: 0.1  # initial LR
+NUM_EPOCH: 200  # total epoch number (use the firt 1/25 epochs to warm up)
+WEIGHT_DECAY: 5e-4 # do not apply to batch_norm parameters
+MOMENTUM: 0.9
+STAGES: [35, 65, 95, 150]  # epoch stages to decay learning rate
+
+RESUME: False
+BACKBONE_RESUME_ROOT: 'work_space/'
+HEAD_RESUME_ROOT: 'work_space/'  # the root to resume training from a saved checkpoint
