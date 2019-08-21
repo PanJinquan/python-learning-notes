@@ -15,6 +15,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import requests
 import matplotlib
+import base64
 
 
 def show_batch_image(title, batch_imgs, index=0):
@@ -69,24 +70,6 @@ def cv_show_image(title, image, type='rgb', waitKey=0):
     cv2.imshow(title, image)
     cv2.waitKey(waitKey)
     return image
-
-
-def show_batch_image(title, batch_imgs, index=0):
-    '''
-    批量显示图片
-    :param title:
-    :param batch_imgs:
-    :param index:
-    :return:
-    '''
-    image = batch_imgs[index, :]
-    # image = image.numpy()  #
-    image = np.array(image, dtype=np.float32)
-    if len(image.shape) == 3:
-        image = image.transpose(1, 2, 0)  # 通道由[c,h,w]->[h,w,c]
-    else:
-        image = image.transpose(1, 0)
-    cv_show_image(title, image)
 
 
 def get_prewhiten_image(x):
@@ -865,18 +848,37 @@ def filtering_scores(bboxes_list, scores_list, labels_list, score_threshold=0.0)
     return dest_bboxes_list, dest_scores_list, dest_labels_list
 
 
+def image_to_base64(rgb_image):
+    bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
+    image = cv2.imencode('.jpg', bgr_image)[1]
+    image_base64 = str(base64.b64encode(image))[2:-1]
+    return image_base64
+
+
+def base64_to_image(image_base64):
+    # base64解码
+    img_data = base64.b64decode(image_base64)
+    # 转换为np数组
+    rgb_array = np.fromstring(img_data, np.uint8)
+    # 转换成opencv可用格式
+    img = cv2.imdecode(rgb_array, cv2.IMREAD_COLOR)
+    # img = cv2.imdecode(rgb_array, cv2.COLOR_BGR2RGB)
+    return img
+
+
+def read_image_base64(image_path, resize_height=None, resize_width=None):
+    if resize_height is None and resize_width is None:
+        with open(image_path, 'rb') as f_in:
+            image_base64 = base64.b64encode(f_in.read())
+    else:
+        rgb_image = read_image(image_path, resize_height, resize_width)
+        image_base64 = image_to_base64(rgb_image)
+    return image_base64
+
+
 if __name__ == "__main__":
-    # image_path="../dataset/test_images/lena1.jpg"
-    # image_path="E:/git/dataset/tgs-salt-identification-challenge/train/my_masks/4.png"
-    # image_path = 'E:/Face/dataset/bzl/test3/test_dataset/陈思远_716/8205_0.936223.jpg'
-    # image_path="https://farm3.staticflickr.com/2099/1791684639_044827f860_o.jpg"
-    image_path = "http://192.168.4.50:8000/image/000000010.jpg"
-    # target_rect=main.select_user_roi(target_path)#rectangle=[x,y,w,h]
-    # orig_rect = [50, 50, 100000, 10000]
-
-    # image = read_image_gbk(image_path, resize_height=None, resize_width=None)
-    img = read_images_url(image_path)
-    # orig_image=get_rect_image(image,orig_rect)
-
-    # show_image_rects("image",image,[orig_rect])
-    show_image("orig_image", img)
+    image_path = "../dataset/dataset/huge/huge_1.jpg"
+    image_base64=read_image_base64(image_path, resize_height=100, resize_width=100)
+    # rgb_image = read_image(image_path, resize_height=100, resize_width=100)
+    rgb_img = base64_to_image(image_base64)
+    cv_show_image("orig_image", rgb_img, type="RGB")

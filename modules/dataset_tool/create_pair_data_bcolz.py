@@ -198,15 +198,15 @@ def convert_image_to_bcolz(pair_filename, image_dir, save_dir, input_size=[112, 
 
 if __name__ == "__main__":
     # NVR VAL faceDataset
-    # dataset = '/media/dm/dm/project/dataset/face_recognition/X4/X4_Face50_Crop/'
+    dataset = '/media/dm/dm2/XMC/FaceDataset/X4/X4_Face20_Crop/'
     # dataset = '/media/dm/dm2/project/dataset/face_recognition/NVR/face/NVR-Teacher/'
     # dataset = "/media/dm/dm1/project/dataset/face_recognition/NVR/face/NVR1/"
-    dataset = "/media/dm/dm/project/dataset/face_recognition/NVR/face/NVRS/"
+    # dataset = "/media/dm/dm/project/dataset/face_recognition/NVR/face/NVRS/"
     image_dir = dataset + "trainval"
-    pair_num=6000
-    pair_filename = dataset + "nvr_pair_data.txt"
-    pair_issame = get_combinations_pair_data(image_dir, pair_num)
-    # pair_issame = get_combinations_pair_data_for_x4_data(image_dir, pair_num)
+    pair_num=0
+    pair_filename = dataset + "x4_pair_data.txt"
+    # pair_issame = get_combinations_pair_data(image_dir, pair_num)
+    pair_issame = get_combinations_pair_data_for_x4_data(image_dir, pair_num)
 
     save_pair_data(pair_filename, pair_issame)
     # convert_image_to_bcolz(pair_filename, image_dir, save_dir=dataset + "nvr", input_size=[112, 112])
@@ -223,5 +223,4 @@ if __name__ == "__main__":
     # image_dir = dataset+"Asian_Faces"
     # pair_issame = get_combinations_pair_data(image_dir)
     # save_pair_data(dataset+"asian_faces_pair_data.txt",pair_issame)
-    # pair_filename = dataset + "casia_pair_data.txt"
-    convert_image_to_bcolz(pair_filename, image_dir, save_dir=dataset + "NVRS", input_size=[112, 112])
+    convert_image_to_bcolz(pair_filename, image_dir, save_dir=dataset + "x4", input_size=[112, 112])

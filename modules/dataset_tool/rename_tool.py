@@ -28,6 +28,7 @@ def rename_image_dir(image_list, prefix="ID_"):
         print(image_path)
         print(newName)
         os.rename(image_path, newpath)
+
 def sys_rename_image_dir(src_dir1,src_dir2,dest_dir):
     image_list,image_id = file_processing.get_files_labels(src_dir1, postfix=['*.jpg'])
     class_set =list(set(image_id))
@@ -57,9 +58,9 @@ def sys_rename_image_dir(src_dir1,src_dir2,dest_dir):
 if __name__ == '__main__':
     # dir = '/media/dm/dm/project/dataset/face_recognition/NVR/face/NVRS/trainval'
     # dataset_dir='F:/clear_data_bzl/val'
-    dataset_dir='F:/clear_data_bzl/facebank'
+    dataset_dir='/media/dm/dm/XMC/FaceData/X4/X4_Face132/val'
     image_list = file_processing.get_files_list(dataset_dir, postfix=['*.jpg'])
-    rename_image_dir(image_list, prefix="ID_")
+    rename_image_dir(image_list, prefix="val_")
 
     # src_dir1='F:/clear_data_bzl/val'
     # src_dir2='F:/clear_data_bzl/facebank'
