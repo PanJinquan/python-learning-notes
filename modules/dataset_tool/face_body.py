@@ -41,6 +41,16 @@ def read_line_image_label(line_image_label):
     return image_id, box, label
 
 
+def read_lines_image_labels(filename):
+    boxes_label_lists = []
+    with open(filename) as f:
+        lines = f.readlines()
+        for line in lines:
+            image_id, box, label = read_line_image_label(line)
+            boxes_label_lists.append([image_id, box, label])
+    return boxes_label_lists
+
+
 def get_annotation(annotations_file, classes, image_shape, coordinatesType="SSD"):
     '''
     label data format：

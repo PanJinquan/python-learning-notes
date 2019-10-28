@@ -34,5 +34,17 @@ def load_config(config_file='config.yaml'):
     return config
 
 
+def print_dict(dict_data, save_path=None):
+    list_config = []
+    for key in dict_data:
+        info = "{}: {}".format(key, dict_data[key])
+        print(info)
+        list_config.append(info)
+    if save_path is not None:
+        with open(save_path, "w") as f:
+            for info in list_config:
+                f.writelines(info + "\n")
+
+
 if __name__ == '__main__':
     pass

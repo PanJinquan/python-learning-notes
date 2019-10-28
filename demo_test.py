@@ -7,30 +7,38 @@
     @Date   : 2019-06-07 13:57:29
 """
 import time
-from utils import debug
+from utils import debug, numpy_tools
+import socket
+import os
+from utils import plot_utils
 
-
-import cv2
+# 主函数
 import numpy as np
 
-# 这里说一下旋转的opencv中为旋转提供的三个要素
-# 旋转的中心点（center）
-# 旋转角度()
-# 旋转后进行放缩
-# 我们可以通过cv2.getRotationMatrix2D函数得到转换矩阵
 
-img = cv2.imread('/media/dm/dm2/project/python-learning-notes/dataset/dataset2/A/1.jpg')
-rows,cols,_ = img.shape
+def mat2d_data(data, indexes):
+    '''
+    get element by indexes
+    data=numpy_tools.gen_range((3,3),0,9)
+    data=np.mat(data)
+    indexes=np.asarray([[1,1],[2,1],[2,2]])
+    out=mat2d_data(data, indexes)
+    print(data)
+    print(out)
+    :param data:
+    :param indexes:
+    :return:
+    '''
+    out = data[indexes[:, 0], indexes[:, 1]]
+    return out
 
-matrix = cv2.getRotationMatrix2D((cols/2,rows/2),90,1)
-# 得到变换的矩阵，通过这个矩阵再利用warpAffine来进行变换
-# 第一个参数就是旋转中心，元组的形式，这里设置成相片中心
-# 第二个参数90，是旋转的角度
-# 第三个参数1，表示放缩的系数，1表示保持原图大小
 
-img1 = cv2.warpAffine(img,matrix,(cols,200))
-
-cv2.imshow('img',img)
-cv2.imshow('img1',img1)
-cv2.waitKey(0)
-
+if __name__ == "__main__":
+    data = numpy_tools.gen_range((3, 3), 0, 9)
+    data = np.mat(data)
+    indexes = np.asarray([[1, 1], [2, 1], [2, 2]])
+    out = mat2d_data(data, indexes)
+    print(data)
+    print(out)
+    dd=np.asarray([0.1, 2.1])
+    print(dd.astype(np.int32))

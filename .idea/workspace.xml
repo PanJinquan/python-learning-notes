@@ -3,9 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="508071c2-169a-468e-8edb-1d221bc5d510" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/convert_voc_to_line_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/convert_voc_to_line_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/convert_voc_to_text_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/convert_voc_to_text_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/dataset_tool/create_pair_data_bcolz.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/dataset_tool/create_pair_data_bcolz.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/dataset_tool/data_cleaning.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/dataset_tool/data_cleaning.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/dataset_tool/face_body.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/dataset_tool/face_body.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/dataset_tool/rename_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/dataset_tool/rename_tool.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/data_cleaning.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/file_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/file_processing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/image_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/image_processing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/json_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/json_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/plot_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/plot_utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,65 +24,68 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/python_learning_notes$ramdom_select.coverage" NAME="ramdom_select Coverage Results" MODIFIED="1569229721276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/dataset_tool" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$demo_test.coverage" NAME="demo_test Coverage Results" MODIFIED="1571832207310" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$file_processing.coverage" NAME="file_processing Coverage Results" MODIFIED="1568339778477" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/python_learning_notes$image_processing.coverage" NAME="image_processing Coverage Results" MODIFIED="1566293451837" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/python_learning_notes$rename_tool.coverage" NAME="rename_tool Coverage Results" MODIFIED="1566285726349" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/dataset_tool" />
-    <SUITE FILE_PATH="coverage/python_learning_notes$create_pair_data_bcolz.coverage" NAME="create_pair_data_bcolz Coverage Results" MODIFIED="1566301497582" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/dataset_tool" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$convert_voc_to_line_dataset.coverage" NAME="convert_voc_to_line_dataset Coverage Results" MODIFIED="1566978017858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$rename_tool.coverage" NAME="rename_tool Coverage Results" MODIFIED="1569413977254" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/dataset_tool" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$create_pair_data_bcolz.coverage" NAME="create_pair_data_bcolz Coverage Results" MODIFIED="1571625464499" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/dataset_tool" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$convert_line_to_text_dataset.coverage" NAME="convert_line_to_text_dataset Coverage Results" MODIFIED="1566978184938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/dataset_tool" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$ramdom_resize.coverage" NAME="ramdom_resize Coverage Results" MODIFIED="1567607188763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/dataset_tool" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$dmai_test_data.coverage" NAME="dmai_test_data Coverage Results" MODIFIED="1571138237107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/dataset_tool" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$convert_image_format.coverage" NAME="convert_image_format Coverage Results" MODIFIED="1569478787239" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/dataset_tool" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$convert_voc_to_text_dataset.coverage" NAME="convert_voc_to_text_dataset Coverage Results" MODIFIED="1566972676823" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="rename_tool.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/dataset_tool/rename_tool.py">
+      <file leaf-file-name="numpy_tools.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/utils/numpy_tools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="60" column="56" selection-start-line="60" selection-start-column="56" selection-end-line="60" selection-end-column="56" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="image_processing.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="880" column="82" selection-start-line="880" selection-start-column="82" selection-end-line="880" selection-end-column="82" />
+            <state relative-caret-position="824">
+              <caret line="97" column="39" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
               <folding>
-                <element signature="e#191#200#0" expanded="true" />
+                <element signature="e#184#202#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create_pair_data_bcolz.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/modules/dataset_tool/create_pair_data_bcolz.py">
+      <file leaf-file-name="_multiarray_umath.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/-1771745584/numpy/core/_multiarray_umath.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="155" selection-start-line="155" selection-end-line="155" />
+            <state relative-caret-position="3015">
+              <caret line="201" column="4" selection-start-line="201" selection-start-column="4" selection-end-line="201" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/-1771745584/cv2/cv2/__init__.py">
+      <file leaf-file-name="demo_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/demo_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="7385" column="4" selection-start-line="7385" selection-start-column="4" selection-end-line="7385" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="file_processing.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/file_processing.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3840">
-              <caret line="261" column="36" selection-start-line="261" selection-start-column="26" selection-end-line="261" selection-end-column="36" />
+            <state relative-caret-position="645">
+              <caret line="43" column="29" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="29" />
+              <folding>
+                <element signature="e#182#193#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>show_batch_image</find>
+      <find>show_</find>
+      <find>read</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -82,9 +94,24 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/convert_voc_to_text_dataset.py" />
+        <option value="$PROJECT_DIR$/modules/dataset_tool/face_body.py" />
+        <option value="$PROJECT_DIR$/modules/dataset_tool/convert_linedata.py" />
+        <option value="$PROJECT_DIR$/convert_voc_to_line_dataset.py" />
+        <option value="$PROJECT_DIR$/modules/dataset_tool/convert_line_to_text_dataset.py" />
+        <option value="$PROJECT_DIR$/modules/dataset_tool/data_cleaning.py" />
+        <option value="$PROJECT_DIR$/modules/dataset_tool/ramdom_resize.py" />
+        <option value="$PROJECT_DIR$/utils/plot_utils.py" />
+        <option value="$PROJECT_DIR$/modules/dataset_tool/conver_image_format.py" />
+        <option value="$PROJECT_DIR$/modules/dataset_tool/ramdom_select.py" />
         <option value="$PROJECT_DIR$/modules/dataset_tool/rename_tool.py" />
+        <option value="$PROJECT_DIR$/modules/dataset_tool/convert_image_format.py" />
+        <option value="$PROJECT_DIR$/utils/file_processing.py" />
+        <option value="$PROJECT_DIR$/modules/dataset_tool/dmai_test_data.py" />
         <option value="$PROJECT_DIR$/utils/image_processing.py" />
         <option value="$PROJECT_DIR$/modules/dataset_tool/create_pair_data_bcolz.py" />
+        <option value="$PROJECT_DIR$/utils/numpy_tools.py" />
+        <option value="$PROJECT_DIR$/demo_test.py" />
       </list>
     </option>
   </component>
@@ -97,27 +124,18 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/.idea/python-learning-notes.iml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
-      </list>
-    </option>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="57" />
+    <option name="x" value="56" />
     <option name="y" value="-4" />
-    <option name="width" value="1863" />
-    <option name="height" value="1084" />
+    <option name="width" value="1865" />
+    <option name="height" value="1085" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -128,26 +146,26 @@
             <path>
               <item name="python-learning-notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="python-learning-notes" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="python-learning-notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="python-learning-notes" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="dataset_tool" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../dm2/XMC/FaceRecognition" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/utils" />
+      <recent name="E:\git\python-learning-notes\utils" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -161,7 +179,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.create_pair_data_bcolz">
+  <component name="RunManager" selected="Python.demo_test">
+    <configuration name="convert_image_format" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="python-learning-notes" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modules/dataset_tool" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modules/dataset_tool/convert_image_format.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="create_pair_data_bcolz" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="python-learning-notes" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -176,6 +213,44 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modules/dataset_tool/create_pair_data_bcolz.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="demo_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="python-learning-notes" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="dmai_test_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="python-learning-notes" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modules/dataset_tool" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modules/dataset_tool/dmai_test_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -200,35 +275,20 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="rename_tool" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="python-learning-notes" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modules/dataset_tool" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modules/dataset_tool/rename_tool.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
     <list>
-      <item itemvalue="Python.rename_tool" />
       <item itemvalue="Python.create_pair_data_bcolz" />
+      <item itemvalue="Python.convert_image_format" />
       <item itemvalue="Python.image_processing" />
+      <item itemvalue="Python.dmai_test_data" />
+      <item itemvalue="Python.demo_test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.demo_test" />
         <item itemvalue="Python.create_pair_data_bcolz" />
+        <item itemvalue="Python.dmai_test_data" />
         <item itemvalue="Python.image_processing" />
-        <item itemvalue="Python.rename_tool" />
+        <item itemvalue="Python.convert_image_format" />
       </list>
     </recent_temporary>
   </component>
@@ -243,36 +303,44 @@
       <option name="presentableId" value="Default" />
       <updated>1566276293394</updated>
       <workItem from="1566276296541" duration="2688000" />
+      <workItem from="1570588158393" duration="4623000" />
+      <workItem from="1570872398793" duration="582000" />
+      <workItem from="1570873694571" duration="796000" />
+      <workItem from="1570939588156" duration="584000" />
+      <workItem from="1571015562053" duration="782000" />
+      <workItem from="1571016619601" duration="1029000" />
+      <workItem from="1571018399582" duration="187000" />
+      <workItem from="1571162986783" duration="3505000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2688000" />
+    <option name="totallyTimeSpent" value="14776000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="57" y="-4" width="1863" height="1084" extended-state="6" />
+    <frame x="56" y="-4" width="1865" height="1085" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.29417774" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21470746" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3237998" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32982087" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15029523" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.27643585" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.1986044" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39943343" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.32842106" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32947367" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,73 +349,316 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/convert_voc_to_line_dataset.py</url>
+          <line>148</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/modules/dataset_tool/ramdom_resize.py</url>
+          <line>26</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/modules/dataset_tool/ramdom_select.py</url>
+          <line>26</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/eval/classification_report.py</url>
+          <line>8</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/modules/dataset_tool/convert_image_format.py</url>
+          <line>16</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="4" />
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/python_learning_notes$rename_tool.coverage" NAME="rename_tool Coverage Results" MODIFIED="1566280677536" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modules/dataset_tool" />
+    <SUITE FILE_PATH="coverage/python_learning_notes$image_processing.coverage" NAME="image_processing Coverage Results" MODIFIED="1570863744557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/rename_tool.py">
+    <entry file="file://$PROJECT_DIR$/utils/numpy_tools.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="60" column="56" selection-start-line="60" selection-start-column="56" selection-end-line="60" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/file_processing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3840">
-          <caret line="261" column="36" selection-start-line="261" selection-start-column="26" selection-end-line="261" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/rename_tool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/file_processing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3840">
-          <caret line="261" column="36" selection-start-line="261" selection-start-column="26" selection-end-line="261" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/file_processing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3840">
-          <caret line="261" column="36" selection-start-line="261" selection-start-column="26" selection-end-line="261" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/rename_tool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="60" column="56" selection-start-line="60" selection-start-column="56" selection-end-line="60" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/-1771745584/cv2/cv2/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="7385" column="4" selection-start-line="7385" selection-start-column="4" selection-end-line="7385" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="880" column="82" selection-start-line="880" selection-start-column="82" selection-end-line="880" selection-end-column="82" />
+        <state relative-caret-position="1440">
+          <caret line="97" column="39" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
           <folding>
-            <element signature="e#191#200#0" expanded="true" />
+            <element signature="e#184#202#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/-1771745584/numpy/core/_multiarray_umath.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3015">
+          <caret line="201" column="4" selection-start-line="201" selection-start-column="4" selection-end-line="201" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="43" column="29" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="29" />
+          <folding>
+            <element signature="e#182#193#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/dataset_tool/create_pair_data_bcolz.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="155" selection-start-line="155" selection-end-line="155" />
+        <state relative-caret-position="2685">
+          <caret line="185" column="13" selection-start-line="185" selection-start-column="8" selection-end-line="185" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16830">
+          <caret line="1131" column="17" selection-start-line="1131" selection-start-column="17" selection-end-line="1131" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/dmai_test_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/create_pair_data_bcolz.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2025">
+          <caret line="141" column="22" selection-start-line="141" selection-start-column="22" selection-end-line="141" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16830">
+          <caret line="1131" column="17" selection-start-line="1131" selection-start-column="17" selection-end-line="1131" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/dmai_test_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/create_pair_data_bcolz.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2025">
+          <caret line="141" column="22" selection-start-line="141" selection-start-column="22" selection-end-line="141" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16830">
+          <caret line="1131" column="17" selection-start-line="1131" selection-start-column="17" selection-end-line="1131" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/dmai_test_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/create_pair_data_bcolz.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2025">
+          <caret line="141" column="22" selection-start-line="141" selection-start-column="22" selection-end-line="141" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/pytorch-py36/lib/python3.6/socket.py" />
+    <entry file="file://$PROJECT_DIR$/utils/debug.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="65" column="34" selection-start-line="65" selection-start-column="11" selection-end-line="65" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/-1771745584/cv2/cv2/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/face_body.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="43" selection-start-line="43" selection-end-line="50" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/convert_widerdataset_to_voc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2147" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/convert_voc_to_line_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2535">
+          <caret line="176" column="48" selection-start-line="176" selection-start-column="31" selection-end-line="176" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/convert_line_to_text_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="24" column="85" selection-start-line="24" selection-start-column="85" selection-end-line="24" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/data_cleaning.py" />
+    <entry file="file://$PROJECT_DIR$/convert_voc_to_text_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1785">
+          <caret line="126" column="4" selection-start-line="126" selection-start-column="4" selection-end-line="126" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/sample_statistics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="15" selection-start-line="15" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/pytorch-py36/lib/python3.6/os.py" />
+    <entry file="file://$USER_HOME$/anaconda3/envs/pytorch-py36/lib/python3.6/random.py" />
+    <entry file="file://$PROJECT_DIR$/modules/pandas_json/pandas_tools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/pytorch-py36/lib/python3.6/site-packages/sklearn/neighbors/classification.py" />
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/ramdom_select.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="95" selection-start-line="21" selection-start-column="61" selection-end-line="21" selection-end-column="95" />
+          <folding>
+            <element signature="e#187#196#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/data_cleaning.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="592">
+          <caret line="89" column="56" selection-start-line="89" selection-start-column="56" selection-end-line="89" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/ramdom_resize.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
+          <folding>
+            <element signature="e#186#195#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/plot_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eval/classification_report.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" selection-start-line="14" selection-end-line="25" selection-end-column="14" />
+          <folding>
+            <element signature="e#194#221#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/rename_tool.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="758">
+          <caret line="74" column="59" selection-start-line="74" selection-start-column="59" selection-end-line="74" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/pytorch-py36/lib/python3.6/typing.py" />
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/convert_image_format.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="24" column="87" selection-end-line="39" />
+          <folding>
+            <element signature="e#23#192#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/file_processing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/pytorch-py36/lib/python3.6/codecs.py" />
+    <entry file="file://$USER_HOME$/anaconda3/envs/pytorch-py36/lib/python3.6/site-packages/PIL/Image.py" />
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/dmai_test_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="700">
+          <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/image_processing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="735">
+          <caret line="1131" column="17" selection-start-line="1131" selection-start-column="17" selection-end-line="1131" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dataset_tool/create_pair_data_bcolz.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="185" column="13" selection-start-line="185" selection-start-column="8" selection-end-line="185" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/-1771745584/numpy/core/_multiarray_umath.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3015">
+          <caret line="201" column="4" selection-start-line="201" selection-start-column="4" selection-end-line="201" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="43" column="29" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="29" />
+          <folding>
+            <element signature="e#182#193#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/numpy_tools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="824">
+          <caret line="97" column="39" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
+          <folding>
+            <element signature="e#184#202#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

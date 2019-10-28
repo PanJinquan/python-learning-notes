@@ -11,7 +11,26 @@ import os
 import os, shutil
 import numpy as np
 import json
-import pandas as pd
+
+
+class WriterTXT(object):
+    def __init__(self, filename, mode='w'):
+        self.f = open(filename, mode=mode)
+
+    def write_line_str(self, line_str, endline="\n"):
+        line_str = line_str + endline
+        self.f.write(line_str)
+        self.f.flush()
+
+    def write_line_list(self, line_list, endline="\n"):
+        for line_list in line_list:
+            # 将list转为string
+            line_str = " ".join('%s' % id for id in line_list)
+            self.write_line_str(line_str, endline=endline)
+        self.f.flush()
+
+    def close(self):
+        self.f.close()
 
 
 def read_json_data(json_path):
@@ -86,6 +105,40 @@ def read_data(filename, split=" ", convertNum=True):
                         line_data.append(l)
                 content_list[i] = line_data
     return content_list
+
+
+def read_line_image_label(line_image_label):
+    '''
+    line_image_label:[image_id,boxes_nums,x1, y1, w, h, label_id,x1, y1, w, h, label_id,...]
+    :param line_image_label:
+    :return:
+    '''
+    line_image_label = line_image_label.strip().split()
+    image_id = line_image_label[0]
+    boxes_nums = int(line_image_label[1])
+    box = []
+    label = []
+    for i in range(boxes_nums):
+        x = float(line_image_label[2 + 5 * i])
+        y = float(line_image_label[3 + 5 * i])
+        w = float(line_image_label[4 + 5 * i])
+        h = float(line_image_label[5 + 5 * i])
+        c = int(line_image_label[6 + 5 * i])
+        if w <= 0 or h <= 0:
+            continue
+        box.append([x, y, x + w, y + h])
+        label.append(c)
+    return image_id, box, label
+
+
+def read_lines_image_labels(filename):
+    boxes_label_lists = []
+    with open(filename) as f:
+        lines = f.readlines()
+        for line in lines:
+            image_id, box, label = read_line_image_label(line)
+            boxes_label_lists.append([image_id, box, label])
+    return boxes_label_lists
 
 
 def is_int(str):
@@ -167,7 +220,8 @@ def create_dir(parent_dir, dir1=None, filename=None):
 def create_file_path(filename):
     basename = os.path.basename(filename)
     dirname = os.path.dirname(filename)
-    create_dir(dirname, dir1=None, filename=basename)
+    out_path = create_dir(dirname, dir1=None, filename=basename)
+    return out_path
 
 
 def merge_list(data1, data2):
@@ -213,6 +267,23 @@ def getFilePathList(file_dir):
         part_filePath_list = [os.path.join(walk[0], file) for file in walk[2]]
         filePath_list.extend(part_filePath_list)
     return filePath_list
+
+
+def get_sub_directory_list(input_dir):
+    '''
+    当前路径下所有子目录
+    :param input_dir:
+    :return:
+    '''
+    dirs_list = []
+    for root, dirs, files in os.walk(input_dir):
+        dirs_list = dirs
+        break
+    # print(root)   # 当前目录路径
+    # print(dirs)   # 当前路径下所有子目录
+    # print(files)  # 当前路径下所有非目录子文件
+    dirs_list.sort()
+    return dirs_list
 
 
 def get_files_list(file_dir, postfix=None):
@@ -312,10 +383,75 @@ def print_dict(dict_data, save_path):
                 f.writelines(info + "\n")
 
 
+def read_pair_data(filename, split=True):
+    '''
+    read pair data,data:[image1.jpg image2.jpg 0]
+    :param filename:
+    :param split:
+    :return:
+    '''
+    content_list = read_data(filename)
+    if split:
+        content_list = np.asarray(content_list)
+        faces_list1 = content_list[:, :1].reshape(-1)
+        faces_list2 = content_list[:, 1:2].reshape(-1)
+        # convert to 0/1
+        issames_data = np.asarray(content_list[:, 2:3].reshape(-1), dtype=np.int)
+        issames_data = np.where(issames_data > 0, 1, 0)
+        faces_list1 = faces_list1.tolist()
+        faces_list2 = faces_list2.tolist()
+        issames_data = issames_data.tolist()
+        return faces_list1, faces_list2, issames_data
+    return content_list
+
+
+def get_loacl_eth2():
+    '''
+    想要获取linux设备网卡接口，并用列表进行保存
+    :return:
+    '''
+    eth_list = []
+    os.system("ls -l /sys/class/net/ | grep -v virtual | sed '1d' | awk 'BEGIN {FS=\"/\"} {print $NF}' > eth.yaml")
+    try:
+        with open('./eth.yaml', "r") as f:
+            for line in f.readlines():
+                line = line.strip()
+                eth_list.append(line.lower())
+    except Exception as e:
+        print(e)
+        eth_list = []
+    return eth_list
+
+
+def get_loacl_eth():
+    '''
+    想要获取linux设备网卡接口，并用列表进行保存
+    :return:
+    '''
+    eth_list = []
+    cmd = "ls -l /sys/class/net/ | grep -v virtual | sed '1d' | awk 'BEGIN {FS=\"/\"} {print $NF}'"
+    try:
+        with os.popen(cmd) as f:
+            for line in f.readlines():
+                line = line.strip()
+                eth_list.append(line.lower())
+    except Exception as e:
+        print(e)
+        eth_list = []
+    return eth_list
+
+
 if __name__ == '__main__':
     filename = 'test.txt'
     w_data = [['1.jpg', 'dog', 200, 300, 1.0], ['2.jpg', 'dog', 20, 30, -2]]
     print("w_data=", w_data)
-    write_data(filename, w_data, mode='w')
-    r_data = read_data(filename)
-    print('r_data=', r_data)
+    f = WriterTXT(filename)
+    f.write_line_list(w_data)
+    f.write_line_list(w_data)
+    # write_data(filename, w_data, mode='w')
+    # r_data = read_data(filename)
+    # print('r_data=', r_data)
+    # eth_list = get_loacl_eth()
+    # print(eth_list)
+    # input_dir = "/media/dm/dm/git/python-learning-notes/dataset/rec"
+    # get_sub_directory_list(input_dir)

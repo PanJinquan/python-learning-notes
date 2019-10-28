@@ -16,15 +16,12 @@ import pandas as pd
 import PIL.Image as Image
 
 
-def data_cleaning(src_image_dir, dest_image_dir, min_nums=0):
+def clear_label_min_nums(src_image_dir, dest_image_dir, min_nums=0):
     '''
-    clear sample data in src_image_dir,which sample nums must be more than min_num
+    clear data which nums less than min_nums
     :param src_image_dir:
-    :param dest_image_dir: 
-    :param min_nums: 
-    :return: 
+    :return:
     '''
-
     image_list, image_label = file_processing.get_files_labels(src_image_dir, postfix=["*.jpg"])
     p = sample_statistics.count_data_info_pd(image_label, plot=False)
     for i, (image_path, label) in enumerate(zip(image_list, image_label)):
@@ -41,6 +38,46 @@ def data_cleaning(src_image_dir, dest_image_dir, min_nums=0):
         if i % 100 == 0 or i == len(image_list) - 1:
             print("processing:{}/{}".format(i, len(image_list)))
         time.sleep(0.01)
+
+
+def filter_bboxes(boxes_list, label_list, filter_babel):
+    out_boxes_list, out_label_list = [], []
+    for bbox, label in zip(boxes_list, label_list):
+        if label in filter_babel:
+            out_boxes_list.append(bbox)
+            out_label_list.append(label)
+    return out_boxes_list, out_label_list
+
+
+def synch_image_label_files(image_dir, label_dir, out_image_dir, out_label_dir):
+    '''
+    synchronized/select existing image and label file that is same basename
+    :param image_dir: is `image_id.jpg` file
+    :param label_dir: is `image_id.txt` file
+    :param out_image_dir:
+    :param out_label_dir:
+    :return:
+    '''
+    image_list, label_id = file_processing.get_files_labels(image_dir, postfix=['*.jpg'])
+    for image_path, label in zip(image_list, label_id):
+        basename = os.path.basename(image_path)
+        txtname = basename[:-len('jpg')] + 'txt'
+        filename_path = os.path.join(label_dir, txtname)
+        if not os.path.exists(filename_path):
+            print("ERROE:no filename:{}".format(filename_path))
+            continue
+        # data = file_processing.read_data(filename_path, split=" ")
+        # label_list, boxes_list = file_processing.split_list(data, split_index=1)
+        # label_list = [l[0] for l in label_list]
+        # filter_babel = [1]
+        # boxes_list, label_list = filter_bboxes(boxes_list, label_list, filter_babel)
+        # if len(boxes_list) >= 2 or len(boxes_list) == 0:
+        #     print("ERROE:have {} face:{}".format(len(boxes_list), filename_path))
+        #     continue
+        out_image_path = file_processing.create_dir(out_image_dir, label, basename)
+        out_label_path = os.path.join(out_label_dir, txtname)
+        file_processing.copyfile(image_path, out_image_path)
+        file_processing.copyfile(filename_path, out_label_path)
 
 
 def move_merge_dirs(source_dir, dest_dir, merge_same=False):
@@ -67,6 +104,7 @@ def move_merge_dirs(source_dir, dest_dir, merge_same=False):
                 os.path.join(path, filename),
                 os.path.join(dest_path, filename)
             )
+
 
 
 def isValidImage(images_list, sizeTh=1000, isRemove=False):

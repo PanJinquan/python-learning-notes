@@ -272,7 +272,7 @@ if __name__ == "__main__":
     # classes = list(range(1, 50, 1))
     # classes = [str(i) for i in classes]
     classes = ["BACKGROUND","body", 'face']
-    DATASET_ROOT = "/media/dm/dm/project/dataset/face_recognition/NVR/face/NVR-T2/"
+    DATASET_ROOT = "/media/dm/dm2/project/dataset/face_recognition/NVR/face/NVR-Teacher2/"
     annotations_dir = DATASET_ROOT + 'Annotations'
     label_out_dir = DATASET_ROOT + 'label'
     image_dir = DATASET_ROOT + "JPEGImages"

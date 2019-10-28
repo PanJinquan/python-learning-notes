@@ -16,6 +16,15 @@ import matplotlib.pyplot as plt
 import requests
 import matplotlib
 import base64
+import PIL.Image as Image
+
+
+def tensor2image(batch_tensor, index=0):
+    image_tensor = batch_tensor[index, :]
+    image = np.array(image_tensor, dtype=np.float32)
+    image = np.squeeze(image)
+    image = image.transpose(1, 2, 0)  # 通道由[c,h,w]->[h,w,c]
+    return image
 
 
 def show_batch_image(title, batch_imgs, index=0):
@@ -72,6 +81,29 @@ def cv_show_image(title, image, type='rgb', waitKey=0):
     return image
 
 
+def center_crop(image, crop_size=[112, 112]):
+    '''
+    central_crop
+    :param image: input numpy type image
+    :param crop_size:crop_size must less than x.shape[:2]
+    :return:
+    '''
+    h, w = image.shape[:2]
+    j = int(round((h - crop_size[0]) / 2.))
+    i = int(round((w - crop_size[1]) / 2.))
+    return image[j:j + crop_size[0], i:i + crop_size[1]]
+
+
+def image_fliplr(image):
+    '''
+    左右翻转
+    :param image:
+    :return:
+    '''
+    image = np.fliplr(image)
+    return image
+
+
 def get_prewhiten_image(x):
     '''
     图片白化处理
@@ -88,19 +120,56 @@ def get_prewhiten_image(x):
 def image_normalization(image, mean=None, std=None):
     '''
     正则化，归一化
-    :param image:
-    :param mean:
-    :param std:
+    image[channel] = (image[channel] - mean[channel]) / std[channel]
+    :param image: numpy image
+    :param mean: [0.5,0.5,0.5]
+    :param std:  [0.5,0.5,0.5]
     :return:
     '''
     # 不能写成:image=image/255
+    if isinstance(mean, list):
+        mean = np.asarray(mean, dtype=np.float32)
+    if isinstance(std, list):
+        std = np.asarray(std, dtype=np.float32)
     image = np.array(image, dtype=np.float32)
     image = image / 255.0
     if mean is not None:
         image = np.subtract(image, mean)
     if std is not None:
-        np.multiply(image, 1 / std)
+        image = np.multiply(image, 1 / std)
     return image
+
+
+def data_normalization(data, ymin, ymax):
+    '''
+    NORMALIZATION 将数据x归一化到任意区间[ymin,ymax]范围的方法
+    :param data:  输入参数x：需要被归一化的数据,numpy
+    :param ymin: 输入参数ymin：归一化的区间[ymin,ymax]下限
+    :param ymax: 输入参数ymax：归一化的区间[ymin,ymax]上限
+    :return: 输出参数y：归一化到区间[ymin,ymax]的数据
+    '''
+    xmax = np.max(data)  # %计算最大值
+    xmin = np.min(data)  # %计算最小值
+    y = (ymax - ymin) * (data - xmin) / (xmax - xmin) + ymin
+    return y
+
+
+def cv_image_normalization(image, min_val=0.0, max_val=1.0):
+    '''
+
+    :param image:
+    :param min_val:
+    :param max_val:
+    :param norm_type:
+    :param dtype:
+    :param mask:
+    :return:
+    '''
+    dtype = cv2.CV_32F
+    norm_type = cv2.NORM_MINMAX
+    out = np.zeros(shape=image.shape, dtype=np.float32)
+    cv2.normalize(image, out, alpha=min_val, beta=max_val, norm_type=norm_type, dtype=dtype)
+    return out
 
 
 def get_prewhiten_images(images_list, normalization=False):
@@ -149,6 +218,35 @@ def read_image(filename, resize_height=None, resize_width=None, normalization=Fa
     # image=Image.open(filename)
     image = resize_image(image, resize_height, resize_width)
     image = np.asanyarray(image)
+    if normalization:
+        image = image_normalization(image)
+    # show_image("src resize image",image)
+    return image
+
+
+def read_image_pil(filename, resize_height=None, resize_width=None, normalization=False):
+    '''
+    读取图片数据,默认返回的是uint8,[0,255]
+    :param filename:
+    :param resize_height:
+    :param resize_width:
+    :param normalization:是否归一化到[0.,1.0]
+    :param colorSpace 输出格式：RGB or BGR
+    :return: 返回的图片数据
+    '''
+
+    rgb_image = Image.open(filename)
+    rgb_image = np.asarray(rgb_image)
+    if rgb_image is None:
+        print("Warning: no image:{}".format(filename))
+        return None
+    if len(rgb_image.shape) == 2:  # 若是灰度图则转为三通道
+        print("Warning:gray image", filename)
+        rgb_image = cv2.cvtColor(rgb_image, cv2.COLOR_GRAY2BGR)
+
+    # show_image(filename,image)
+    # image=Image.open(filename)
+    image = resize_image(rgb_image, resize_height, resize_width)
     if normalization:
         image = image_normalization(image)
     # show_image("src resize image",image)
@@ -654,7 +752,7 @@ def show_landmark_boxes(win_name, img, landmarks_list, boxes):
     show_image_boxes(win_name, image, boxes)
 
 
-def show_landmark(win_name, img, landmarks_list):
+def show_landmark(win_name, img, landmarks_list, waitKey=0):
     '''
     显示landmark和boxex
     :param win_name:
@@ -671,7 +769,54 @@ def show_landmark(win_name, img, landmarks_list):
             # 要画的点的坐标
             point = (int(landmark[0]), int(landmark[1]))
             cv2.circle(image, point, point_size, point_color, thickness)
-    cv_show_image(win_name, image)
+    return cv_show_image(win_name, image, waitKey)
+
+
+def show_points_text(img, points, texts, color=None):
+    # draw score roi
+    fontScale = 0.4
+    thickness = 1
+    if not color:
+        color = (0, 0, 255)
+    for point, text in zip(points, texts):
+        text_size, baseline = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, fontScale, thickness)
+        text_loc = (int(point[0]), int(point[1]) - text_size[1])
+        cv2.rectangle(img, (text_loc[0] - 2 // 2, text_loc[1] - 2 - baseline),
+                      (text_loc[0] + text_size[0], text_loc[1] + text_size[1]), color, -1)
+        # draw score value
+        cv2.putText(img, text, (text_loc[0], text_loc[1] + baseline), cv2.FONT_HERSHEY_SIMPLEX, fontScale,
+                    (255, 255, 255), thickness, 8)
+    return img
+
+
+def show_point_line(win_name, img, point_list, line=True, waitKey=0):
+    '''
+    在图像中画点和连接线
+    :param win_name:
+    :param img:
+    :param point_list: 点列表
+    :param line: 是否用线连接点
+    :param waitKey:
+    :return:
+    '''
+    image = copy.copy(img)
+    point_size = 1
+    point_color = (0, 0, 255)  # BGR
+    circle_thickness = 4  # 可以为 0 、4、8
+    line_thickness = 1
+    for i, point in enumerate(point_list):
+        # 要画的点的坐标
+        point = (int(point[0]), int(point[1]))
+        if line:
+            if i == 0:
+                point0 = point
+                tmp_point = point
+            elif i == len(point_list) - 1:
+                cv2.line(image, point0, point, (0, 255, 0), line_thickness)  # 绿色，3个像素宽度
+            cv2.line(image, tmp_point, point, (0, 255, 0), line_thickness)  # 绿色，3个像素宽度
+            tmp_point = point
+        cv2.circle(image, point, point_size, point_color, circle_thickness)
+    return cv_show_image(win_name, image, waitKey=waitKey)
 
 
 def show_image_rects(win_name, image, rect_list, color=(0, 0, 255), waitKey=0):
@@ -851,7 +996,9 @@ def filtering_scores(bboxes_list, scores_list, labels_list, score_threshold=0.0)
 def image_to_base64(rgb_image):
     bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
     image = cv2.imencode('.jpg', bgr_image)[1]
-    image_base64 = str(base64.b64encode(image))[2:-1]
+    # image_base64 = str(base64.b64encode(image))[2:-1]
+    image_base64 = base64.b64encode(image)
+    image_base64 = str(image_base64, encoding='utf-8')
     return image_base64
 
 
@@ -870,15 +1017,149 @@ def read_image_base64(image_path, resize_height=None, resize_width=None):
     if resize_height is None and resize_width is None:
         with open(image_path, 'rb') as f_in:
             image_base64 = base64.b64encode(f_in.read())
+            image_base64 = str(image_base64, encoding='utf-8')
     else:
         rgb_image = read_image(image_path, resize_height, resize_width)
         image_base64 = image_to_base64(rgb_image)
     return image_base64
 
 
+def bin2image(bin_data, resize_height=None, resize_width=None, normalization=False, colorSpace='RGB'):
+    data = np.asarray(bytearray(bin_data), dtype="uint8")
+    bgr_image = cv2.imdecode(data, cv2.IMREAD_COLOR)
+    if colorSpace == 'RGB':
+        image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)  # 将BGR转为RGB
+    elif colorSpace == "BGR":
+        image = bgr_image
+    else:
+        exit(0)
+    # show_image(filename,image)
+    # image=Image.open(filename)
+    image = resize_image(image, resize_height, resize_width)
+    image = np.asanyarray(image)
+    if normalization:
+        image = image_normalization(image)
+    # show_image("src resize image",image)
+    return image
+
+
+def extend_boxes(faces_boxes, width_factor=1.0, height_factor=1.0):
+    '''
+    extend boxes ,such as extend faces_boxes to body_boxes
+    :param faces_boxes:
+    :param width_factor:
+    :param height_factor:
+    :return:
+    '''
+    body_boxes = []
+    for face_box in faces_boxes:
+        [x1, y1, x2, y2] = face_box
+        w = (x2 - x1)
+        h = (y2 - y1)
+        x1 = x1 - width_factor * w
+        y1 = y1 - width_factor * h
+        x1 = np.where(x1 > 0, x1, 0)
+        y1 = np.where(y1 > 0, y1, 0)
+        w = 3 * width_factor * w
+        h = height_factor * h
+        body_boxes.append([x1, y1, x1 + w, y1 + h])
+    return body_boxes
+
+
+def get_image_tensor(image_path, image_size, transpose=False):
+    image = read_image(image_path)
+    # transform = default_transform(image_size)
+    # torch_image = transform(image).detach().numpy()
+    image = resize_image(image, int(128 * image_size[0] / 112), int(128 * image_size[1] / 112))
+    image = center_crop(image, crop_size=image_size)
+    image_tensor = image_normalization(image, mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+    if transpose:
+        image_tensor = image_tensor.transpose(2, 0, 1)
+    image_tensor = image_tensor[np.newaxis, :]
+    # std = np.std(torch_image-image_tensor)
+    return image_tensor
+
+
+def post_process(input, axis=1):
+    '''
+    l2_norm
+    :param input:
+    :param axis:
+    :return:
+    '''
+    # norm = torch.norm(input, 2, axis, True)
+    # output = torch.div(input, norm)
+    output = input / np.linalg.norm(input, axis=1, keepdims=True)
+    return output
+
+
+def softmax(x, axis=1):
+    # 计算每行的最大值
+    row_max = x.max(axis=axis)
+
+    # 每行元素都需要减去对应的最大值，否则求exp(x)会溢出，导致inf情况
+    row_max = row_max.reshape(-1, 1)
+    x = x - row_max
+
+    # 计算e的指数次幂
+    x_exp = np.exp(x)
+    x_sum = np.sum(x_exp, axis=axis, keepdims=True)
+    s = x_exp / x_sum
+    return s
+
+
+class EventCv():
+    def __init__(self):
+        self.image = None
+
+    def update_image(self, image):
+        self.image = image
+
+    def callback_print_image(self, event, x, y, flags, param):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            print("(x,y)=({},{}),data={}".format(x, y, self.image[y][x]))
+
+    def add_mouse_event(self, winname, param=None, callbackFunc=None):
+        '''
+         添加点击事件
+        :param winname:
+        :param param:
+        :param callbackFunc:
+        :return:
+        '''
+        cv2.namedWindow(winname)
+        if callbackFunc is None:
+            callbackFunc = self.callback_print_image
+        cv2.setMouseCallback(winname, callbackFunc, param=param)
+
+
+def addMouseCallback(winname, param, callbackFunc=None):
+    '''
+     添加点击事件
+    :param winname:
+    :param param:
+    :param callbackFunc:
+    :return:
+    '''
+    cv2.namedWindow(winname)
+
+    def default_callbackFunc(event, x, y, flags, param):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            print("(x,y)=({},{}),data={}".format(x, y, param[y][x]))
+
+    if callbackFunc is None:
+        callbackFunc = default_callbackFunc
+    cv2.setMouseCallback(winname, callbackFunc, param)
+
+
 if __name__ == "__main__":
     image_path = "../dataset/dataset/huge/huge_1.jpg"
-    image_base64=read_image_base64(image_path, resize_height=100, resize_width=100)
+    image_base64 = read_image_base64(image_path, resize_height=100, resize_width=100)
     # rgb_image = read_image(image_path, resize_height=100, resize_width=100)
-    rgb_img = base64_to_image(image_base64)
-    cv_show_image("orig_image", rgb_img, type="RGB")
+    cve = EventCv()
+    cve.add_mouse_event("orig_image")
+    while True:
+        rgb_img = base64_to_image(image_base64)
+        cve.update_image(rgb_img)
+        cv_show_image("orig_image", rgb_img, type="RGB", waitKey=100)
+        print("0")

@@ -11,7 +11,6 @@ import shutil
 import os.path
 from utils import file_processing
 
-
 def rename_image_dir(image_list, prefix="ID_"):
     for image_path in image_list:
         dirname = os.path.dirname(image_path)
@@ -29,7 +28,14 @@ def rename_image_dir(image_list, prefix="ID_"):
         print(newName)
         os.rename(image_path, newpath)
 
-def sys_rename_image_dir(src_dir1,src_dir2,dest_dir):
+def synch_rename_image_dir(src_dir1, src_dir2, dest_dir):
+    '''
+    synchronize rename image directory
+    :param src_dir1:
+    :param src_dir2:
+    :param dest_dir:
+    :return:
+    '''
     image_list,image_id = file_processing.get_files_labels(src_dir1, postfix=['*.jpg'])
     class_set =list(set(image_id))
     class_set.sort()
@@ -55,14 +61,19 @@ def sys_rename_image_dir(src_dir1,src_dir2,dest_dir):
 
 
 
+
 if __name__ == '__main__':
-    # dir = '/media/dm/dm/project/dataset/face_recognition/NVR/face/NVRS/trainval'
-    # dataset_dir='F:/clear_data_bzl/val'
-    dataset_dir='/media/dm/dm/XMC/FaceData/X4/X4_Face132/val'
+    # src_dir1='/media/dm/dm1/FaceDataset/lexue/lexue2/val'
+    # src_dir2='/media/dm/dm1/FaceDataset/lexue/lexue2/facebank'
+    # dest_dir='/media/dm/dm1/FaceDataset/lexue/lexue2/dest'
+    # synch_rename_image_dir(src_dir1,src_dir2,dest_dir)
+
+    # # dir = '/media/dm/dm/project/dataset/face_recognition/NVR/face/NVRS/trainval'
+    # # dataset_dir='F:/clear_data_bzl/val'
+    # # dataset_dir='/media/dm/dm/XMC/FaceData/X4/X4_Face132/val'
+    # # dataset_dir = '/media/dm/dm1/FaceDataset/lexue/lexue/facebank'
+    dataset_dir='/media/dm/dm1/FaceDataset/lexue/lexue2/val'
     image_list = file_processing.get_files_list(dataset_dir, postfix=['*.jpg'])
     rename_image_dir(image_list, prefix="val_")
 
-    # src_dir1='F:/clear_data_bzl/val'
-    # src_dir2='F:/clear_data_bzl/facebank'
-    # dest_dir='F:/clear_data_bzl/dest'
-    # sys_rename_image_dir(src_dir1,src_dir2,dest_dir)
+

@@ -169,10 +169,10 @@ if __name__ == "__main__":
     # print("class_name:{}".format(classes))
     # linedataset_for_image()
     classes = ["BACKGROUND", 'face', "body"]
-    DATASET_ROOT = "/media/dm/dm/project/dataset/face_recognition/NVR/face/NVR-T2/"
-    annotations_dir = DATASET_ROOT + 'Annotations'
-    label_out_dir = DATASET_ROOT + 'label'
-    image_dir = DATASET_ROOT + "JPEGImages"
+    DATASET_ROOT = "/media/dm/dm2/XMC/FaceDataset/NVR/NVR-Teacher2/"
+    # annotations_dir = DATASET_ROOT + 'Annotations'
+    # label_out_dir = DATASET_ROOT + 'label'
+    image_dir = DATASET_ROOT + "image"
 
-    filename = DATASET_ROOT + "face_body_annotation.txt"
+    filename = DATASET_ROOT + "teacher_data_anno.txt"
     linedataset_test(filename, classes, image_dir)

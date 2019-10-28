@@ -73,7 +73,7 @@ def get_combinations_pair_data(image_dir, pair_num=0):
     return pair_issame
 
 
-def get_combinations_pair_data_for_x4_data(image_dir, pair_num=0):
+def get_combinations_pair_data_for_facebank_data(image_dir, pair_num=0):
     '''
     get image_dir image list,combinations image
     :param image_dir:
@@ -108,16 +108,20 @@ def get_combinations_pair_data_for_x4_data(image_dir, pair_num=0):
 
     pair_issame = np.asarray(pair_issame)
     pair_issame = pair_issame[np.lexsort(pair_issame.T)]
+    if pair_num is None:
+        return pair_issame
+
     pair_issame_0 = pair_issame[pair_issame[:, -1] == "0", :]
     pair_issame_1 = pair_issame[pair_issame[:, -1] == "1", :]
     num_pair_issame_1 = len(pair_issame_1)
     num_pair_issame_0 = len(pair_issame_0)  # pair_issame_0.shape[0]
-    if select_nums == 0 or select_nums is None:
+    select_nums = int(pair_num / 2)
+    if select_nums == 0:
         select_nums = num_pair_issame_1
     else:
         if select_nums > num_pair_issame_1:
             raise Exception(
-                "pair_nums({}) must be less than num_pair_issame_1({})".format(select_nums, num_pair_issame_1))
+                "pair_nums({}) must be less than num_pair_issame_1({})".format(pair_num, num_pair_issame_1*2))
 
     index_0 = np.random.permutation(num_pair_issame_0)[:select_nums]  # 打乱后的行号
     index_1 = np.random.permutation(num_pair_issame_1)[:select_nums]  # 打乱后的行号
@@ -198,17 +202,17 @@ def convert_image_to_bcolz(pair_filename, image_dir, save_dir, input_size=[112, 
 
 if __name__ == "__main__":
     # NVR VAL faceDataset
-    dataset = '/media/dm/dm2/XMC/FaceDataset/X4/X4_Face20_Crop/'
-    # dataset = '/media/dm/dm2/project/dataset/face_recognition/NVR/face/NVR-Teacher/'
+    # dataset = '/media/dm/dm2/XMC/FaceDataset/X4/X4_Face20_Crop/'
+    # dataset = '/media/dm/dm2/XMC/FaceDataset/NVR/NVR-Teacher2/'
     # dataset = "/media/dm/dm1/project/dataset/face_recognition/NVR/face/NVR1/"
     # dataset = "/media/dm/dm/project/dataset/face_recognition/NVR/face/NVRS/"
-    image_dir = dataset + "trainval"
-    pair_num=0
-    pair_filename = dataset + "x4_pair_data.txt"
+    # image_dir = dataset + "trainval"
+    # pair_num=5502
+    # pair_filename = dataset + "nvr_pair_data.txt"
     # pair_issame = get_combinations_pair_data(image_dir, pair_num)
-    pair_issame = get_combinations_pair_data_for_x4_data(image_dir, pair_num)
+    # pair_issame = get_combinations_pair_data_for_facebank_data(image_dir, pair_num)
 
-    save_pair_data(pair_filename, pair_issame)
+    # save_pair_data(pair_filename, pair_issame)
     # convert_image_to_bcolz(pair_filename, image_dir, save_dir=dataset + "nvr", input_size=[112, 112])
 
     # CASIA-FaceV5 faceDataset
@@ -223,4 +227,12 @@ if __name__ == "__main__":
     # image_dir = dataset+"Asian_Faces"
     # pair_issame = get_combinations_pair_data(image_dir)
     # save_pair_data(dataset+"asian_faces_pair_data.txt",pair_issame)
-    convert_image_to_bcolz(pair_filename, image_dir, save_dir=dataset + "x4", input_size=[112, 112])
+    # convert_image_to_bcolz(pair_filename, image_dir, save_dir=dataset + "x4", input_size=[112, 112])
+
+    # lexue
+    pair_num=2831*2
+    dataset = '/media/dm/dm2/FaceDataset/lexue/lexue2/'
+    image_dir = dataset + "trainval"
+    pair_filename = dataset + "lexue2_pair_data.txt"
+    pair_issame = get_combinations_pair_data_for_facebank_data(image_dir, pair_num)
+    save_pair_data(pair_filename, pair_issame)
