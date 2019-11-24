@@ -57,6 +57,35 @@ def set_mat_vecror(data, index, vector):
     return data
 
 
+def find_max_shape_data(list_data):
+    max_shape_data = np.asarray([])
+    for data in list_data:
+        if len(max_shape_data) < len(data):
+            max_shape_data = data
+    return max_shape_data
+
+
+def data_alignment(data):
+    '''
+    row_stack()函数扩展行，column_stack()函数扩展列
+    :param list_data:
+    :param align:
+    :param extend:
+    :return:
+    '''
+    max_shape_data = find_max_shape_data(data)
+    for i in range(len(data)):
+        maxdata = np.zeros(shape=max_shape_data.shape, dtype=max_shape_data.dtype) - 1
+        shape = data[i].shape
+        if len(shape) == 1:
+            maxdata[0:shape[0]] = data[i]
+        else:
+            maxdata[0:shape[0], 0:shape[1]] = data[i]
+        data[i] = maxdata
+    # data = np.asarray(data)
+    return data
+
+
 def get_batch(image_list, batch_size):
     '''
     batch size data
@@ -74,8 +103,16 @@ def get_batch(image_list, batch_size):
         print("batch_image:{}".format(batch_image))
 
 
-def gen_range(shape=None,start=None, *args, **kwargs):
-    '''create range data'''
+def gen_range(shape=None, start=None, *args, **kwargs):
+    '''
+    create range data->
+    gen_range(shape=(10, 10), start=0, stop=100)
+    :param shape:
+    :param start:
+    :param args:
+    :param kwargs:
+    :return:
+    '''
     data = np.arange(start, *args, **kwargs)
     if shape:
         data = np.reshape(data, newshape=shape)
@@ -95,5 +132,84 @@ def mat2d_data(data, indexes):
     :param indexes:
     :return:
     '''
-    out=data[indexes[:,0],indexes[:,1]]
+    out = data[indexes[:, 0], indexes[:, 1]]
     return out
+
+
+def count_sort_list(list_data: list, reverse=True):
+    '''
+    给定一个非空正整数的数组，按照数组内数字重复出现次数，从高到低排序
+    :param list_data:
+    :param reverse: True-降序,Fasle-升序
+    :return:
+    '''
+    d = {}
+    list_sorted = []
+    for i in list_data:
+        d[i] = list_data.count(i)
+    # 根据字典值的降序排序
+    d_sorted = sorted(d.items(), key=lambda x: x[1], reverse=reverse)
+    # 输出排序后的数组
+    for x in d_sorted:
+        for number in range(0, x[1]):
+            list_sorted.append(x[0])
+    return list_sorted
+
+
+def remove_list_data(list_data, flag=["", -1]):
+    '''
+    删除list所有符合条件元素
+    :param list_data:
+    :param flag:
+    :return:
+    '''
+    for f in flag:
+        while f in list_data:
+            list_data.remove(f)
+    return list_data
+
+
+def label_alignment(data_list):
+    mat = np.asarray(data_list).T
+    label_list = []
+    for data in mat:
+        out = count_sort_list(data.tolist(), reverse=True)
+        out = remove_list_data(out, flag=["", -1])
+        if out:
+            label = out[0]
+        else:
+            label = -1
+        label_list.append(label)
+    return label_list
+
+
+def __print(data, info=""):
+    print("-------------------------------------")
+    print(info)
+    for index in range(len(data)):
+        print("{}".format(data[index]))
+
+
+if __name__ == "__main__":
+    d = ["", -1, 1, 2, 3, "", 4, 5, 6, -1, ""]
+    d = remove_list_data(d)
+    print(d)
+
+    # data1 = gen_range((3, 4), 0, 12)
+    # data2 = gen_range((6, 4), 0, 24)
+    # data3 = gen_range((5, 4), 0, 20)
+    # data4 = gen_range((10, 4), 0, 40)
+    data1 = np.asarray([1, 2, 2, 3, 4, 5])
+    data2 = np.asarray([1, 2, 4, 3, 4, 5, 6])
+    data3 = np.asarray([1, 1, 4, 3, 4, 5, 6, 7, 8, 9])
+    data4 = np.asarray([0, 1, 4, 3, 4, 5, 6])
+    data = []
+    data.append(data1)
+    data.append(data2)
+    data.append(data3)
+    data.append(data4)
+    __print(data)
+    out = data_alignment(data)
+    __print(out)
+    label_list = label_alignment(out)
+    __print([label_list])

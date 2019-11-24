@@ -7,13 +7,19 @@
     @Date   : 2019-06-10 10:06:18
 """
 
+import threading
+
 
 def singleton(cls):
+    _instance_lock = threading.Lock()
     instances = {}
-    def _singleton(*args,**kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args,**kwargs)
-        return instances[cls]
+
+    def _singleton(*args, **kwargs):
+        with _instance_lock:
+            if cls not in instances:
+                instances[cls] = cls(*args, **kwargs)
+            return instances[cls]
+
     return _singleton
 
 
@@ -23,6 +29,7 @@ class MySingleton(object):
     使用装饰器的方法，__init__仅会运行一次：
 
     '''
+
     def __init__(self, name):
         print("__init__")
         self.__name = name
@@ -40,6 +47,11 @@ if __name__ == "__main__":
     s3 = MySingleton("C")
     s3.set_name("D")
 
-    print(s1,s1.get_name())
-    print(s2,s2.get_name())
-    print(s3,s3.get_name())
+    print(s1, s1.get_name())
+    print(s2, s2.get_name())
+    print(s3, s3.get_name())
+
+    s1.set_name("F")
+    print(s1, s1.get_name())
+    print(s2, s2.get_name())
+    print(s3, s3.get_name())

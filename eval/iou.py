@@ -7,6 +7,8 @@
     @Date   : 2019-07-10 10:14:56
 """
 
+import numpy as np
+
 
 def cal_iou(box1, box2):
     """
@@ -44,10 +46,43 @@ def cal_iou_list(box1, box2_list):
     return iou_list
 
 
+def get_iou_mat(box1_list, box2_list):
+    '''
+    获得IOU矩阵:iou_mat=(len1,len2)
+    :param box1_list: len1
+    :param box2_list: len2
+    :return:
+    '''
+    iou_mat = []
+    for box1 in box1_list:
+        iou_list = cal_iou_list(box1, box2_list)
+        iou_mat.append(iou_list)
+    iou_mat = np.asarray(iou_mat)
+    return iou_mat
+
+
+def get_max_iou_index(iou_mat, iou_threshold):
+    max_index = np.argmax(iou_mat, axis=1)
+    max_iou = np.max(iou_mat, axis=1)
+    index = max_iou > iou_threshold
+    max_iou = max_iou[index]
+    max_index = max_index[index]
+    return max_iou, max_index
+
+
 if __name__ == '__main__':
     box1 = [661, 27, 679, 47]
     box2 = [661, 27, 679, 47]
-    box2_list=[]
+    box2_list = []
+    box2_list.append(box2)
+    box2_list.append(box2)
+    iou = cal_iou_list(box1, box2_list)
+    print(iou)
+
+if __name__ == '__main__':
+    box1 = [661, 27, 679, 47]
+    box2 = [661, 27, 679, 47]
+    box2_list = []
     box2_list.append(box2)
     box2_list.append(box2)
     iou = cal_iou_list(box1, box2_list)

@@ -63,6 +63,8 @@ def convert_voc_to_textdataset_for_annotation(annotations_list, image_dir, label
         out_file = os.path.join(label_out_dir, name_id + ".txt")
         rects, class_name, class_id = pascal_voc.get_annotation(annotations_file, class_names,
                                                                 coordinatesType=coordinatesType)
+        if not rects:
+            continue
         if labelType == "class_name":
             label = class_name
         elif labelType == "class_id":
@@ -205,7 +207,7 @@ def text_dataset_for_image(annotations_dir, image_dir, label_out_dir, out_train_
         random.shuffle(image_list)
 
     # 分割成train和val数据集
-    factor = 0.95
+    factor = 0.90
     train_num = int(factor * len(image_list))
     train_image_list = image_list[:train_num]
     val_image_list = image_list[train_num:]
@@ -235,11 +237,12 @@ def label_test(image_dir, filename, class_names=None):
     if class_names:
         name_list = file_processing.decode_label(label_list, class_names)
     else:
-        name_list=label_list
-    show_info = ["id:" + str(n)for n in name_list]
-    rgb_image=image_processing.show_image_rects_text("object2", image, rect_list, show_info,color=(0,0,255),drawType="text",waitKey=1)
-    rgb_image=image_processing.resize_image(rgb_image,900)
-    image_processing.cv_show_image("object2",rgb_image)
+        name_list = label_list
+    show_info = ["id:" + str(n) for n in name_list]
+    rgb_image = image_processing.show_image_rects_text("object2", image, rect_list, show_info, color=(0, 0, 255),
+                                                       drawType="custom", waitKey=1)
+    rgb_image = image_processing.resize_image(rgb_image, 900)
+    image_processing.cv_show_image("object2", rgb_image)
 
 
 def batch_label_test(label_dir, image_dir, classes):
@@ -248,47 +251,64 @@ def batch_label_test(label_dir, image_dir, classes):
         label_test(image_dir, filename, class_names=classes)
 
 
+def xmc_data():
+    classes = ["BACKGROUND", "body"]
+    # dataset = "/media/dm/dm/project/dataset/xmc/xmc_det_v3.1.1/xmc_det_v3.1.1_voc"
+    dataset = "/media/dm/dm2/project/dataset/xmc/xmc_det_banchmark_v2.1/xmc_det_banchmark_v2.1_voc"
+    annotations_dir = os.path.join(dataset, "Annotations")
+    label_out_dir = os.path.join(dataset, "label")
+    image_dir = os.path.join(dataset, "JPEGImages")
+    out_train_val_path = dataset
+    coordinatesType = "SSD"
+    show = False
+    labelType = "class_id"
+    text_dataset_for_annotation(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,
+                                labelType=labelType,
+                                show=show)
+    # text_dataset_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,
+    #                        show=show)
+
+    batch_label_test(label_out_dir, image_dir, classes=classes)
+
+
+def voc_data():
+    dataset = "/media/dm/dm/project/dataset/voc/VOCdevkit/VOC2007"
+    annotations_dir = os.path.join(dataset, "Annotations")
+    label_out_dir = os.path.join(dataset, "label")
+    image_dir = os.path.join(dataset, "JPEGImages")
+    out_train_val_path = dataset
+    coordinatesType = "SSD"
+    show = False
+    labelType = "class_id"
+    text_dataset_for_annotation(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,
+                                labelType=labelType,
+                                show=show)
+    # text_dataset_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,
+    #                        show=show)
+
+    batch_label_test(label_out_dir, image_dir, classes=classes)
+
+
+
 if __name__ == "__main__":
-    # classes = ["BACKGROUND", 'face']
+    # classes = ["BACKGROUND", "person"]
+    # classes = ["BACKGROUND", "body"]
     # classes = ["BACKGROUND", 'PCwall']
     # classes = ["BACKGROUND","aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
-    # print("class_name:{}".format(classes))
-    # DATASET_ROOT="/media/dm/dm2/project/dataset/face/wider_face_voc/"
-    # annotations_dir = './dataset/VOC/Annotations'
-    # label_out_dir = './dataset/VOC/label'
-    # image_dir = "./dataset/VOC/JPEGImages"
-    # out_train_val_path = "./data/voc"  # 输出 train/val 文件
-    #
-    # annotations_dir='/media/dm/dm2/project/dataset/VOCdevkit/VOC2007/Annotations'
-    # label_out_dir= '/media/dm/dm2/project/dataset/VOCdevkit/VOC2007/label'
-    # image_dir="/media/dm/dm2/project/dataset/VOCdevkit/VOC2007/JPEGImages"
-    # out_train_val_path= "/media/dm/dm2/project/dataset/VOCdevkit/VOC2007"# 输出 train/val 文件
-
-    # annotations_dir = '/media/dm/dm2/project/dataset/VOC_wall/Annotations'
-    # label_out_dir = '/media/dm/dm2/project/dataset/VOC_wall/label'
-    # image_dir = "/media/dm/dm2/project/dataset/VOC_wall/JPEGImages"
-    # out_train_val_path = "/media/dm/dm2/project/dataset/VOC_wall"  # 输出 train/val 文件
-
-    # classes = list(range(1, 50, 1))
-    # classes = [str(i) for i in classes]
-    classes = ["BACKGROUND","body", 'face']
-    DATASET_ROOT = "/media/dm/dm2/project/dataset/face_recognition/NVR/face/NVR-Teacher2/"
-    annotations_dir = DATASET_ROOT + 'Annotations'
-    label_out_dir = DATASET_ROOT + 'label'
-    image_dir = DATASET_ROOT + "JPEGImages"
-    out_train_val_path = DATASET_ROOT  # 输出 train/val 文件
 
     # annotations_dir = '/media/dm/dm2/project/dataset/face/Annotations'
     # label_out_dir = '/media/dm/dm2/project/dataset/face/label'
     # image_dir = "/media/dm/dm2/project/dataset/face/JPEGImages"
     # out_train_val_path = "/media/dm/dm2/project/dataset/face/"  # 输出 train/val 文件
 
-    coordinatesType = "SSD"
-    show = True
-    labelType="class_name"
-    text_dataset_for_annotation(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,labelType=labelType,
-                                show=show)
+    # coordinatesType = "SSD"
+    # show = False
+    # labelType="class_id"
+    # text_dataset_for_annotation(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,labelType=labelType,
+    #                             show=show)
     # text_dataset_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,
     #                        show=show)
 
-    batch_label_test(label_out_dir, image_dir, classes=None)
+    # batch_label_test(label_out_dir, image_dir, classes=classes)
+    xmc_data()
+    # voc_data()

@@ -19,6 +19,15 @@ import base64
 import PIL.Image as Image
 
 
+def bound_protection(points, height, width):
+    points[points[:, 0] > width, 0] = width - 1  # x
+    points[points[:, 1] > height, 1] = height - 1  # y
+
+    # points[points[:, 0] < 0, 0] = 0  # x
+    # points[points[:, 1] < 0, 1] = 0  # y
+    return points
+
+
 def tensor2image(batch_tensor, index=0):
     image_tensor = batch_tensor[index, :]
     image = np.array(image_tensor, dtype=np.float32)
@@ -592,7 +601,7 @@ def get_color_map():
     return colors
 
 
-def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, set_color=None, drawType="text", waitKey=0):
+def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, color=None, drawType="custom", waitKey=0, top=True):
     '''
     :param boxes_name:
     :param bgr_image: bgr image
@@ -606,25 +615,24 @@ def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, set_color=None, 
     class_set = list(set(boxes_name))
     color_map = get_color_map() * len(class_set)
     for name, box in zip(boxes_name, boxes):
-        if not set_color:
+        if not color:
             cls_id = class_set.index(name)
             color = convert_color_map(color_map[cls_id])
-        else:
-            color = set_color
         box = [int(b) for b in box]
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
         # cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), color, 2, 8, 0)
         # cv2.putText(bgr_image, str(name), (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, thickness=2)
-        custom_bbox_line(bgr_image, box, color, name, drawType)
+        custom_bbox_line(bgr_image, box, color, name, drawType, top)
     # cv2.imshow(title, bgr_image)
     # cv2.waitKey(0)
     rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
-    cv_show_image(title, rgb_image, waitKey=waitKey)
+    if title:
+        rgb_image=cv_show_image(title, rgb_image, waitKey=waitKey)
     return rgb_image
 
 
-def show_image_rects_text(title, rgb_image, rects_list, rects_name, color=None, drawType="text", waitKey=0):
+def show_image_rects_text(title, rgb_image, rects_list, rects_name, color=None, drawType="custom", waitKey=0):
     '''
     :param rects_name:
     :param bgr_image: bgr image
@@ -650,7 +658,7 @@ def show_image_detection_rects(title, rgb_image, rects, probs, lables, color=Non
     return rgb_image
 
 
-def show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, set_color=None, waitKey=0):
+def show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, color=None, waitKey=0):
     '''
     :param title:
     :param rgb_image:
@@ -666,37 +674,44 @@ def show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, set_col
     # color_map=list(reversed(color_map))
     color_map = get_color_map()
     for l, name, box in zip(lables, boxes_name, bboxes):
-        if not set_color:
+        if not color:
             cls_id = class_set.index(l)
             color = convert_color_map(color_map[cls_id])
         else:
-            color = set_color
+            color = color
         box = [int(b) for b in box]
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
         # cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), color, 2, 8, 0)
         # cv2.putText(bgr_image, str(name), (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, thickness=2)
-        custom_bbox_line(bgr_image, box, color, name, drawType="text")
+        custom_bbox_line(bgr_image, box, color, name, drawType="custom")
     # cv2.imshow(title, bgr_image)
     # cv2.waitKey(0)
     rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
-    cv_show_image(title, rgb_image, waitKey=waitKey)
+    if title:
+        rgb_image = cv_show_image(title, rgb_image, waitKey=waitKey)
     return rgb_image
 
 
-def custom_bbox_line(img, bbox, color, name, drawType="text"):
+def custom_bbox_line(img, bbox, color, name, drawType="custom", top=True):
     if drawType == "simple":
         fontScale = 0.4
         thickness = 1
         cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), color, thickness, 8, 0)
         cv2.putText(img, str(name), (bbox[0], bbox[1]), cv2.FONT_HERSHEY_SIMPLEX, fontScale, color, thickness)
-    elif drawType == "text":
+    elif drawType == "custom":
         cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), color, 2)
         # draw score roi
         fontScale = 0.4
         thickness = 1
         text_size, baseline = cv2.getTextSize(str(name), cv2.FONT_HERSHEY_SIMPLEX, fontScale, thickness)
-        text_loc = (bbox[0], bbox[1] - text_size[1])
+        if top:
+            text_loc = (bbox[0], bbox[1] - text_size[1])
+        else:
+            # text_loc = (bbox[0], bbox[3])
+            # text_loc = (bbox[2], bbox[3] - text_size[1])
+            text_loc = (bbox[2], bbox[1] + text_size[1])
+
         cv2.rectangle(img, (text_loc[0] - 2 // 2, text_loc[1] - 2 - baseline),
                       (text_loc[0] + text_size[0], text_loc[1] + text_size[1]), color, -1)
         # draw score value
@@ -705,10 +720,10 @@ def custom_bbox_line(img, bbox, color, name, drawType="text"):
     return img
 
 
-def show_boxList(title, boxList, rgb_image):
+def show_boxList(win_name, boxList, rgb_image, waitKey=0):
     '''
     [xmin,ymin,xmax,ymax]
-    :param title:
+    :param win_name:
     :param boxList:
     :param rgb_image:
     :return:
@@ -728,7 +743,9 @@ def show_boxList(title, boxList, rgb_image):
     # cv2.imshow(title, bgr_image)
     # cv2.waitKey(0)
     rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
-    cv_show_image(title, rgb_image)
+    if win_name:
+        rgb_image = cv_show_image(win_name, rgb_image, waitKey=waitKey)
+    return rgb_image
 
 
 def show_landmark_boxes(win_name, img, landmarks_list, boxes):
@@ -749,7 +766,9 @@ def show_landmark_boxes(win_name, img, landmarks_list, boxes):
             # 要画的点的坐标
             point = (int(landmark[0]), int(landmark[1]))
             cv2.circle(image, point, point_size, point_color, thickness)
-    show_image_boxes(win_name, image, boxes)
+    if win_name:
+        image = show_image_boxes(win_name, image, boxes)
+    return image
 
 
 def show_landmark(win_name, img, landmarks_list, waitKey=0):
@@ -769,54 +788,124 @@ def show_landmark(win_name, img, landmarks_list, waitKey=0):
             # 要画的点的坐标
             point = (int(landmark[0]), int(landmark[1]))
             cv2.circle(image, point, point_size, point_color, thickness)
-    return cv_show_image(win_name, image, waitKey)
+    if win_name:
+        image = cv_show_image(win_name, image, waitKey=waitKey)
+    return image
 
 
-def show_points_text(img, points, texts, color=None):
-    # draw score roi
-    fontScale = 0.4
-    thickness = 1
-    if not color:
-        color = (0, 0, 255)
+def draw_points_text(img, points, texts=None, color=(0, 0, 255), drawType="custom"):
+    '''
+
+    :param img:
+    :param points:
+    :param texts:
+    :param color:
+    :param drawType: custom or custom
+    :return:
+    '''
+    thickness = 5
+    if texts is None:
+        texts = [""] * len(points)
     for point, text in zip(points, texts):
-        text_size, baseline = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, fontScale, thickness)
-        text_loc = (int(point[0]), int(point[1]) - text_size[1])
-        cv2.rectangle(img, (text_loc[0] - 2 // 2, text_loc[1] - 2 - baseline),
-                      (text_loc[0] + text_size[0], text_loc[1] + text_size[1]), color, -1)
-        # draw score value
-        cv2.putText(img, text, (text_loc[0], text_loc[1] + baseline), cv2.FONT_HERSHEY_SIMPLEX, fontScale,
-                    (255, 255, 255), thickness, 8)
+        point = (int(point[0]), int(point[1]))
+        cv2.circle(img, point, thickness, color, -1)
+        draw_text(img, point, text, drawType)
     return img
 
 
-def show_point_line(win_name, img, point_list, line=True, waitKey=0):
+def draw_text(img, point, text, drawType):
     '''
-    在图像中画点和连接线
-    :param win_name:
     :param img:
-    :param point_list: 点列表
-    :param line: 是否用线连接点
-    :param waitKey:
+    :param point:
+    :param text:
+    :param drawType: custom or custom
     :return:
     '''
+    fontScale = 0.4
+    thickness = 5
+    text_thickness = 1
+    bg_color = (255, 0, 0)
+    if drawType == "custom":
+        text_size, baseline = cv2.getTextSize(str(text), cv2.FONT_HERSHEY_SIMPLEX, fontScale, thickness)
+        text_loc = (point[0], point[1] + text_size[1])
+        cv2.rectangle(img, (text_loc[0] - 2 // 2, text_loc[1] - 2 - baseline),
+                      (text_loc[0] + text_size[0], text_loc[1] + text_size[1]), bg_color, -1)
+        # draw score value
+        cv2.putText(img, str(text), (text_loc[0], text_loc[1] + baseline), cv2.FONT_HERSHEY_SIMPLEX, fontScale,
+                    (255, 255, 255), text_thickness, 8)
+    elif drawType == "simple":
+        cv2.putText(img, '%d' % (text), point, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0))
+    return img
+
+
+def draw_key_point_in_image(image, key_points, pointline=[]):
+    '''
+    :param key_points: list(ndarray(19,2)) or ndarray(n_person,19,2)
+    :param image:
+    :param pointline: `auto`->pointline = circle_line(len(points), iscircle=True)
+    :return:
+    '''
+    img = copy.deepcopy(image)
+    person_nums = len(key_points)
+    color_map = get_color_map() * person_nums
+    for person_id, points in enumerate(key_points):
+        if points is None:
+            continue
+        color = convert_color_map(color_map[person_id])
+        img = draw_point_line(img, points, pointline, color, check=True)
+    return img
+
+
+def draw_point_line(img, points, pointline=[], color=(0, 255, 0), texts=None, drawType="simple", check=True):
+    '''
+    在图像中画点和连接线
+    :param img:
+    :param points: 点列表
+    :param pointline: `auto`->pointline = circle_line(len(points), iscircle=True)
+    :param color:
+    :param texts:
+    :param drawType: simple or custom
+    :param check:
+    :return:
+    '''
+    points = np.asarray(points, dtype=np.int32)
     image = copy.copy(img)
-    point_size = 1
-    point_color = (0, 0, 255)  # BGR
-    circle_thickness = 4  # 可以为 0 、4、8
     line_thickness = 1
-    for i, point in enumerate(point_list):
-        # 要画的点的坐标
-        point = (int(point[0]), int(point[1]))
-        if line:
-            if i == 0:
-                point0 = point
-                tmp_point = point
-            elif i == len(point_list) - 1:
-                cv2.line(image, point0, point, (0, 255, 0), line_thickness)  # 绿色，3个像素宽度
-            cv2.line(image, tmp_point, point, (0, 255, 0), line_thickness)  # 绿色，3个像素宽度
-            tmp_point = point
-        cv2.circle(image, point, point_size, point_color, circle_thickness)
-    return cv_show_image(win_name, image, waitKey=waitKey)
+    if texts is None:
+        texts = list(range(len(points)))
+    image = draw_points_text(image, points, texts=texts, color=color, drawType=drawType)
+    if pointline == "auto":
+        pointline = circle_line(len(points), iscircle=True)
+    for point_index in pointline:
+        point1 = tuple(points[point_index[0]])
+        point2 = tuple(points[point_index[1]])
+        if check:
+            if point1 is None or point2 is None:
+                continue
+            if sum(point1) == 0 or sum(point2) == 0:
+                continue
+        cv2.line(image, point1, point2, color, line_thickness)  # 绿色，3个像素宽度
+    return image
+
+
+def circle_line(num_point, iscircle=True):
+    '''
+    产生连接线的点,用于绘制连接线
+    points_line=circle_line(len(points),iscircle=True)
+    >> [(0, 1), (1, 2), (2, 0)]
+    :param num_point:
+    :param iscircle: 首尾是否相连
+    :return:
+    '''
+    start = 0
+    end = num_point - 1
+    points_line = []
+    for i in range(start, end + 1):
+        if i == end and iscircle:
+            points_line.append([end, start])
+        elif i != end:
+            points_line.append([i, i + 1])
+    return points_line
 
 
 def show_image_rects(win_name, image, rect_list, color=(0, 0, 255), waitKey=0):
@@ -842,11 +931,12 @@ def show_image_boxes(win_name, image, boxes_list, color=(0, 0, 255), waitKey=0):
     :param boxes_list:[[ x1, y1, x2, y2],[ x1, y1, x2, y2]]
     :return:
     '''
+    thickness = 2
     for box in boxes_list:
         x1, y1, x2, y2 = box
         point1 = (int(x1), int(y1))
         point2 = (int(x2), int(y2))
-        cv2.rectangle(image, point1, point2, color, thickness=2)
+        cv2.rectangle(image, point1, point2, color, thickness=thickness)
     cv_show_image(win_name, image, waitKey=waitKey)
     return image
 
@@ -928,7 +1018,7 @@ def combile_label_prob(label_list, prob_list):
     :param prob_list:
     :return:
     '''
-    info = [l + ":" + str(p)[:5] for l, p in zip(label_list, prob_list)]
+    info = [str(l) + ":" + str(p)[:5] for l, p in zip(label_list, prob_list)]
     return info
 
 
@@ -1108,6 +1198,24 @@ def softmax(x, axis=1):
     return s
 
 
+def convert_anchor(anchors, height, width):
+    '''
+    height, width, _ = img.shape
+    :param win_name:
+    :param img:
+    :param anchors: <class 'tuple'>: (nums, 4)
+    :return: boxes_list:[xmin, ymin, xmax, ymax]
+    '''
+    boxes_list = []
+    for index, anchor in enumerate(anchors):
+        xmin = anchor[0] * width
+        ymin = anchor[1] * height
+        xmax = anchor[2] * width
+        ymax = anchor[3] * height
+        boxes_list.append([xmin, ymin, xmax, ymax])
+    return boxes_list
+
+
 class EventCv():
     def __init__(self):
         self.image = None
@@ -1153,13 +1261,13 @@ def addMouseCallback(winname, param, callbackFunc=None):
 
 
 if __name__ == "__main__":
-    image_path = "../dataset/dataset/huge/huge_1.jpg"
-    image_base64 = read_image_base64(image_path, resize_height=100, resize_width=100)
-    # rgb_image = read_image(image_path, resize_height=100, resize_width=100)
-    cve = EventCv()
-    cve.add_mouse_event("orig_image")
-    while True:
-        rgb_img = base64_to_image(image_base64)
-        cve.update_image(rgb_img)
-        cv_show_image("orig_image", rgb_img, type="RGB", waitKey=100)
-        print("0")
+    image_path = "/media/dm/dm/X2/binocularCamera/Project/DepthPose/data/color.png"
+    points = np.array([[100, 100],
+                       [100, 200],
+                       [300, 300]], dtype=np.float32)
+    # points = list(range(4))
+    image = read_image(image_path, resize_height=500, resize_width=500)
+    pointline = circle_line(len(points), iscircle=True)
+    show_image("image,", image)
+    align_color_img = draw_point_line(image, points.tolist(), pointline)
+    show_image("align_color_img,", align_color_img)

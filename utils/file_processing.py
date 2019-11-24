@@ -207,7 +207,10 @@ def copyfile(srcfile, dstfile):
 
 
 def create_dir(parent_dir, dir1=None, filename=None):
-    out_path = parent_dir
+    if parent_dir:
+        out_path = parent_dir
+    else:
+        return parent_dir
     if dir1:
         out_path = os.path.join(parent_dir, dir1)
     if not os.path.exists(out_path):

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="0b1f928f-c8a8-4104-9dc3-2f7f52292b8f" name="192.168.68.6" url="http://192.168.68.6">
+        <fileTransfer host="192.168.68.6" port="22" rootFolder="/home/panjinquan/project/python-learning-notes" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="c894b40f-fec4-4aa4-8e1f-dc05448e024c" name="192.168.68.62" url="http://192.168.68.62">
+        <fileTransfer host="192.168.68.62" port="22" rootFolder="/home/panjinquan/project/python-learning-notes" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
