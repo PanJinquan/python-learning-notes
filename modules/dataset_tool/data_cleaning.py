@@ -51,7 +51,7 @@ def filter_bboxes(boxes_list, label_list, filter_babel):
 
 def synch_image_label_files(image_dir, label_dir, out_image_dir, out_label_dir):
     '''
-    synchronized/select existing image and label file that is same basename
+    synchronized/select existing image_dict and label file that is same basename
     :param image_dir: is `image_id.jpg` file
     :param label_dir: is `image_id.txt` file
     :param out_image_dir:
@@ -128,17 +128,17 @@ def isValidImage(images_list, sizeTh=1000, isRemove=False):
             print(" empty file:{}".format(path))
             if isRemove:
                 os.remove(path)
-                print(" info:----------------remove image:{}".format(path))
+                print(" info:----------------remove image_dict:{}".format(path))
             images_list.pop(i)
             continue
         # 判断图像文件是否损坏
         try:
             Image.open(path).verify()
         except:
-            print(" damaged image:{}".format(path))
+            print(" damaged image_dict:{}".format(path))
             if isRemove:
                 os.remove(path)
-                print(" info:----------------remove image:{}".format(path))
+                print(" info:----------------remove image_dict:{}".format(path))
             images_list.pop(i)
             continue
         i += 1

@@ -21,20 +21,37 @@ def random_resize(image, range_size):
 
 def random_resize_image_list(image_dir, out_dir, range_size):
     image_list, label_list = file_processing.get_files_labels(image_dir, postfix=['*.jpg'])
+    print("hace {} images".format(len(image_list)))
     for image_path, lable in zip(image_list, label_list):
         basename = os.path.basename(image_path)
         image = image_processing.read_image(image_path)
         re_image = random_resize(image, range_size)
-        print("image shape:{}".format(re_image.shape))
+        print("image_dict shape:{}".format(re_image.shape))
         # out_path = os.path.join(out_dir, lable, basename)
         out_path = file_processing.create_dir(out_dir, lable, basename)
         image_processing.save_image(out_path, re_image)
 
 
+def resize_image_list(image_dir, out_dir, resize_height=None, resize_width=None):
+    image_list, label_list = file_processing.get_files_labels(image_dir, postfix=['*.jpg',"*.JPG"])
+    print("hace {} images".format(len(image_list)))
+    for image_path, lable in zip(image_list, label_list):
+        basename = os.path.basename(image_path)
+        image = image_processing.read_image(image_path,
+                                            resize_height=resize_height,
+                                            resize_width=resize_width)
+        print("image_dict shape:{}".format(image.shape))
+        # out_path = os.path.join(out_dir, lable, basename)
+        out_path = file_processing.create_dir(out_dir, lable, basename)
+        image_processing.save_image(out_path, image)
+
+
 if __name__ == "__main__":
     # image_dir = "/media/dm/dm/FaceDataset/X4/X4_Face50_Alig/val"
     # out_dir = "/media/dm/dm/FaceDataset/X4/X4_Face50_low_25_40/val"
-    image_dir = "/media/dm/dm/FaceDataset/X4/X4_Face50_Alig/facebank"
-    out_dir = "/media/dm/dm/FaceDataset/X4/X4_Face50_F40_V25_40/facebank"
-    range_size = [40,40]
-    random_resize_image_list(image_dir, out_dir, range_size)
+    image_dir = "/media/dm/dm1/FaceRecognition/dataset/honghe/test/honghe/portrait"
+    out_dir = "/media/dm/dm1/FaceRecognition/dataset/honghe/test/honghe/portrait2"
+    range_size = [40, 40]
+    # random_resize_image_list(image_dir, out_dir, range_size)
+    resize_image_list(image_dir, out_dir, resize_height=600, resize_width=None)
+

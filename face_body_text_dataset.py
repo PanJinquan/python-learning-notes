@@ -69,7 +69,7 @@ def convert_to_linedataset(annotations_dir, image_list, class_names, out_filenam
             name_id = image_name[:-len(".jpg")]
             annotations_file = os.path.join(annotations_dir, name_id + ".json")
             if not os.path.exists(image_path):
-                print("no image:{}".format(image_path))
+                print("no image_dict:{}".format(image_path))
                 continue
             if not os.path.exists(annotations_file):
                 print("no annotations:{}".format(annotations_file))
@@ -83,7 +83,7 @@ def convert_to_linedataset(annotations_dir, image_list, class_names, out_filenam
             contents_line = " ".join('%s' % id for id in line_image_label)
             f.write(contents_line + "\n")
             if i % 10 == 0 or i == len(image_list) - 1:
-                print("processing image:{}/{}".format(i, len(image_list)-1))
+                print("processing image_dict:{}/{}".format(i, len(image_list)-1))
 
 
 def linedataset_test(filename, image_dir=None, show=True):
@@ -104,7 +104,7 @@ def linedataset_test(filename, image_dir=None, show=True):
                 else:
                     image_path = image_id
                 image = image_processing.read_image(image_path)
-                image_processing.show_image_bboxes_text("image", image, box, label)
+                image_processing.show_image_bboxes_text("image_dict", image, box, label)
 
 
 def convert_facebody_to_textdataset(image_list, annotations_dir, label_out_dir, class_names, coordinatesType,
@@ -133,7 +133,7 @@ def convert_facebody_to_textdataset(image_list, annotations_dir, label_out_dir, 
         annotations_file = os.path.join(annotations_dir, ann_name)
 
         if not os.path.exists(image_path):
-            print("no image:{}".format(image_path))
+            print("no image_dict:{}".format(image_path))
             continue
         if not os.path.exists(annotations_file):
             print("no annotations:{}".format(annotations_file))
@@ -152,9 +152,9 @@ def convert_facebody_to_textdataset(image_list, annotations_dir, label_out_dir, 
         file_processing.write_data(out_file, content_list, mode='w')
         if show:
             image = image_processing.read_image(image_path)
-            image_processing.show_image_rects_text("image", image, rects, class_name)
+            image_processing.show_image_rects_text("image_dict", image, rects, class_name)
         if i % 10 == 0 or i == len(image_list) - 1:
-            print("processing image:{}/{}".format(i, len(image_list) - 1))
+            print("processing image_dict:{}/{}".format(i, len(image_list) - 1))
     return name_id_list
 
 
@@ -207,7 +207,7 @@ def face_body_test(annotations_dir, image_dir, class_names, show=True):
         image_name = name_id + ".jpg"
         image_path = os.path.join(image_dir, image_name)
         if not os.path.exists(image_path):
-            print("no image:{}".format(image_path))
+            print("no image_dict:{}".format(image_path))
             continue
         if not os.path.exists(annotations_file):
             print("no annotations:{}".format(annotations_file))
@@ -218,8 +218,8 @@ def face_body_test(annotations_dir, image_dir, class_names, show=True):
             continue
         if show:
             image = image_processing.read_image(image_path)
-            # image_processing.show_image_rects_text("image", image, rects, class_name)
-            image_processing.show_boxList("image", boxList, image)
+            # image_processing.show_image_rects_text("image_dict", image_dict, rects, class_name)
+            image_processing.show_boxList("image_dict", boxList, image)
 
 
 def label_test(image_dir, filename, class_names):

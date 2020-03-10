@@ -114,7 +114,7 @@ def create_class_sample_weight_custom(labels_list, balanced="balanced", weight_t
 
 def create_sample_weight_torch(labels_list, nclasses):
     '''
-    Make a vector of weights for each image in the dataset, based
+    Make a vector of weights for each image_dict in the dataset, based
     on class frequency. The returned vector of weights can be used
     to create a WeightedRandomSampler for a DataLoader to have
     class balancing when sampling for a training batch.

@@ -190,26 +190,62 @@ def __print(data, info=""):
         print("{}".format(data[index]))
 
 
-if __name__ == "__main__":
-    d = ["", -1, 1, 2, 3, "", 4, 5, 6, -1, ""]
-    d = remove_list_data(d)
-    print(d)
+def rmse(data1, data2):
+    '''
+    均方差
+    :param predictions:
+    :param targets:
+    :return:
+    '''
+    return np.sqrt(((data1 - data2) ** 2).mean())
 
-    # data1 = gen_range((3, 4), 0, 12)
-    # data2 = gen_range((6, 4), 0, 24)
-    # data3 = gen_range((5, 4), 0, 20)
-    # data4 = gen_range((10, 4), 0, 40)
-    data1 = np.asarray([1, 2, 2, 3, 4, 5])
-    data2 = np.asarray([1, 2, 4, 3, 4, 5, 6])
-    data3 = np.asarray([1, 1, 4, 3, 4, 5, 6, 7, 8, 9])
-    data4 = np.asarray([0, 1, 4, 3, 4, 5, 6])
-    data = []
-    data.append(data1)
-    data.append(data2)
-    data.append(data3)
-    data.append(data4)
-    __print(data)
-    out = data_alignment(data)
-    __print(out)
-    label_list = label_alignment(out)
-    __print([label_list])
+
+def l2(data1, data2):
+    '''
+    L2欧式距离
+    :param emb1:
+    :param emb2:
+    :return:返回欧式距离(0,+∞),值越小越相似
+    '''
+    diff = data1 - data2
+    dist = np.sum(np.power(diff, 2), axis=1)
+    return dist
+
+
+def L1_loss(y_true, y_pre):
+    return np.sum(np.abs(y_true - y_pre))
+
+def L2_loss(y_true, y_pre):
+    return np.sum(np.square(y_true - y_pre))
+
+def norn(x, ord):
+    y = np.linalg.norm(x, ord=ord, axis=1, keepdims=True)
+    return y
+
+
+def mean(data):
+    return np.mean(data)
+
+
+def var(data):
+    # 求方差
+    return np.var(data)
+
+
+def std(data):
+    # 求标准差
+    return np.std(data, ddof=1)
+
+
+def load_data(data_path):
+    return np.load(data_path)
+
+
+# 矩阵拼接
+
+
+if __name__ == "__main__":
+    data1 = np.arange(0, 10)
+    data1 = data1.reshape([5, 2])
+    y = np.concatenate([data1, data1], 0)
+    print(y)

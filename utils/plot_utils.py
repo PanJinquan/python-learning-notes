@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plot_bar(x_data, y_data, title, xlabel, ylabel):
+def plot_bar(x_data, y_data, title, xlabel, ylabel, isshow=False):
     # 准备数据
     # 用 Matplotlib 画条形图
     plt.bar(x_data, y_data)
@@ -28,7 +28,9 @@ def plot_bar(x_data, y_data, title, xlabel, ylabel):
     plt.title(title)
     plt.legend(loc="lower right")  # "upper right"
     # plt.legend(loc="upper right")#"upper right"
-    plt.show()
+    plt.savefig('out.png')
+    if isshow:
+        plt.show()
 
 
 def plot_multi_line(x_data_list, y_data_list, line_names=None, title="", xlabel="", ylabel=""):
@@ -43,7 +45,7 @@ def plot_multi_line(x_data_list, y_data_list, line_names=None, title="", xlabel=
     xlim_min = 0
     ylim_min = 0
     if not line_names:
-        line_names=" "*len(x_data_list)
+        line_names = " " * len(x_data_list)
     for x, y, color, line_name in zip(x_data_list, y_data_list, colors, line_names):
         plt.plot(x, y, color=color, lw=lw, label=line_name)  # 假正率为横坐标，真正率为纵坐标做曲线
         if xlim_max < max(x):

@@ -17,7 +17,7 @@ from pathlib import Path
 
 def create_pair_data(image_dir, pair_num=0):
     '''
-    get image_dir image list,combinations image
+    get image_dir image_dict list,combinations image_dict
     :param image_dir:
     :return:
     '''
@@ -79,8 +79,8 @@ def create_pair_data(image_dir, pair_num=0):
 
 if __name__ == "__main__":
     # NVR VAL faceDataset
-    # dataset = '/media/dm/dm2/XMC/FaceDataset/X4/X4_Face20_Crop/'
-    dataset = '/media/dm/dm1/FaceDataset/X4/DMAI_Alig/'
+    dataset = '/media/dm/dm2/XMC/FaceDataset/X4/X4_Face20_Crop/'
+    # dataset = '/media/dm/dm1/FaceDataset/X4/DMAI_Alig/'
     # lexue
     image_dir = dataset + "trainval"
     pair_filename = dataset + "x4_pair_data.txt"

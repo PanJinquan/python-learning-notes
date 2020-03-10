@@ -44,7 +44,7 @@ def pascal_voc_test(annotations_dir, image_dir, class_names, coordinatesType="SS
         image_name = name_id + ".jpg"
         image_path = os.path.join(image_dir, image_name)
         if not os.path.exists(image_path):
-            print("no image:{}".format(image_path))
+            print("no image_dict:{}".format(image_path))
             continue
         if not os.path.exists(annotations_file):
             print("no annotations:{}".format(annotations_file))
@@ -54,7 +54,7 @@ def pascal_voc_test(annotations_dir, image_dir, class_names, coordinatesType="SS
             print("no class in annotations:{}".format(annotations_file))
         if show:
             image = image_processing.read_image(image_path)
-            image_processing.show_image_rects_text("image", image, rects, class_name)
+            image_processing.show_image_rects_text("image_dict", image, rects, class_name)
 
 
 if __name__ == "__main__":

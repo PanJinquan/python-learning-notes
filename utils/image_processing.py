@@ -20,6 +20,13 @@ import PIL.Image as Image
 
 
 def bound_protection(points, height, width):
+    """
+    Avoid array overbounds
+    :param points:
+    :param height:
+    :param width:
+    :return:
+    """
     points[points[:, 0] > width, 0] = width - 1  # x
     points[points[:, 1] > height, 1] = height - 1  # y
 
@@ -29,10 +36,39 @@ def bound_protection(points, height, width):
 
 
 def tensor2image(batch_tensor, index=0):
+    """
+    convert tensor to image_dict
+    :param batch_tensor:
+    :param index:
+    :return:
+    """
     image_tensor = batch_tensor[index, :]
     image = np.array(image_tensor, dtype=np.float32)
     image = np.squeeze(image)
     image = image.transpose(1, 2, 0)  # 通道由[c,h,w]->[h,w,c]
+    return image
+
+
+def get_image_tensor(image_path, image_size, transpose=False):
+    image = read_image(image_path)
+    # transform = default_transform(image_size)
+    # torch_image = transform(image_dict).detach().numpy()
+    image = resize_image(image, int(128 * image_size[0] / 112), int(128 * image_size[1] / 112))
+    image = center_crop(image, crop_size=image_size)
+    image_tensor = image_normalization(image, mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+    if transpose:
+        image_tensor = image_tensor.transpose(2, 0, 1)
+    image_tensor = image_tensor[np.newaxis, :]
+    # std = np.std(torch_image-image_tensor)
+    return image_tensor
+
+
+def image_clip(image):
+    """
+    :param image:
+    :return:
+    """
+    image = np.clip(image, 0, 1)
     return image
 
 
@@ -45,14 +81,15 @@ def show_batch_image(title, batch_imgs, index=0):
     :return:
     '''
     image = batch_imgs[index, :]
-    # image = image.numpy()  #
+    # image_dict = image_dict.numpy()  #
     image = np.array(image, dtype=np.float32)
     image = np.squeeze(image)
     if len(image.shape) == 3:
         image = image.transpose(1, 2, 0)  # 通道由[c,h,w]->[h,w,c]
     else:
         image = image.transpose(1, 0)
-    cv_show_image(title, image)
+    if title:
+        cv_show_image(title, image)
 
 
 def show_image(title, rgb_image):
@@ -63,7 +100,7 @@ def show_image(title, rgb_image):
     :return:
     '''
     # plt.figure("show_image")
-    # print(image.dtype)
+    # print(image_dict.dtype)
     channel = len(rgb_image.shape)
     if channel == 3:
         plt.imshow(rgb_image)
@@ -82,25 +119,13 @@ def cv_show_image(title, image, type='rgb', waitKey=0):
     :param type:'rgb' or 'bgr'
     :return:
     '''
-    channels = image.shape[-1]
+    img = copy.copy(image)
+    channels = img.shape[-1]
     if channels == 3 and type == 'rgb':
-        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)  # 将BGR转为RGB
-    cv2.imshow(title, image)
+        img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)  # 将BGR转为RGB
+    cv2.imshow(title, img)
     cv2.waitKey(waitKey)
     return image
-
-
-def center_crop(image, crop_size=[112, 112]):
-    '''
-    central_crop
-    :param image: input numpy type image
-    :param crop_size:crop_size must less than x.shape[:2]
-    :return:
-    '''
-    h, w = image.shape[:2]
-    j = int(round((h - crop_size[0]) / 2.))
-    i = int(round((w - crop_size[1]) / 2.))
-    return image[j:j + crop_size[0], i:i + crop_size[1]]
 
 
 def image_fliplr(image):
@@ -129,13 +154,13 @@ def get_prewhiten_image(x):
 def image_normalization(image, mean=None, std=None):
     '''
     正则化，归一化
-    image[channel] = (image[channel] - mean[channel]) / std[channel]
-    :param image: numpy image
+    image_dict[channel] = (image_dict[channel] - mean[channel]) / std[channel]
+    :param image: numpy image_dict
     :param mean: [0.5,0.5,0.5]
     :param std:  [0.5,0.5,0.5]
     :return:
     '''
-    # 不能写成:image=image/255
+    # 不能写成:image_dict=image_dict/255
     if isinstance(mean, list):
         mean = np.asarray(mean, dtype=np.float32)
     if isinstance(std, list):
@@ -209,12 +234,12 @@ def read_image(filename, resize_height=None, resize_width=None, normalization=Fa
     '''
 
     bgr_image = cv2.imread(filename)
-    # bgr_image = cv2.imread(filename,cv2.IMREAD_IGNORE_ORIENTATION|cv2.IMREAD_COLOR)
+    # bgr_image = cv2.imread(filename,cv2.IMREAD_IGNORE_ORIENTATION|cv2.IMREAD_UNCHANGED)
     if bgr_image is None:
-        print("Warning: no image:{}".format(filename))
+        print("Warning: no image_dict:{}".format(filename))
         return None
     if len(bgr_image.shape) == 2:  # 若是灰度图则转为三通道
-        print("Warning:gray image", filename)
+        print("Warning:gray image_dict", filename)
         bgr_image = cv2.cvtColor(bgr_image, cv2.COLOR_GRAY2BGR)
 
     if colorSpace == 'RGB':
@@ -223,13 +248,13 @@ def read_image(filename, resize_height=None, resize_width=None, normalization=Fa
         image = bgr_image
     else:
         exit(0)
-    # show_image(filename,image)
-    # image=Image.open(filename)
+    # show_image(filename,image_dict)
+    # image_dict=Image.open(filename)
     image = resize_image(image, resize_height, resize_width)
     image = np.asanyarray(image)
     if normalization:
         image = image_normalization(image)
-    # show_image("src resize image",image)
+    # show_image("src resize image_dict",image_dict)
     return image
 
 
@@ -247,18 +272,18 @@ def read_image_pil(filename, resize_height=None, resize_width=None, normalizatio
     rgb_image = Image.open(filename)
     rgb_image = np.asarray(rgb_image)
     if rgb_image is None:
-        print("Warning: no image:{}".format(filename))
+        print("Warning: no image_dict:{}".format(filename))
         return None
     if len(rgb_image.shape) == 2:  # 若是灰度图则转为三通道
-        print("Warning:gray image", filename)
+        print("Warning:gray image_dict", filename)
         rgb_image = cv2.cvtColor(rgb_image, cv2.COLOR_GRAY2BGR)
 
-    # show_image(filename,image)
-    # image=Image.open(filename)
+    # show_image(filename,image_dict)
+    # image_dict=Image.open(filename)
     image = resize_image(rgb_image, resize_height, resize_width)
     if normalization:
         image = image_normalization(image)
-    # show_image("src resize image",image)
+    # show_image("src resize image_dict",image_dict)
     return image
 
 
@@ -282,10 +307,10 @@ def read_image_gbk(filename, resize_height=None, resize_width=None, normalizatio
     # 或者：
     # bgr_image=cv2.imdecode(np.fromfile(filename,dtype=np.uint8),cv2.IMREAD_COLOR)
     if bgr_image is None:
-        print("Warning: no image:{}".format(filename))
+        print("Warning: no image_dict:{}".format(filename))
         return None
     if len(bgr_image.shape) == 2:  # 若是灰度图则转为三通道
-        print("Warning:gray image", filename)
+        print("Warning:gray image_dict", filename)
         bgr_image = cv2.cvtColor(bgr_image, cv2.COLOR_GRAY2BGR)
     if colorSpace == 'RGB':
         image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)  # 将BGR转为RGB
@@ -293,13 +318,13 @@ def read_image_gbk(filename, resize_height=None, resize_width=None, normalizatio
         image = bgr_image
     else:
         exit(0)
-    # show_image(filename,image)
-    # image=Image.open(filename)
+    # show_image(filename,image_dict)
+    # image_dict=Image.open(filename)
     image = resize_image(image, resize_height, resize_width)
     image = np.asanyarray(image)
     if normalization:
         image = image_normalization(image)
-    # show_image("src resize image",image)
+    # show_image("src resize image_dict",image_dict)
     return image
 
 
@@ -343,10 +368,10 @@ def read_images_url(url, resize_height=None, resize_width=None, normalization=Fa
         bgr_image = cv2.imread(url)
 
     if bgr_image is None:
-        print("Warning: no image:{}".format(url))
+        print("Warning: no image_dict:{}".format(url))
         return None
     if len(bgr_image.shape) == 2:  # 若是灰度图则转为三通道
-        print("Warning:gray image", url)
+        print("Warning:gray image_dict", url)
         bgr_image = cv2.cvtColor(bgr_image, cv2.COLOR_GRAY2BGR)
     if colorSpace == 'RGB':
         image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)  # 将BGR转为RGB
@@ -358,7 +383,7 @@ def read_images_url(url, resize_height=None, resize_width=None, normalization=Fa
     image = np.asanyarray(image)
     if normalization:
         image = image_normalization(image)
-    # show_image("src resize image",image)
+    # show_image("src resize image_dict",image_dict)
     return image
 
 
@@ -373,7 +398,7 @@ def read_image_batch(image_list):
     for image_path in image_list:
         image = read_images_url(image_path)
         if image is None:
-            print("no image:{}".format(image_path))
+            print("no image_dict:{}".format(image_path))
             continue
         image_batch.append(image)
         out_image_list.append(image_path)
@@ -415,10 +440,10 @@ def fast_read_image_roi(filename, orig_rect, ImreadModes=cv2.IMREAD_COLOR, norma
     bgr_image = cv2.imread(filename, flags=ImreadModes)
 
     if bgr_image is None:
-        print("Warning: no image:{}".format(filename))
+        print("Warning: no image_dict:{}".format(filename))
         return None
     if len(bgr_image.shape) == 2:  # 若是灰度图则转为三通道
-        print("Warning:gray image", filename)
+        print("Warning:gray image_dict", filename)
         bgr_image = cv2.cvtColor(bgr_image, cv2.COLOR_GRAY2BGR)
     if colorSpace == 'RGB':
         image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)  # 将BGR转为RGB
@@ -596,7 +621,7 @@ def convert_color_map(color, colorType="BGR"):
 
 
 def get_color_map():
-    colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF",
+    colors = ["#0000FF", "#FF0000", "#00FF00", "#FFFF00", "#00FFFF",
               "#4169E1", "#FF9912", "#FF6100", "#00FF00", "#FF8000"]
     return colors
 
@@ -604,7 +629,7 @@ def get_color_map():
 def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, color=None, drawType="custom", waitKey=0, top=True):
     '''
     :param boxes_name:
-    :param bgr_image: bgr image
+    :param bgr_image: bgr image_dict
     :param color: BGR color:[B,G,R]
     :param boxes: [[x1,y1,x2,y2],[x1,y1,x2,y2]]
     :return:
@@ -628,14 +653,14 @@ def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, color=None, draw
     # cv2.waitKey(0)
     rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
     if title:
-        rgb_image=cv_show_image(title, rgb_image, waitKey=waitKey)
+        cv_show_image(title, rgb_image, waitKey=waitKey)
     return rgb_image
 
 
 def show_image_rects_text(title, rgb_image, rects_list, rects_name, color=None, drawType="custom", waitKey=0):
     '''
     :param rects_name:
-    :param bgr_image: bgr image
+    :param bgr_image: bgr image_dict
     :param rects: [[x1,y1,w,h],[x1,y1,w,h]]
     :return:
     '''
@@ -689,11 +714,21 @@ def show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, color=N
     # cv2.waitKey(0)
     rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
     if title:
-        rgb_image = cv_show_image(title, rgb_image, waitKey=waitKey)
+        cv_show_image(title, rgb_image, waitKey=waitKey)
     return rgb_image
 
 
 def custom_bbox_line(img, bbox, color, name, drawType="custom", top=True):
+    """
+
+    :param img:
+    :param bbox:
+    :param color:
+    :param name:
+    :param drawType:
+    :param top:
+    :return:
+    """
     if drawType == "simple":
         fontScale = 0.4
         thickness = 1
@@ -744,7 +779,7 @@ def show_boxList(win_name, boxList, rgb_image, waitKey=0):
     # cv2.waitKey(0)
     rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
     if win_name:
-        rgb_image = cv_show_image(win_name, rgb_image, waitKey=waitKey)
+        cv_show_image(win_name, rgb_image, waitKey=waitKey)
     return rgb_image
 
 
@@ -752,7 +787,7 @@ def show_landmark_boxes(win_name, img, landmarks_list, boxes):
     '''
     显示landmark和boxex
     :param win_name:
-    :param image:
+    :param image_dict:
     :param landmarks_list: [[x1, y1], [x2, y2]]
     :param boxes:     [[ x1, y1, x2, y2],[ x1, y1, x2, y2]]
     :return:
@@ -775,7 +810,7 @@ def show_landmark(win_name, img, landmarks_list, waitKey=0):
     '''
     显示landmark和boxex
     :param win_name:
-    :param image:
+    :param image_dict:
     :param landmarks_list: [[x1, y1], [x2, y2]]
     :return:
     '''
@@ -789,7 +824,7 @@ def show_landmark(win_name, img, landmarks_list, waitKey=0):
             point = (int(landmark[0]), int(landmark[1]))
             cv2.circle(image, point, point_size, point_color, thickness)
     if win_name:
-        image = cv_show_image(win_name, image, waitKey=waitKey)
+        cv_show_image(win_name, image, waitKey=waitKey)
     return image
 
 
@@ -809,11 +844,11 @@ def draw_points_text(img, points, texts=None, color=(0, 0, 255), drawType="custo
     for point, text in zip(points, texts):
         point = (int(point[0]), int(point[1]))
         cv2.circle(img, point, thickness, color, -1)
-        draw_text(img, point, text, drawType)
+        draw_text(img, point, text, bg_color=color, drawType=drawType)
     return img
 
 
-def draw_text(img, point, text, drawType):
+def draw_text(img, point, text, bg_color=(255, 0, 0), drawType="custom"):
     '''
     :param img:
     :param point:
@@ -824,17 +859,40 @@ def draw_text(img, point, text, drawType):
     fontScale = 0.4
     thickness = 5
     text_thickness = 1
-    bg_color = (255, 0, 0)
+    fontFace = cv2.FONT_HERSHEY_SIMPLEX
+    # fontFace=cv2.FONT_HERSHEY_SIMPLEX
     if drawType == "custom":
-        text_size, baseline = cv2.getTextSize(str(text), cv2.FONT_HERSHEY_SIMPLEX, fontScale, thickness)
+        text_size, baseline = cv2.getTextSize(str(text), fontFace, fontScale, thickness)
         text_loc = (point[0], point[1] + text_size[1])
         cv2.rectangle(img, (text_loc[0] - 2 // 2, text_loc[1] - 2 - baseline),
                       (text_loc[0] + text_size[0], text_loc[1] + text_size[1]), bg_color, -1)
         # draw score value
-        cv2.putText(img, str(text), (text_loc[0], text_loc[1] + baseline), cv2.FONT_HERSHEY_SIMPLEX, fontScale,
+        cv2.putText(img, str(text), (text_loc[0], text_loc[1] + baseline), fontFace, fontScale,
                     (255, 255, 255), text_thickness, 8)
     elif drawType == "simple":
-        cv2.putText(img, '%d' % (text), point, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0))
+        cv2.putText(img, '%d' % (text), point, fontFace, 0.5, (255, 0, 0))
+    return img
+
+
+def draw_text_line(img, point, text_line: str, bg_color=(255, 0, 0), drawType="custom"):
+    '''
+    :param img:
+    :param point:
+    :param text:
+    :param drawType: custom or custom
+    :return:
+    '''
+    fontScale = 0.4
+    thickness = 5
+    fontFace = cv2.FONT_HERSHEY_SIMPLEX
+    # fontFace=cv2.FONT_HERSHEY_SIMPLEX
+    text_line = text_line.split("\n")
+    # text_size, baseline = cv2.getTextSize(str(text_line), fontFace, fontScale, thickness)
+    text_size, baseline = cv2.getTextSize(str(text_line), fontFace, fontScale, thickness)
+    for i, text in enumerate(text_line):
+        if text:
+            draw_point = [point[0], point[1] + (text_size[1] + 2 + baseline) * i]
+            img = draw_text(img, draw_point, text, bg_color, drawType)
     return img
 
 
@@ -908,7 +966,7 @@ def circle_line(num_point, iscircle=True):
     return points_line
 
 
-def show_image_rects(win_name, image, rect_list, color=(0, 0, 255), waitKey=0):
+def show_image_rects(win_name, image, rect_list, type="rgb", color=(0, 0, 255), waitKey=0):
     '''
     :param win_name:
     :param image:
@@ -920,7 +978,8 @@ def show_image_rects(win_name, image, rect_list, color=(0, 0, 255), waitKey=0):
         point1 = (int(x), int(y))
         point2 = (int(x + w), int(y + h))
         cv2.rectangle(image, point1, point2, color, thickness=2)
-    image = cv_show_image(win_name, image, waitKey=waitKey)
+    if win_name:
+        cv_show_image(win_name, image, type, waitKey=waitKey)
     return image
 
 
@@ -937,13 +996,14 @@ def show_image_boxes(win_name, image, boxes_list, color=(0, 0, 255), waitKey=0):
         point1 = (int(x1), int(y1))
         point2 = (int(x2), int(y2))
         cv2.rectangle(image, point1, point2, color, thickness=thickness)
-    cv_show_image(win_name, image, waitKey=waitKey)
+    if win_name:
+        cv_show_image(win_name, image, waitKey=waitKey)
     return image
 
 
 def rgb_to_gray(image):
     '''
-    RGB to Gray image
+    RGB to Gray image_dict
     :param image:
     :return:
     '''
@@ -1086,7 +1146,7 @@ def filtering_scores(bboxes_list, scores_list, labels_list, score_threshold=0.0)
 def image_to_base64(rgb_image):
     bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
     image = cv2.imencode('.jpg', bgr_image)[1]
-    # image_base64 = str(base64.b64encode(image))[2:-1]
+    # image_base64 = str(base64.b64encode(image_dict))[2:-1]
     image_base64 = base64.b64encode(image)
     image_base64 = str(image_base64, encoding='utf-8')
     return image_base64
@@ -1123,13 +1183,13 @@ def bin2image(bin_data, resize_height=None, resize_width=None, normalization=Fal
         image = bgr_image
     else:
         exit(0)
-    # show_image(filename,image)
-    # image=Image.open(filename)
+    # show_image(filename,image_dict)
+    # image_dict=Image.open(filename)
     image = resize_image(image, resize_height, resize_width)
     image = np.asanyarray(image)
     if normalization:
         image = image_normalization(image)
-    # show_image("src resize image",image)
+    # show_image("src resize image_dict",image_dict)
     return image
 
 
@@ -1154,20 +1214,6 @@ def extend_boxes(faces_boxes, width_factor=1.0, height_factor=1.0):
         h = height_factor * h
         body_boxes.append([x1, y1, x1 + w, y1 + h])
     return body_boxes
-
-
-def get_image_tensor(image_path, image_size, transpose=False):
-    image = read_image(image_path)
-    # transform = default_transform(image_size)
-    # torch_image = transform(image).detach().numpy()
-    image = resize_image(image, int(128 * image_size[0] / 112), int(128 * image_size[1] / 112))
-    image = center_crop(image, crop_size=image_size)
-    image_tensor = image_normalization(image, mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
-    if transpose:
-        image_tensor = image_tensor.transpose(2, 0, 1)
-    image_tensor = image_tensor[np.newaxis, :]
-    # std = np.std(torch_image-image_tensor)
-    return image_tensor
 
 
 def post_process(input, axis=1):
@@ -1260,14 +1306,163 @@ def addMouseCallback(winname, param, callbackFunc=None):
     cv2.setMouseCallback(winname, callbackFunc, param)
 
 
+class CVVideo():
+    def __init__(self):
+        pass
+
+    def start_capture(self, video_path, detect_freq):
+        """
+        start capture video
+        :param video_path:
+        :param detect_freq:
+        :return:
+        """
+        camera = cv2.VideoCapture(video_path)
+        numFrames = int(camera.get(cv2.CAP_PROP_FRAME_COUNT))
+        fps = int(camera.get(cv2.CAP_PROP_FPS))
+        freq = int(fps / detect_freq)
+        count = 0
+        while True:
+            isSuccess, frame = camera.read()
+            if not isSuccess:
+                break
+            if count % freq == 0:
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            count += 1
+        camera.release()
+
+    def get_video_capture(self, video_path):
+        self.video_cap = cv2.VideoCapture(video_path)
+        return self.video_cap
+
+    def get_video_info(self):
+        width = int(self.video_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(self.video_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        numFrames = int(self.video_cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        fps = int(self.video_cap.get(cv2.CAP_PROP_FPS))
+        return width, height, fps
+
+    def get_video_writer(self, save_path, width, height, fps):
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        frameSize = (width, height)
+        self.video_writer = cv2.VideoWriter(save_path, fourcc, fps, frameSize)
+        print("video:width:{},height:{},fps:{}".format(width, height, fps))
+        return self.video_writer
+
+    def write(self, img):
+        self.video_writer.write(img)
+
+
+def get_rect_crop_padding(image, rect):
+    """
+    :param image:
+    :param rect:
+    :return:
+    """
+    rect = [int(v) for v in rect]
+    rows, cols, d = image.shape  # h,w,d
+    x, y, width, height = rect
+    crop_x1 = max(0, x)
+    crop_y1 = max(0, y)
+    crop_x2 = min(cols, x + width)  # 图像范围
+    crop_y2 = min(rows, y + height)
+    left_x = -x
+    top_y = -y
+    right_x = x + width - cols
+    down_y = y + height - rows
+    roi_image = image[crop_y1:crop_y2, crop_x1:crop_x2]
+    # 只要存在边界越界的情况，就需要边界填充
+    if top_y > 0 or down_y > 0 or left_x > 0 or right_x > 0:
+        left_x = np.where(left_x > 0, left_x, 0)
+        right_x = np.where(right_x > 0, right_x, 0)
+        top_y = np.where(top_y > 0, top_y, 0)
+        down_y = np.where(down_y > 0, down_y, 0)
+        roi_image = cv2.copyMakeBorder(roi_image, top_y, down_y, left_x, right_x, cv2.BORDER_CONSTANT, value=0)
+    return roi_image
+
+
+def get_bbox_crop_padding(image, bbox):
+    """
+    :param image:
+    :param bbox:
+    :return:
+    """
+    rect = bboxes2rects([bbox])[0]
+    roi_image = get_rect_crop_padding(image, rect)
+    return roi_image
+
+
+def get_bboxes_crop_padding(image, bboxes, resize_height=None, resize_width=None):
+    """
+    :param image:
+    :param bboxes:
+    :param resize:
+    :return:
+    """
+    rects = bboxes2rects(bboxes)
+    roi_images = []
+    for rect in rects:
+        roi_image = get_rect_crop_padding(image, rect)
+        roi_image = resize_image(roi_image, resize_height, resize_width)
+        roi_images.append(roi_image)
+    return roi_images
+
+
+def get_rects_crop_padding(image, rects, resize_height=None, resize_width=None):
+    """
+    :param image:
+    :param rects:
+    :param resize:
+    :return:
+    """
+    roi_images = []
+    for rect in rects:
+        roi_image = get_rect_crop_padding(image, rect)
+        roi_image = resize_image(roi_image, resize_height, resize_width)
+        roi_images.append(roi_image)
+    return roi_images
+
+
+def center_crop(image, crop_size=[112, 112]):
+    '''
+    central_crop
+    :param image: input numpy type image_dict
+    :param crop_size:crop_size must less than x.shape[:2]=[crop_h,crop_w]
+    :return:
+    '''
+    h, w = image.shape[:2]
+    y = int(round((h - crop_size[0]) / 2.))
+    x = int(round((w - crop_size[1]) / 2.))
+    y = np.where(y > 0, y, 0)
+    x = np.where(x > 0, x, 0)
+    return image[y:y + crop_size[0], x:x + crop_size[1]]
+
+
+def center_crop_padding(image, crop_size):
+    """
+    :param image:
+    :param crop_size: [crop_h,crop_w]
+    :return:
+    """
+    h, w = image.shape[:2]
+    y = int(round((h - crop_size[0]) / 2.))
+    x = int(round((w - crop_size[1]) / 2.))
+    rect = [x, y, crop_size[1], crop_size[0]]
+    roi_image = get_rect_crop_padding(image, rect)
+    return roi_image
+
+
 if __name__ == "__main__":
-    image_path = "/media/dm/dm/X2/binocularCamera/Project/DepthPose/data/color.png"
-    points = np.array([[100, 100],
-                       [100, 200],
-                       [300, 300]], dtype=np.float32)
-    # points = list(range(4))
-    image = read_image(image_path, resize_height=500, resize_width=500)
-    pointline = circle_line(len(points), iscircle=True)
-    show_image("image,", image)
-    align_color_img = draw_point_line(image, points.tolist(), pointline)
-    show_image("align_color_img,", align_color_img)
+    image_path = "/media/dm/dm1/git/python-learning-notes/dataset/dataset/A/test1.jpg"
+    image = read_image(image_path, 400, 400)
+    bbox = [100, 50, 280, 240]
+    roi = get_bbox_crop_padding(image, bbox)
+    center_crop_size = [300, 200]
+    center_image = center_crop_padding(roi, center_crop_size)
+    # center_image = center_crop(roi, center_crop_size)
+    show_image("roi:{}".format(roi.shape), roi)
+    show_image("center_image:{}".format(center_image.shape), center_image)
+    show_image("image_dict:{}".format(image.shape), image)
+
+    rect_image = show_image_boxes("rect", image, boxes_list=[bbox], waitKey=1)
+    show_image("rect_image:{}".format(rect_image.shape), rect_image)

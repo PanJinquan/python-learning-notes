@@ -6,14 +6,11 @@
     @E-mail : pan_jinquan@163.com
     @Date   : 2019-05-09 19:10:16
 """
-import xml.etree.ElementTree as ET
-import pickle
 import os
 import random
-from os import listdir, getcwd
-from os.path import join
 from utils import file_processing, image_processing
-from modules.dataset_tool import pascal_voc, comment
+from modules.dataset_tool import comment
+from modules.dataset_tool.voc import pascal_voc
 
 
 # for SSD  label，the first label is BACKGROUND：
@@ -55,7 +52,7 @@ def convert_voc_to_textdataset_for_annotation(annotations_list, image_dir, label
         image_name = name_id + image_type
         image_path = os.path.join(image_dir, image_name)
         if not os.path.exists(image_path):
-            print("no image:{}".format(image_path))
+            print("no image_dict:{}".format(image_path))
             continue
         if not os.path.exists(annotations_file):
             print("no annotations:{}".format(annotations_file))
@@ -74,12 +71,12 @@ def convert_voc_to_textdataset_for_annotation(annotations_list, image_dir, label
         file_processing.write_data(out_file, content_list, mode='w')
         if show:
             image = image_processing.read_image(image_path)
-            # rect_image = image_processing.get_rects_image(image,rects)
+            # rect_image = image_processing.get_rects_image(image_dict,rects)
             # save_root=DATASET_ROOT+"/trainval_faces"
             # image_processing.save_image_lable_dir(save_root, rect_image, class_name,i)
-            image_processing.show_image_rects_text("image", image, rects, class_name)
+            image_processing.show_image_rects_text("image_dict", image, rects, class_name)
         if i % 10 == 0 or i == len(annotations_list) - 1:
-            print("processing image:{}/{}".format(i, len(annotations_list) - 1))
+            print("processing image_dict:{}/{}".format(i, len(annotations_list) - 1))
     return name_id_list
 
 
@@ -157,7 +154,7 @@ def convert_voc_to_textdataset_for_image(image_list, annotations_dir, label_out_
         annotations_file = os.path.join(annotations_dir, ann_name)
 
         if not os.path.exists(image_path):
-            print("no image:{}".format(image_path))
+            print("no image_dict:{}".format(image_path))
             continue
         if not os.path.exists(annotations_file):
             print("no annotations:{}".format(annotations_file))
@@ -177,9 +174,9 @@ def convert_voc_to_textdataset_for_image(image_list, annotations_dir, label_out_
         file_processing.write_data(out_file, content_list, mode='w')
         if show:
             image = image_processing.read_image(image_path)
-            image_processing.show_image_rects_text("image", image, rects, class_name)
+            image_processing.show_image_rects_text("image_dict", image, rects, class_name)
         if i % 10 == 0 or i == len(image_list) - 1:
-            print("processing image:{}/{}".format(i, len(image_list) - 1))
+            print("processing image_dict:{}/{}".format(i, len(image_list) - 1))
     return name_id_list
 
 

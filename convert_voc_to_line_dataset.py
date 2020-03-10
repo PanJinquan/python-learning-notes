@@ -6,14 +6,11 @@
     @E-mail : pan_jinquan@163.com
     @Date   : 2019-05-09 19:10:16
 """
-import xml.etree.ElementTree as ET
-import pickle
 import os
 import random
-from os import listdir, getcwd
-from os.path import join
 from utils import file_processing, image_processing
-from modules.dataset_tool import pascal_voc, face_body
+from modules.dataset_tool import face_body
+from modules.dataset_tool.voc import pascal_voc
 
 
 # for SSD  label，the first label is BACKGROUND：
@@ -51,7 +48,7 @@ def convert_voc_to_linedataset(annotations_dir, image_list, class_names, out_fil
             annotations_file = os.path.join(annotations_dir, ann_name)
 
             if not os.path.exists(image_path):
-                print("no image:{}".format(image_path))
+                print("no image_dict:{}".format(image_path))
                 continue
             if not os.path.exists(annotations_file):
                 print("no annotations:{}".format(annotations_file))
@@ -70,9 +67,9 @@ def convert_voc_to_linedataset(annotations_dir, image_list, class_names, out_fil
 
             if show:
                 image = image_processing.read_image(image_path)
-                image_processing.show_image_rects_text("image", image, rects, class_name)
+                image_processing.show_image_rects_text("image_dict", image, rects, class_name)
             if i % 10 == 0 or i == len(image_list) - 1:
-                print("processing image:{}/{}".format(i, len(image_list) - 1))
+                print("processing image_dict:{}/{}".format(i, len(image_list) - 1))
 
 
 def linedataset_for_image(shuffle=True):
@@ -156,7 +153,7 @@ def linedataset_test(filename, classes, image_dir=None, show=True):
                     image_path = image_id
                 image = image_processing.read_image(image_path)
                 name_list = file_processing.decode_label(label, classes)
-                image_processing.show_image_bboxes_text("image", image, box, name_list)
+                image_processing.show_image_bboxes_text("image_dict", image, box, name_list)
 
 
 if __name__ == "__main__":
@@ -172,7 +169,7 @@ if __name__ == "__main__":
     DATASET_ROOT = "/media/dm/dm2/XMC/FaceDataset/NVR/NVR-Teacher2/"
     # annotations_dir = DATASET_ROOT + 'Annotations'
     # label_out_dir = DATASET_ROOT + 'label'
-    image_dir = DATASET_ROOT + "image"
+    image_dir = DATASET_ROOT + "image_dict"
 
     filename = DATASET_ROOT + "teacher_data_anno.txt"
     linedataset_test(filename, classes, image_dir)

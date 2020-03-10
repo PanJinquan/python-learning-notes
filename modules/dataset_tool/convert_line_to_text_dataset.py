@@ -21,7 +21,7 @@ def convert_line_to_text_dataset(anno_filename, label_out_dir, show=True):
 
 
 if __name__ == "__main__":
-    image_dir = '/media/dm/dm2/XMC/FaceDataset/NVR/NVR-Teacher2/image'
+    image_dir = '/media/dm/dm2/XMC/FaceDataset/NVR/NVR-Teacher2/image_dict'
     anno_filename = "/media/dm/dm2/XMC/FaceDataset/NVR/NVR-Teacher2/teacher_data_anno.txt"
     label_out_dir = "/media/dm/dm2/XMC/FaceDataset/NVR/NVR-Teacher2/label"
     convert_line_to_text_dataset(anno_filename, label_out_dir)

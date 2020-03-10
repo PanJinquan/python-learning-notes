@@ -14,8 +14,8 @@ class COCOeval:
     #  cocoGt=..., cocoDt=...       # load dataset and results
     #  E = CocoEval(cocoGt,cocoDt); # initialize CocoEval object
     #  E.params.recThrs = ...;      # set parameters as desired
-    #  E.evaluate();                # run per image evaluation
-    #  E.accumulate();              # accumulate per image results
+    #  E.evaluate();                # run per image_dict evaluation
+    #  E.accumulate();              # accumulate per image_dict results
     #  E.summarize();               # display summary metrics of results
     # For example usage see evalDemo.m and http://mscoco.org/.
     #
@@ -25,14 +25,14 @@ class COCOeval:
     #  iouThrs    - [.5:.05:.95] T=10 IoU thresholds for evaluation
     #  recThrs    - [0:.01:1] R=101 recall thresholds for evaluation
     #  areaRng    - [...] A=4 object area ranges for evaluation
-    #  maxDets    - [1 10 100] M=3 thresholds on max detections per image
+    #  maxDets    - [1 10 100] M=3 thresholds on max detections per image_dict
     #  iouType    - ['segm'] set iouType to 'segm', 'bbox' or 'keypoints'
     #  iouType replaced the now DEPRECATED useSegm parameter.
     #  useCats    - [1] if true use category labels for evaluation
     # Note: if useCats=0 category labels are ignored as in proposal scoring.
     # Note: multiple areaRngs [Ax2] and maxDets [Mx1] can be specified.
     #
-    # evaluate(): evaluates detections on every image and every category and
+    # evaluate(): evaluates detections on every image_dict and every category and
     # concats the results into the "evalImgs" with fields:
     #  dtIds      - [1xD] id for each of the D detections (dt)
     #  gtIds      - [1xG] id for each of the G ground truths (gt)
@@ -42,7 +42,7 @@ class COCOeval:
     #  gtIgnore   - [1xG] ignore flag for each gt
     #  dtIgnore   - [TxD] ignore flag for each dt at each IoU
     #
-    # accumulate(): accumulates the per-image, per-category evaluation
+    # accumulate(): accumulates the per-image_dict, per-category evaluation
     # results in "evalImgs" into the dictionary "eval" with fields:
     #  params     - parameters used for evaluation
     #  date       - date evaluation was performed
@@ -68,7 +68,7 @@ class COCOeval:
             print('iouType not specified. use default iouType segm')
         self.cocoGt   = cocoGt              # ground truth COCO API
         self.cocoDt   = cocoDt              # detections COCO API
-        self.evalImgs = defaultdict(list)   # per-image per-category evaluation results [KxAxI] elements
+        self.evalImgs = defaultdict(list)   # per-image_dict per-category evaluation results [KxAxI] elements
         self.eval     = {}                  # accumulated evaluation results
         self._gts = defaultdict(list)       # gt for evaluation
         self._dts = defaultdict(list)       # dt for evaluation
@@ -115,16 +115,16 @@ class COCOeval:
             self._gts[gt['image_id'], gt['category_id']].append(gt)
         for dt in dts:
             self._dts[dt['image_id'], dt['category_id']].append(dt)
-        self.evalImgs = defaultdict(list)   # per-image per-category evaluation results
+        self.evalImgs = defaultdict(list)   # per-image_dict per-category evaluation results
         self.eval     = {}                  # accumulated evaluation results
 
     def evaluate(self):
         '''
-        Run per image evaluation on given images and store results (a list of dict) in self.evalImgs
+        Run per image_dict evaluation on given images and store results (a list of dict) in self.evalImgs
         :return: None
         '''
         tic = time.time()
-        print('Running per image evaluation...')
+        print('Running per image_dict evaluation...')
         p = self.params
         # add backward compatibility if useSegm is specified in params
         if not p.useSegm is None:
@@ -234,8 +234,8 @@ class COCOeval:
 
     def evaluateImg(self, imgId, catId, aRng, maxDet):
         '''
-        perform evaluation for single category and image
-        :return: dict (single image results)
+        perform evaluation for single category and image_dict
+        :return: dict (single image_dict results)
         '''
         p = self.params
         if p.useCats:
@@ -297,7 +297,7 @@ class COCOeval:
         # set unmatched detections outside of area range to ignore
         a = np.array([d['area']<aRng[0] or d['area']>aRng[1] for d in dt]).reshape((1, len(dt)))
         dtIg = np.logical_or(dtIg, np.logical_and(dtm==0, np.repeat(a,T,0)))
-        # store results for given image and category
+        # store results for given image_dict and category
         return {
                 'image_id':     imgId,
                 'category_id':  catId,
@@ -314,7 +314,7 @@ class COCOeval:
 
     def accumulate(self, p = None):
         '''
-        Accumulate per image evaluation results and store the result in self.eval
+        Accumulate per image_dict evaluation results and store the result in self.eval
         :param p: input params for evaluation
         :return: None
         '''

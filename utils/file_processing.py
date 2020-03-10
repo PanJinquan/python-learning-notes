@@ -1,19 +1,34 @@
-# -*-coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
-    @Project: IntelligentManufacture
-    @File   : file_processing.py
-    @Author : panjq
-    @E-mail : pan_jinquan@163.com
-    @Date   : 2019-02-14 15:08:19
+# --------------------------------------------------------
+# @Project: torch-Face-Recognize-Pipeline
+# @Author : panjq
+# @E-mail : pan_jinquan@163.com
+# @Date   : 2019-12-31 09:11:25
+# --------------------------------------------------------
 """
 import glob
 import os
+import time
 import os, shutil
 import numpy as np
 import json
+import random
+import os
+import subprocess
+import concurrent.futures
+from datetime import datetime
+
+
+def get_time():
+    # return datetime.strftime(datetime.now(), '%Y%m%d_%H%M%S')
+    return datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
+    # return (str(datetime.now())[:-10]).replace(' ', '-').replace(':', '-')
 
 
 class WriterTXT(object):
+    """ write data in txt files"""
+
     def __init__(self, filename, mode='w'):
         self.f = open(filename, mode=mode)
 
@@ -34,16 +49,25 @@ class WriterTXT(object):
 
 
 def read_json_data(json_path):
-    # 读取数据
+    """
+    读取数据
+    :param json_path:
+    :return:
+    """
     with open(json_path, 'r') as f:
         json_data = json.load(f)
     return json_data
 
 
 def write_json_path(out_json_path, json_data):
-    # 写入 JSON 数据
+    """
+    写入 JSON 数据
+    :param out_json_path:
+    :param json_data:
+    :return:
+    """
     with open(out_json_path, 'w') as f:
-        json.dump(json_data, f)
+        json.dump(json_data, f,indent=4)
 
 
 def write_data(filename, content_list, mode='w'):
@@ -132,6 +156,10 @@ def read_line_image_label(line_image_label):
 
 
 def read_lines_image_labels(filename):
+    """
+    :param filename:
+    :return:
+    """
     boxes_label_lists = []
     with open(filename) as f:
         lines = f.readlines()
@@ -142,7 +170,11 @@ def read_lines_image_labels(filename):
 
 
 def is_int(str):
-    # 判断是否为整数
+    """
+    判断是否为整数
+    :param str:
+    :return:
+    """
     try:
         x = int(str)
         return isinstance(x, int)
@@ -151,7 +183,11 @@ def is_int(str):
 
 
 def is_float(str):
-    # 判断是否为整数和小数
+    """
+    判断是否为整数和小数
+    :param str:
+    :return:
+    """
     try:
         x = float(str)
         return isinstance(x, float)
@@ -160,6 +196,11 @@ def is_float(str):
 
 
 def list2str(content_list):
+    """
+    convert list to string
+    :param content_list:
+    :return:
+    """
     content_str_list = []
     for line_list in content_list:
         line_str = " ".join('%s' % id for id in line_list)
@@ -188,6 +229,11 @@ def get_images_list(image_dir, postfix=['*.jpg'], basename=False):
 
 
 def get_basename(file_list):
+    """
+    get files basename
+    :param file_list:
+    :return:
+    """
     dest_list = []
     for file_path in file_list:
         basename = os.path.basename(file_path)
@@ -195,7 +241,134 @@ def get_basename(file_list):
     return dest_list
 
 
-def copyfile(srcfile, dstfile):
+def remove_dir(dir):
+    """
+    remove directory
+    :param dir:
+    :return:
+    """
+    if os.path.exists(dir):
+        shutil.rmtree(dir)
+
+
+def randam_select_images(image_list, nums, shuffle=True):
+    """
+    randam select nums images
+    :param image_list:
+    :param nums:
+    :param shuffle:
+    :return:
+    """
+    image_nums = len(image_list)
+    if image_nums <= nums:
+        return image_list
+    if shuffle:
+        random.seed(100)
+        random.shuffle(image_list)
+    out = image_list[:nums]
+    return out
+
+
+def remove_file(path):
+    """
+    remove files
+    :param path:
+    :return:
+    """
+    if os.path.exists(path):
+        os.remove(path)
+
+
+def remove_file_list(file_list):
+    """
+    remove file list
+    :param file_list:
+    :return:
+    """
+    for file_path in file_list:
+        remove_file(file_path)
+
+
+def copy_dir_multi_thread(sync_source_root, sync_dest_dir, dataset, max_workers=1):
+    """
+    :param sync_source_dir:
+    :param sync_dest_dir:
+    :param dataset:
+    :return:
+    """
+
+    def rsync_cmd(source_dir, dest_dir):
+        cmd_line = "rsync -a {0} {1}".format(source_dir, dest_dir)
+        # subprocess.call(cmd_line.split())
+        subprocess.call(cmd_line)
+
+    sync_dest_dir = sync_dest_dir.rstrip('/')
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        future_to_rsync = {}
+        for source_dir in dataset:
+            sync_source_dir = os.path.join(sync_source_root, source_dir.strip('/'))
+            future_to_rsync[executor.submit(rsync_cmd, sync_source_dir, sync_dest_dir)] = source_dir
+
+        for future in concurrent.futures.as_completed(future_to_rsync):
+            source_dir = future_to_rsync[future]
+            try:
+                _ = future.result()
+            except Exception as exc:
+                print("%s copy data generated an exception: %s" % (source_dir, exc))
+            else:
+                print("%s copy data successful." % (source_dir,))
+
+
+def copy_dir_delete(src, dst):
+    """
+    copy src directory to dst directory,will detete the dst same directory
+    :param src:
+    :param dst:
+    :return:
+    """
+    if os.path.exists(dst):
+        shutil.rmtree(dst)
+    shutil.copytree(src, dst)
+    # time.sleep(3 / 1000.)
+
+
+def copy_dir(src, dst):
+    """ copy src-directory to dst-directory, will cover the same files"""
+    if not os.path.exists(src):
+        print("\nno src path:{}".format(src))
+        return
+    for root, dirs, files in os.walk(src, topdown=False):
+        dest_path = os.path.join(dst, os.path.relpath(root, src))
+        if not os.path.exists(dest_path):
+            os.makedirs(dest_path)
+        for filename in files:
+            copy_file(
+                os.path.join(root, filename),
+                os.path.join(dest_path, filename)
+            )
+
+
+def move_file(srcfile, dstfile):
+    """ 移动文件或重命名"""
+    if not os.path.isfile(srcfile):
+        print("%s not exist!" % (srcfile))
+    else:
+        fpath, fname = os.path.split(dstfile)  # 分离文件名和路径
+        if not os.path.exists(fpath):
+            os.makedirs(fpath)  # 创建路径
+        shutil.move(srcfile, dstfile)
+        # print("copy %s -> %s"%( srcfile,dstfile))
+        # time.sleep(1 / 1000.)
+
+
+def copy_file(srcfile, dstfile):
+    """
+    copy src file to dst file
+    :param srcfile:
+    :param dstfile:
+    :return:
+    """
     if not os.path.isfile(srcfile):
         print("%s not exist!" % (srcfile))
     else:
@@ -204,13 +377,58 @@ def copyfile(srcfile, dstfile):
             os.makedirs(fpath)  # 创建路径
         shutil.copyfile(srcfile, dstfile)  # 复制文件
         # print("copy %s -> %s"%( srcfile,dstfile))
+        # time.sleep(1 / 1000.)
+
+
+def merge_dir(src, dst, sub, merge_same):
+    src_dir = os.path.join(src, sub)
+    dst_dir = os.path.join(dst, sub)
+
+    if not os.path.exists(src_dir):
+        print("\nno src path:{}".format(src))
+        return
+    if not os.path.exists(dst_dir):
+        os.makedirs(dst_dir)
+    elif not merge_same:
+        t = get_time()
+        dst_dir = os.path.join(dst, sub + "_{}".format(t))
+        print("have save sub:{}".format(dst_dir))
+    copy_dir(src_dir, dst_dir)
+
+
+
+# def merge_dir(src, dst, merge_same=False):
+#     '''
+#     move and merge files, move/merge files from source directory to dst directory
+#     root 所指的是当前正在遍历的这个文件夹的本身的地址
+#     dirs 是一个 list ，内容是该文件夹中所有的目录的名字(不包括子目录)
+#     files 同样是 list , 内容是该文件夹中所有的文件(不包括子目录)
+#     :param source_dir:
+#     :param dest_dir:
+#     :return:
+#     '''
+#     if not os.path.exists(src):
+#         print("\nno src path:{}".format(src))
+#     for root, dirs, files in os.walk(src, topdown=False):
+#         dest_path = os.path.join(dst, os.path.relpath(root, src))
+#         if not os.path.exists(dest_path):
+#             os.makedirs(dest_path)
+#         for filename in files:
+#             copy_file(
+#                 os.path.join(root, filename),
+#                 os.path.join(dest_path, filename)
+#             )
 
 
 def create_dir(parent_dir, dir1=None, filename=None):
-    if parent_dir:
-        out_path = parent_dir
-    else:
-        return parent_dir
+    """
+    create directory
+    :param parent_dir:
+    :param dir1:
+    :param filename:
+    :return:
+    """
+    out_path = parent_dir
     if dir1:
         out_path = os.path.join(parent_dir, dir1)
     if not os.path.exists(out_path):
@@ -221,6 +439,11 @@ def create_dir(parent_dir, dir1=None, filename=None):
 
 
 def create_file_path(filename):
+    """
+    create file in path
+    :param filename:
+    :return:
+    """
     basename = os.path.basename(filename)
     dirname = os.path.dirname(filename)
     out_path = create_dir(dirname, dir1=None, filename=basename)
@@ -370,11 +593,22 @@ def encode_label(name_list, name_table, unknow=0):
 
 
 def list2dict(data):
+    """
+    convert list to dict
+    :param data:
+    :return:
+    """
     data = {data[i]: i for i in range(len(data))}
     return data
 
 
 def print_dict(dict_data, save_path):
+    """
+    print dict info
+    :param dict_data:
+    :param save_path:
+    :return:
+    """
     list_config = []
     for key in dict_data:
         info = "conf.{}={}".format(key, dict_data[key])
@@ -408,6 +642,34 @@ def read_pair_data(filename, split=True):
     return content_list
 
 
+def check_files(files_list, sizeTh=1*1024, isRemove=False):
+    ''' 去除不存的文件和文件过小的文件列表
+    :param files_list:
+    :param sizeTh: 文件大小阈值,单位：字节B，默认1000B ,33049513/1024/1024=33.0MB
+    :param isRemove: 是否在硬盘上删除被损坏的原文件
+    :return:
+    '''
+    i = 0
+    while i < len(files_list):
+        path = files_list[i]
+        # 判断文件是否存在
+        if not (os.path.exists(path)):
+            print(" non-existent file:{}".format(path))
+            files_list.pop(i)
+            continue
+        # 判断文件是否为空
+        f_size = os.path.getsize(path)
+        if f_size < sizeTh:
+            print(" empty file:{}".format(path))
+            if isRemove:
+                os.remove(path)
+                print(" info:----------------remove image_dict:{}".format(path))
+            files_list.pop(i)
+            continue
+        i += 1
+    return files_list
+
+
 def get_loacl_eth2():
     '''
     想要获取linux设备网卡接口，并用列表进行保存
@@ -439,22 +701,18 @@ def get_loacl_eth():
                 line = line.strip()
                 eth_list.append(line.lower())
     except Exception as e:
-        print(e)
-        eth_list = []
+        print(e, "can not found eth,will set default eth is:eth0")
+        eth_list = ["eth0"]
+    if not eth_list:
+        eth_list = ["eth0"]
     return eth_list
 
 
 if __name__ == '__main__':
-    filename = 'test.txt'
-    w_data = [['1.jpg', 'dog', 200, 300, 1.0], ['2.jpg', 'dog', 20, 30, -2]]
-    print("w_data=", w_data)
-    f = WriterTXT(filename)
-    f.write_line_list(w_data)
-    f.write_line_list(w_data)
-    # write_data(filename, w_data, mode='w')
-    # r_data = read_data(filename)
-    # print('r_data=', r_data)
-    # eth_list = get_loacl_eth()
-    # print(eth_list)
-    # input_dir = "/media/dm/dm/git/python-learning-notes/dataset/rec"
-    # get_sub_directory_list(input_dir)
+    import xmltodict
+
+    json_path1 = "/media/dm/dm1/git/python-learning-notes/dataset/person_keypoints_val2017.json"
+    json_path2 = "/media/dm/dm1/git/python-learning-notes/dataset/instances_val2017.json"
+    # json_path2 = "/media/dm/dm/X2/Pose/dataset/KeyPoints-Teacher/teacher_coco.json"
+    instances_data1 = read_json_data(json_path1)
+    instances_data2 = read_json_data(json_path2)

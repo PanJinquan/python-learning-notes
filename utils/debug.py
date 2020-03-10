@@ -1,14 +1,16 @@
-# -*-coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
-    @Project: tools
-    @File   : debug.py
-    @Author : panjq
-    @E-mail : pan_jinquan@163.com
-    @Date   : 2019-05-10 16:24:49
+# --------------------------------------------------------
+# @Project: torch-Face-Recognize-Pipeline
+# @Author : panjq
+# @Date   : 2019-9-20 13:18:34
+# --------------------------------------------------------
 """
+
 import datetime
 import logging
 from logging.handlers import TimedRotatingFileHandler
+from memory_profiler import profile
 
 
 def set_logging(name, level="info", logfile=None):
@@ -73,6 +75,7 @@ def run_time_decorator(title=""):
             result = func(*args, **kwargs)
             T1 = TIME()
             logger.debug("{}-- function : {}-- rum time : {}ms ".format(title, func.__name__, RUN_TIME(T1 - T0)))
+            # logger.debug("{}-- function : {}-- rum time : {}s ".format(title, func.__name__, RUN_TIME(T1 - T0)/1000.0))
             return result
 
         return wrapper
@@ -80,15 +83,34 @@ def run_time_decorator(title=""):
     return decorator
 
 
-logger = set_logging(name="FBPyramidBox", level="debug", logfile=None)
+logger = set_logging(name="LOG", level="debug", logfile=None)
+
+
+@profile(precision=4)
+def memory_test():
+    """
+    1.先导入：
+    > from memory_profiler import profile
+    2.函数前加装饰器：
+    > @profile(precision=4,stream=open('memory_profiler.log','w+'))
+　　　参数含义：precision:精确到小数点后几位
+　　　stream:此模块分析结果保存到 'memory_profiler.log' 日志文件。如果没有此参数，分析结果会在控制台输出
+    :return:
+    """
+    c = 0
+    for item in range(100000):
+        c += 1
+    print(c)
+
 
 if __name__ == '__main__':
-    T0 = TIME()
+    # T0 = TIME()
     # do something
-    T1 = TIME()
-    print("rum time:{}ms".format(RUN_TIME(T1 - T0)))
-    t_logger = set_logging(name=__name__, level="info", logfile=None)
-    t_logger.debug('debug')
-    t_logger.info('info')
-    t_logger.warning('Warning exists')
-    t_logger.error('Finish')
+    # T1 = TIME()
+    # print("rum time:{}ms".format(RUN_TIME(T1 - T0)))
+    # t_logger = set_logging(name=__name__, level="info", logfile=None)
+    # t_logger.debug('debug')
+    # t_logger.info('info')
+    # t_logger.warning('Warning exists')
+    # t_logger.error('Finish')
+    memory_test()

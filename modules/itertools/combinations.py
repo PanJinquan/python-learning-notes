@@ -15,7 +15,7 @@ import tqdm
 
 def get_combinations_pair_data(image_dir, weight=1):
     '''
-    get image_dir image list,combinations image
+    get image_dir image_dict list,combinations image_dict
     :param image_dir:
     :return:
     '''

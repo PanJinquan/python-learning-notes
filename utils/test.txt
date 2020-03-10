@@ -1,4 +1,0 @@
-1.jpg dog 200 300 1.0
-2.jpg dog 20 30 -2
-1.jpg dog 200 300 1.0
-2.jpg dog 20 30 -2

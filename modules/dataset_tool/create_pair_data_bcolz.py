@@ -13,12 +13,11 @@ import itertools
 from utils import file_processing, image_processing
 import tqdm
 import PIL.Image as Image
-from pathlib import Path
 
 
 def get_combinations_pair_data(image_dir, pair_num=0):
     '''
-    get image_dir image list,combinations image
+    get image_dir image_dict list,combinations image_dict
     :param image_dir:
     :return:
     '''
@@ -75,7 +74,7 @@ def get_combinations_pair_data(image_dir, pair_num=0):
 
 def get_combinations_pair_data_for_facebank_data(image_dir, pair_num=0):
     '''
-    get image_dir image list,combinations image
+    get image_dir image_dict list,combinations image_dict
     :param image_dir:
     :return:
     '''
@@ -188,7 +187,7 @@ def convert_image_to_bcolz(pair_filename, image_dir, save_dir, input_size=[112, 
         face1 = image_processing.resize_image(face1, resize_height=input_size[0], resize_width=input_size[1])
         face2 = image_processing.resize_image(face2, resize_height=input_size[0], resize_width=input_size[1])
         # img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-        # image_processing.cv_show_image("image",img)
+        # image_processing.cv_show_image("image_dict",img)
         face1 = Image.fromarray(face1.astype(np.uint8))
         face2 = Image.fromarray(face2.astype(np.uint8))
         data[i * 2, ...] = transform(face1)
