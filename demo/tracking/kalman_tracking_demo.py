@@ -14,6 +14,7 @@ import numpy as np
 
 class KalmanTracking(object):
     """称卡尔曼滤波器是线性滤波器"""
+
     def __init__(self):
         # 创建一个空帧，定义(700, 700, 3)画图区域
         self.frame = np.zeros((700, 700, 3), np.uint8)
@@ -22,10 +23,17 @@ class KalmanTracking(object):
         self.last_prediction = self.current_prediction = np.zeros((2, 1), np.float32)
 
         self.kalman = cv2.KalmanFilter(4, 2)  # 4：状态数，包括（x，y，dx，dy）坐标及速度（每次移动的距离）；2：观测量，能看到的是坐标值
-        self.kalman.measurementMatrix = np.array([[1, 0, 0, 0], [0, 1, 0, 0]], np.float32)  # 系统测量矩阵
-        self.kalman.transitionMatrix = np.array([[1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 0, 0, 1]],
+        self.kalman.measurementMatrix = np.array([[1, 0, 0, 0],
+                                                  [0, 1, 0, 0]], np.float32)  # 系统测量矩阵
+        self.kalman.transitionMatrix = np.array([[1, 0, 1, 0],
+                                                 [0, 1, 0, 1],
+                                                 [0, 0, 1, 0],
+                                                 [0, 0, 0, 1]],
                                                 np.float32)  # 状态转移矩阵
-        self.kalman.processNoiseCov = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]],
+        self.kalman.processNoiseCov = np.array([[1, 0, 0, 0],
+                                                [0, 1, 0, 0],
+                                                [0, 0, 1, 0],
+                                                [0, 0, 0, 1]],
                                                np.float32) * 0.03  # 系统过程噪声协方差
 
     def mousemove(self, event, x, y, s, p):

@@ -19,6 +19,53 @@ import base64
 import PIL.Image as Image
 
 
+def get_color_map(nums=25):
+    colors = [
+        "#FF0000", "#FF7F50", "#B0171F", "#872657", "#FF00FF",
+        "#FFFF00", "#FF8000", "#FF9912", "#DAA569", "#FF6100",
+        "#0000FF", "#3D59AB", "#03A89E", "#33A1C9", "#00C78C",
+        "#00FF00", "#385E0F", "#00C957", "#6B8E23", "#2E8B57",
+        "#A020F0", "#8A2BE2", "#A066D3", "#DA70D6", "#DDA0DD"]
+    colors = colors * int(np.ceil(nums / len(colors)))
+    return colors
+
+
+def get_color(id):
+    color = convert_color_map(COLOR_MAP[id])
+    return color
+
+
+def set_class_set(class_set=set()):
+    global CLASS_SET
+    CLASS_SET = class_set
+
+
+COLOR_MAP = get_color_map(200)
+CLASS_SET = set()
+
+
+def convert_color_map(color, colorType="BGR"):
+    '''
+    :param color:
+    :param colorType:
+    :return:
+    '''
+    assert (len(color) == 7 and color[0] == "#"), "input color error:color={}".format(color)
+    R = color[1:3]
+    G = color[3:5]
+    B = color[5:7]
+
+    R = int(R, 16)
+    G = int(G, 16)
+    B = int(B, 16)
+    if colorType == "BGR":
+        return (B, G, R)
+    elif colorType == "RGB":
+        return (R, G, B)
+    else:
+        assert "colorType error "
+
+
 def bound_protection(points, height, width):
     """
     Avoid array overbounds
@@ -37,7 +84,7 @@ def bound_protection(points, height, width):
 
 def tensor2image(batch_tensor, index=0):
     """
-    convert tensor to image_dict
+    convert tensor to image
     :param batch_tensor:
     :param index:
     :return:
@@ -52,7 +99,7 @@ def tensor2image(batch_tensor, index=0):
 def get_image_tensor(image_path, image_size, transpose=False):
     image = read_image(image_path)
     # transform = default_transform(image_size)
-    # torch_image = transform(image_dict).detach().numpy()
+    # torch_image = transform(image).detach().numpy()
     image = resize_image(image, int(128 * image_size[0] / 112), int(128 * image_size[1] / 112))
     image = center_crop(image, crop_size=image_size)
     image_tensor = image_normalization(image, mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
@@ -81,7 +128,7 @@ def show_batch_image(title, batch_imgs, index=0):
     :return:
     '''
     image = batch_imgs[index, :]
-    # image_dict = image_dict.numpy()  #
+    # image = image.numpy()  #
     image = np.array(image, dtype=np.float32)
     image = np.squeeze(image)
     if len(image.shape) == 3:
@@ -100,7 +147,7 @@ def show_image(title, rgb_image):
     :return:
     '''
     # plt.figure("show_image")
-    # print(image_dict.dtype)
+    # print(image.dtype)
     channel = len(rgb_image.shape)
     if channel == 3:
         plt.imshow(rgb_image)
@@ -123,9 +170,9 @@ def cv_show_image(title, image, type='rgb', waitKey=0):
     channels = img.shape[-1]
     if channels == 3 and type == 'rgb':
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)  # 将BGR转为RGB
-    cv2.imshow(title, img)
-    cv2.waitKey(waitKey)
-    return image
+    if title:
+        cv2.imshow(title, img)
+        cv2.waitKey(waitKey)
 
 
 def image_fliplr(image):
@@ -154,13 +201,13 @@ def get_prewhiten_image(x):
 def image_normalization(image, mean=None, std=None):
     '''
     正则化，归一化
-    image_dict[channel] = (image_dict[channel] - mean[channel]) / std[channel]
-    :param image: numpy image_dict
+    image[channel] = (image[channel] - mean[channel]) / std[channel]
+    :param image: numpy image
     :param mean: [0.5,0.5,0.5]
     :param std:  [0.5,0.5,0.5]
     :return:
     '''
-    # 不能写成:image_dict=image_dict/255
+    # 不能写成:image=image/255
     if isinstance(mean, list):
         mean = np.asarray(mean, dtype=np.float32)
     if isinstance(std, list):
@@ -236,10 +283,10 @@ def read_image(filename, resize_height=None, resize_width=None, normalization=Fa
     bgr_image = cv2.imread(filename)
     # bgr_image = cv2.imread(filename,cv2.IMREAD_IGNORE_ORIENTATION|cv2.IMREAD_UNCHANGED)
     if bgr_image is None:
-        print("Warning: no image_dict:{}".format(filename))
+        print("Warning: no image:{}".format(filename))
         return None
     if len(bgr_image.shape) == 2:  # 若是灰度图则转为三通道
-        print("Warning:gray image_dict", filename)
+        print("Warning:gray image", filename)
         bgr_image = cv2.cvtColor(bgr_image, cv2.COLOR_GRAY2BGR)
 
     if colorSpace == 'RGB':
@@ -248,13 +295,13 @@ def read_image(filename, resize_height=None, resize_width=None, normalization=Fa
         image = bgr_image
     else:
         exit(0)
-    # show_image(filename,image_dict)
-    # image_dict=Image.open(filename)
+    # show_image(filename,image)
+    # image=Image.open(filename)
     image = resize_image(image, resize_height, resize_width)
     image = np.asanyarray(image)
     if normalization:
         image = image_normalization(image)
-    # show_image("src resize image_dict",image_dict)
+    # show_image("src resize image",image)
     return image
 
 
@@ -272,18 +319,18 @@ def read_image_pil(filename, resize_height=None, resize_width=None, normalizatio
     rgb_image = Image.open(filename)
     rgb_image = np.asarray(rgb_image)
     if rgb_image is None:
-        print("Warning: no image_dict:{}".format(filename))
+        print("Warning: no image:{}".format(filename))
         return None
     if len(rgb_image.shape) == 2:  # 若是灰度图则转为三通道
-        print("Warning:gray image_dict", filename)
+        print("Warning:gray image", filename)
         rgb_image = cv2.cvtColor(rgb_image, cv2.COLOR_GRAY2BGR)
 
-    # show_image(filename,image_dict)
-    # image_dict=Image.open(filename)
+    # show_image(filename,image)
+    # image=Image.open(filename)
     image = resize_image(rgb_image, resize_height, resize_width)
     if normalization:
         image = image_normalization(image)
-    # show_image("src resize image_dict",image_dict)
+    # show_image("src resize image",image)
     return image
 
 
@@ -307,10 +354,10 @@ def read_image_gbk(filename, resize_height=None, resize_width=None, normalizatio
     # 或者：
     # bgr_image=cv2.imdecode(np.fromfile(filename,dtype=np.uint8),cv2.IMREAD_COLOR)
     if bgr_image is None:
-        print("Warning: no image_dict:{}".format(filename))
+        print("Warning: no image:{}".format(filename))
         return None
     if len(bgr_image.shape) == 2:  # 若是灰度图则转为三通道
-        print("Warning:gray image_dict", filename)
+        print("Warning:gray image", filename)
         bgr_image = cv2.cvtColor(bgr_image, cv2.COLOR_GRAY2BGR)
     if colorSpace == 'RGB':
         image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)  # 将BGR转为RGB
@@ -318,13 +365,13 @@ def read_image_gbk(filename, resize_height=None, resize_width=None, normalizatio
         image = bgr_image
     else:
         exit(0)
-    # show_image(filename,image_dict)
-    # image_dict=Image.open(filename)
+    # show_image(filename,image)
+    # image=Image.open(filename)
     image = resize_image(image, resize_height, resize_width)
     image = np.asanyarray(image)
     if normalization:
         image = image_normalization(image)
-    # show_image("src resize image_dict",image_dict)
+    # show_image("src resize image",image)
     return image
 
 
@@ -368,10 +415,10 @@ def read_images_url(url, resize_height=None, resize_width=None, normalization=Fa
         bgr_image = cv2.imread(url)
 
     if bgr_image is None:
-        print("Warning: no image_dict:{}".format(url))
+        print("Warning: no image:{}".format(url))
         return None
     if len(bgr_image.shape) == 2:  # 若是灰度图则转为三通道
-        print("Warning:gray image_dict", url)
+        print("Warning:gray image", url)
         bgr_image = cv2.cvtColor(bgr_image, cv2.COLOR_GRAY2BGR)
     if colorSpace == 'RGB':
         image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)  # 将BGR转为RGB
@@ -383,7 +430,7 @@ def read_images_url(url, resize_height=None, resize_width=None, normalization=Fa
     image = np.asanyarray(image)
     if normalization:
         image = image_normalization(image)
-    # show_image("src resize image_dict",image_dict)
+    # show_image("src resize image",image)
     return image
 
 
@@ -398,7 +445,7 @@ def read_image_batch(image_list):
     for image_path in image_list:
         image = read_images_url(image_path)
         if image is None:
-            print("no image_dict:{}".format(image_path))
+            print("no image:{}".format(image_path))
             continue
         image_batch.append(image)
         out_image_list.append(image_path)
@@ -440,10 +487,10 @@ def fast_read_image_roi(filename, orig_rect, ImreadModes=cv2.IMREAD_COLOR, norma
     bgr_image = cv2.imread(filename, flags=ImreadModes)
 
     if bgr_image is None:
-        print("Warning: no image_dict:{}".format(filename))
+        print("Warning: no image:{}".format(filename))
         return None
     if len(bgr_image.shape) == 2:  # 若是灰度图则转为三通道
-        print("Warning:gray image_dict", filename)
+        print("Warning:gray image", filename)
         bgr_image = cv2.cvtColor(bgr_image, cv2.COLOR_GRAY2BGR)
     if colorSpace == 'RGB':
         image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)  # 将BGR转为RGB
@@ -587,85 +634,142 @@ def get_rect_intersection(rec1, rec2):
     :param rec2:
     :return:
     '''
-    cx1, cy1, cx2, cy2 = rects2bboxes([rec1])[0]
-    gx1, gy1, gx2, gy2 = rects2bboxes([rec2])[0]
-    x1 = max(cx1, gx1)
-    y1 = max(cy1, gy1)
-    x2 = min(cx2, gx2)
-    y2 = min(cy2, gy2)
+    xmin1, ymin1, xmax1, ymax1 = rects2bboxes([rec1])[0]
+    xmin2, ymin2, xmax2, ymax2 = rects2bboxes([rec2])[0]
+    x1 = max(xmin1, xmin2)
+    y1 = max(ymin1, ymin2)
+    x2 = min(xmax1, xmax2)
+    y2 = min(ymax1, ymax2)
     w = max(0, x2 - x1)
     h = max(0, y2 - y1)
     return (x1, y1, w, h)
 
 
-def convert_color_map(color, colorType="BGR"):
+def get_bbox_intersection(box1, box2):
     '''
-    :param color:
-    :param colorType:
+    计算两个boxes的交集坐标
+    :param rec1:
+    :param rec2:
     :return:
     '''
-    assert (len(color) == 7 and color[0] == "#"), "input color error:color={}".format(color)
-    R = color[1:3]
-    G = color[3:5]
-    B = color[5:7]
-
-    R = int(R, 16)
-    G = int(G, 16)
-    B = int(B, 16)
-    if colorType == "BGR":
-        return (B, G, R)
-    elif colorType == "RGB":
-        return (R, G, B)
-    else:
-        assert "colorType error "
+    xmin1, ymin1, xmax1, ymax1 = box1
+    xmin2, ymin2, xmax2, ymax2 = box2
+    x1 = max(xmin1, xmin2)
+    y1 = max(ymin1, ymin2)
+    x2 = min(xmax1, xmax2)
+    y2 = min(ymax1, ymax2)
+    return (x1, y1, x2, y2)
 
 
-def get_color_map():
-    colors = ["#0000FF", "#FF0000", "#00FF00", "#FFFF00", "#00FFFF",
-              "#4169E1", "#FF9912", "#FF6100", "#00FF00", "#FF8000"]
-    return colors
+def draw_image_rects(bgr_image, rect_list, color=(0, 0, 255)):
+    thickness = 2
+    for rect in rect_list:
+        x, y, w, h = rect
+        point1 = (int(x), int(y))
+        point2 = (int(x + w), int(y + h))
+        cv2.rectangle(bgr_image, point1, point2, color, thickness=thickness)
+    return bgr_image
 
 
-def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, color=None, drawType="custom", waitKey=0, top=True):
+def draw_image_boxes(bgr_image, boxes_list, color=(0, 0, 255)):
+    thickness = 2
+    for box in boxes_list:
+        x1, y1, x2, y2 = box
+        point1 = (int(x1), int(y1))
+        point2 = (int(x2), int(y2))
+        cv2.rectangle(bgr_image, point1, point2, color, thickness=thickness)
+    return bgr_image
+
+
+def show_image_rects(win_name, image, rect_list, type="rgb", color=(0, 0, 255), waitKey=0):
+    '''
+    :param win_name:
+    :param image:
+    :param rect_list:[[ x, y, w, h],[ x, y, w, h]]
+    :return:
+    '''
+    image = draw_image_rects(image, rect_list, color)
+    cv_show_image(win_name, image, type, waitKey=waitKey)
+    return image
+
+
+def show_image_boxes(win_name, image, boxes_list, color=(0, 0, 255), waitKey=0):
+    '''
+    :param win_name:
+    :param image:
+    :param boxes_list:[[ x1, y1, x2, y2],[ x1, y1, x2, y2]]
+    :return:
+    '''
+    image = draw_image_boxes(image, boxes_list, color)
+    cv_show_image(win_name, image, waitKey=waitKey)
+    return image
+
+
+def draw_image_bboxes_text(rgb_image, boxes, boxes_name, color=None, drawType="custom", top=True):
     '''
     :param boxes_name:
-    :param bgr_image: bgr image_dict
+    :param bgr_image: bgr image
     :param color: BGR color:[B,G,R]
     :param boxes: [[x1,y1,x2,y2],[x1,y1,x2,y2]]
     :return:
     '''
-    bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
     # color_map=list(matplotlib.colors.cnames.values())
     # color_map=list(reversed(color_map))
-    class_set = list(set(boxes_name))
-    color_map = get_color_map() * len(class_set)
+    class_set = list(CLASS_SET)
+    if not class_set:
+        class_set = list(set(boxes_name))
+    set_color = color
     for name, box in zip(boxes_name, boxes):
         if not color:
             cls_id = class_set.index(name)
-            color = convert_color_map(color_map[cls_id])
+            set_color = get_color(cls_id)
         box = [int(b) for b in box]
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
         # cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), color, 2, 8, 0)
         # cv2.putText(bgr_image, str(name), (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, thickness=2)
-        custom_bbox_line(bgr_image, box, color, name, drawType, top)
+        custom_bbox_line(rgb_image, box, set_color, name, drawType, top)
     # cv2.imshow(title, bgr_image)
     # cv2.waitKey(0)
-    rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
-    if title:
-        cv_show_image(title, rgb_image, waitKey=waitKey)
     return rgb_image
 
 
-def show_image_rects_text(title, rgb_image, rects_list, rects_name, color=None, drawType="custom", waitKey=0):
+def show_image_bboxes_text(title, rgb_image, boxes, boxes_name, color=None, drawType="custom", waitKey=0, top=True):
+    '''
+    :param boxes_name:
+    :param bgr_image: bgr image
+    :param color: BGR color:[B,G,R]
+    :param boxes: [[x1,y1,x2,y2],[x1,y1,x2,y2]]
+    :return:
+    '''
+    bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
+    bgr_image = draw_image_bboxes_text(bgr_image, boxes, boxes_name, color, drawType, top)
+    rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
+    cv_show_image(title, rgb_image, waitKey=waitKey)
+    return rgb_image
+
+
+def draw_image_rects_text(rgb_image, rects, rects_name, color=None, drawType="custom", waitKey=0, top=True):
+    boxes = rects2bboxes(rects)
+    rgb_image = draw_image_bboxes_text(rgb_image, boxes, rects_name, color, drawType, waitKey, top)
+    return rgb_image
+
+
+def show_image_rects_text(title, rgb_image, rects, rects_name, color=None, drawType="custom", waitKey=0, top=True):
     '''
     :param rects_name:
-    :param bgr_image: bgr image_dict
+    :param bgr_image: bgr image
     :param rects: [[x1,y1,w,h],[x1,y1,w,h]]
     :return:
     '''
-    bbox_list = rects2bboxes(rects_list)
-    rgb_image = show_image_bboxes_text(title, rgb_image, bbox_list, rects_name, color, drawType, waitKey)
+    boxes = rects2bboxes(rects)
+    rgb_image = show_image_bboxes_text(title, rgb_image, boxes, rects_name, color, drawType, waitKey, top)
+    return rgb_image
+
+
+def draw_image_detection_rects(rgb_image, rects, probs, lables, color=None):
+    bboxes = rects2bboxes(rects)
+    rgb_image = draw_image_detection_bboxes(rgb_image, bboxes, probs, lables, color)
     return rgb_image
 
 
@@ -683,44 +787,47 @@ def show_image_detection_rects(title, rgb_image, rects, probs, lables, color=Non
     return rgb_image
 
 
-def show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, color=None, waitKey=0):
+def draw_image_detection_bboxes(rgb_image, bboxes, probs, labels, color=None):
     '''
     :param title:
     :param rgb_image:
     :param bboxes:  [[x1,y1,x2,y2],[x1,y1,x2,y2]]
     :param probs:
-    :param lables:
+    :param labels:
     :return:
     '''
-    class_set = list(set(lables))
-    boxes_name = combile_label_prob(lables, probs)
+    class_set = list(CLASS_SET)
+    if not class_set:
+        class_set = list(set(labels))
+    boxes_name = combile_label_prob(labels, probs)
     bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
     # color_map=list(matplotlib.colors.cnames.values())
     # color_map=list(reversed(color_map))
-    color_map = get_color_map()
-    for l, name, box in zip(lables, boxes_name, bboxes):
+    set_color = color
+    for l, name, box in zip(labels, boxes_name, bboxes):
         if not color:
             cls_id = class_set.index(l)
-            color = convert_color_map(color_map[cls_id])
-        else:
-            color = color
+            set_color = get_color(cls_id)
         box = [int(b) for b in box]
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2, 8, 0)
         # cv2.putText(bgr_image, name, (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), thickness=2)
         # cv2.rectangle(bgr_image, (box[0], box[1]), (box[2], box[3]), color, 2, 8, 0)
         # cv2.putText(bgr_image, str(name), (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, thickness=2)
-        custom_bbox_line(bgr_image, box, color, name, drawType="custom")
+        custom_bbox_line(bgr_image, box, set_color, name, drawType="custom")
     # cv2.imshow(title, bgr_image)
     # cv2.waitKey(0)
     rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
-    if title:
-        cv_show_image(title, rgb_image, waitKey=waitKey)
+    return rgb_image
+
+
+def show_image_detection_bboxes(title, rgb_image, bboxes, probs, lables, color=None, waitKey=0):
+    rgb_image = draw_image_detection_bboxes(rgb_image, bboxes, probs, lables, color)
+    cv_show_image(title, rgb_image, waitKey=waitKey)
     return rgb_image
 
 
 def custom_bbox_line(img, bbox, color, name, drawType="custom", top=True):
     """
-
     :param img:
     :param bbox:
     :param color:
@@ -730,14 +837,15 @@ def custom_bbox_line(img, bbox, color, name, drawType="custom", top=True):
     :return:
     """
     if drawType == "simple":
-        fontScale = 0.4
+        fontScale = 0.6
         thickness = 1
         cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), color, thickness, 8, 0)
         cv2.putText(img, str(name), (bbox[0], bbox[1]), cv2.FONT_HERSHEY_SIMPLEX, fontScale, color, thickness)
     elif drawType == "custom":
         cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), color, 2)
         # draw score roi
-        fontScale = 0.4
+        # fontScale = 0.4
+        fontScale = 0.6
         thickness = 1
         text_size, baseline = cv2.getTextSize(str(name), cv2.FONT_HERSHEY_SIMPLEX, fontScale, thickness)
         if top:
@@ -783,15 +891,7 @@ def show_boxList(win_name, boxList, rgb_image, waitKey=0):
     return rgb_image
 
 
-def show_landmark_boxes(win_name, img, landmarks_list, boxes):
-    '''
-    显示landmark和boxex
-    :param win_name:
-    :param image_dict:
-    :param landmarks_list: [[x1, y1], [x2, y2]]
-    :param boxes:     [[ x1, y1, x2, y2],[ x1, y1, x2, y2]]
-    :return:
-    '''
+def draw_landmark(img, landmarks_list):
     image = copy.copy(img)
     point_size = 1
     point_color = (0, 0, 255)  # BGR
@@ -801,8 +901,20 @@ def show_landmark_boxes(win_name, img, landmarks_list, boxes):
             # 要画的点的坐标
             point = (int(landmark[0]), int(landmark[1]))
             cv2.circle(image, point, point_size, point_color, thickness)
-    if win_name:
-        image = show_image_boxes(win_name, image, boxes)
+    return image
+
+
+def show_landmark_boxes(win_name, img, landmarks_list, boxes):
+    '''
+    显示landmark和boxex
+    :param win_name:
+    :param image:
+    :param landmarks_list: [[x1, y1], [x2, y2]]
+    :param boxes:     [[ x1, y1, x2, y2],[ x1, y1, x2, y2]]
+    :return:
+    '''
+    image = draw_landmark(img, landmarks_list)
+    image = show_image_boxes(win_name, image, boxes)
     return image
 
 
@@ -810,21 +922,12 @@ def show_landmark(win_name, img, landmarks_list, waitKey=0):
     '''
     显示landmark和boxex
     :param win_name:
-    :param image_dict:
+    :param image:
     :param landmarks_list: [[x1, y1], [x2, y2]]
     :return:
     '''
-    image = copy.copy(img)
-    point_size = 1
-    point_color = (0, 0, 255)  # BGR
-    thickness = 4  # 可以为 0 、4、8
-    for landmarks in landmarks_list:
-        for landmark in landmarks:
-            # 要画的点的坐标
-            point = (int(landmark[0]), int(landmark[1]))
-            cv2.circle(image, point, point_size, point_color, thickness)
-    if win_name:
-        cv_show_image(win_name, image, waitKey=waitKey)
+    image = draw_landmark(img, landmarks_list)
+    cv_show_image(win_name, image, waitKey=waitKey)
     return image
 
 
@@ -905,11 +1008,10 @@ def draw_key_point_in_image(image, key_points, pointline=[]):
     '''
     img = copy.deepcopy(image)
     person_nums = len(key_points)
-    color_map = get_color_map() * person_nums
     for person_id, points in enumerate(key_points):
         if points is None:
             continue
-        color = convert_color_map(color_map[person_id])
+        color = get_color(person_id)
         img = draw_point_line(img, points, pointline, color, check=True)
     return img
 
@@ -966,44 +1068,9 @@ def circle_line(num_point, iscircle=True):
     return points_line
 
 
-def show_image_rects(win_name, image, rect_list, type="rgb", color=(0, 0, 255), waitKey=0):
-    '''
-    :param win_name:
-    :param image:
-    :param rect_list:[[ x, y, w, h],[ x, y, w, h]]
-    :return:
-    '''
-    for rect in rect_list:
-        x, y, w, h = rect
-        point1 = (int(x), int(y))
-        point2 = (int(x + w), int(y + h))
-        cv2.rectangle(image, point1, point2, color, thickness=2)
-    if win_name:
-        cv_show_image(win_name, image, type, waitKey=waitKey)
-    return image
-
-
-def show_image_boxes(win_name, image, boxes_list, color=(0, 0, 255), waitKey=0):
-    '''
-    :param win_name:
-    :param image:
-    :param boxes_list:[[ x1, y1, x2, y2],[ x1, y1, x2, y2]]
-    :return:
-    '''
-    thickness = 2
-    for box in boxes_list:
-        x1, y1, x2, y2 = box
-        point1 = (int(x1), int(y1))
-        point2 = (int(x2), int(y2))
-        cv2.rectangle(image, point1, point2, color, thickness=thickness)
-    if win_name:
-        cv_show_image(win_name, image, waitKey=waitKey)
-    return image
-
-
 def rgb_to_gray(image):
     '''
-    RGB to Gray image_dict
+    RGB to Gray image
     :param image:
     :return:
     '''
@@ -1146,7 +1213,7 @@ def filtering_scores(bboxes_list, scores_list, labels_list, score_threshold=0.0)
 def image_to_base64(rgb_image):
     bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
     image = cv2.imencode('.jpg', bgr_image)[1]
-    # image_base64 = str(base64.b64encode(image_dict))[2:-1]
+    # image_base64 = str(base64.b64encode(image))[2:-1]
     image_base64 = base64.b64encode(image)
     image_base64 = str(image_base64, encoding='utf-8')
     return image_base64
@@ -1183,13 +1250,13 @@ def bin2image(bin_data, resize_height=None, resize_width=None, normalization=Fal
         image = bgr_image
     else:
         exit(0)
-    # show_image(filename,image_dict)
-    # image_dict=Image.open(filename)
+    # show_image(filename,image)
+    # image=Image.open(filename)
     image = resize_image(image, resize_height, resize_width)
     image = np.asanyarray(image)
     if normalization:
         image = image_normalization(image)
-    # show_image("src resize image_dict",image_dict)
+    # show_image("src resize image",image)
     return image
 
 
@@ -1260,97 +1327,6 @@ def convert_anchor(anchors, height, width):
         ymax = anchor[3] * height
         boxes_list.append([xmin, ymin, xmax, ymax])
     return boxes_list
-
-
-class EventCv():
-    def __init__(self):
-        self.image = None
-
-    def update_image(self, image):
-        self.image = image
-
-    def callback_print_image(self, event, x, y, flags, param):
-        if event == cv2.EVENT_LBUTTONDOWN:
-            print("(x,y)=({},{}),data={}".format(x, y, self.image[y][x]))
-
-    def add_mouse_event(self, winname, param=None, callbackFunc=None):
-        '''
-         添加点击事件
-        :param winname:
-        :param param:
-        :param callbackFunc:
-        :return:
-        '''
-        cv2.namedWindow(winname)
-        if callbackFunc is None:
-            callbackFunc = self.callback_print_image
-        cv2.setMouseCallback(winname, callbackFunc, param=param)
-
-
-def addMouseCallback(winname, param, callbackFunc=None):
-    '''
-     添加点击事件
-    :param winname:
-    :param param:
-    :param callbackFunc:
-    :return:
-    '''
-    cv2.namedWindow(winname)
-
-    def default_callbackFunc(event, x, y, flags, param):
-        if event == cv2.EVENT_LBUTTONDOWN:
-            print("(x,y)=({},{}),data={}".format(x, y, param[y][x]))
-
-    if callbackFunc is None:
-        callbackFunc = default_callbackFunc
-    cv2.setMouseCallback(winname, callbackFunc, param)
-
-
-class CVVideo():
-    def __init__(self):
-        pass
-
-    def start_capture(self, video_path, detect_freq):
-        """
-        start capture video
-        :param video_path:
-        :param detect_freq:
-        :return:
-        """
-        camera = cv2.VideoCapture(video_path)
-        numFrames = int(camera.get(cv2.CAP_PROP_FRAME_COUNT))
-        fps = int(camera.get(cv2.CAP_PROP_FPS))
-        freq = int(fps / detect_freq)
-        count = 0
-        while True:
-            isSuccess, frame = camera.read()
-            if not isSuccess:
-                break
-            if count % freq == 0:
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            count += 1
-        camera.release()
-
-    def get_video_capture(self, video_path):
-        self.video_cap = cv2.VideoCapture(video_path)
-        return self.video_cap
-
-    def get_video_info(self):
-        width = int(self.video_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height = int(self.video_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        numFrames = int(self.video_cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        fps = int(self.video_cap.get(cv2.CAP_PROP_FPS))
-        return width, height, fps
-
-    def get_video_writer(self, save_path, width, height, fps):
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        frameSize = (width, height)
-        self.video_writer = cv2.VideoWriter(save_path, fourcc, fps, frameSize)
-        print("video:width:{},height:{},fps:{}".format(width, height, fps))
-        return self.video_writer
-
-    def write(self, img):
-        self.video_writer.write(img)
 
 
 def get_rect_crop_padding(image, rect):
@@ -1426,7 +1402,7 @@ def get_rects_crop_padding(image, rects, resize_height=None, resize_width=None):
 def center_crop(image, crop_size=[112, 112]):
     '''
     central_crop
-    :param image: input numpy type image_dict
+    :param image: input numpy type image
     :param crop_size:crop_size must less than x.shape[:2]=[crop_h,crop_w]
     :return:
     '''
@@ -1452,6 +1428,109 @@ def center_crop_padding(image, crop_size):
     return roi_image
 
 
+def addMouseCallback(winname, param, callbackFunc=None):
+    '''
+     添加点击事件
+    :param winname:
+    :param param:
+    :param callbackFunc:
+    :return:
+    '''
+    cv2.namedWindow(winname)
+
+    def default_callbackFunc(event, x, y, flags, param):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            print("(x,y)=({},{}),data={}".format(x, y, param[y][x]))
+
+    if callbackFunc is None:
+        callbackFunc = default_callbackFunc
+    cv2.setMouseCallback(winname, callbackFunc, param)
+
+
+class EventCv():
+    def __init__(self):
+        self.image = None
+
+    def update_image(self, image):
+        self.image = image
+
+    def callback_print_image(self, event, x, y, flags, param):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            print("(x,y)=({},{}),data={}".format(x, y, self.image[y][x]))
+
+    def add_mouse_event(self, winname, param=None, callbackFunc=None):
+        '''
+         添加点击事件
+        :param winname:
+        :param param:
+        :param callbackFunc:
+        :return:
+        '''
+        cv2.namedWindow(winname)
+        if callbackFunc is None:
+            callbackFunc = self.callback_print_image
+        cv2.setMouseCallback(winname, callbackFunc, param=param)
+
+
+class CVVideo():
+    def __init__(self):
+        pass
+
+    def start_capture(self, video_path, save_video=None, detect_freq=1):
+        """
+        start capture video
+        :param video_path: *.avi,*.mp4,...
+        :param save_video: *.avi
+        :param detect_freq:
+        :return:
+        """
+        video_cap = self.get_get_video_capture(video_path)
+        width, height, numFrames, fps = self.get_video_info()
+        if save_video:
+            self.video_writer = self.get_video_writer(save_video, width, height, fps)
+        # freq = int(fps / detect_freq)
+        count = 0
+        while True:
+            isSuccess, frame = video_cap.read()
+            if not isSuccess:
+                break
+            if count % detect_freq == 0:
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                self.do_something(frame)
+            if save_video:
+                self.write_video(frame)
+            count += 1
+        video_cap.release()
+
+    @staticmethod
+    def get_get_video_capture(video_path):
+        video_cap = cv2.VideoCapture(video_path)
+        return video_cap
+
+    @staticmethod
+    def get_video_info(video_cap):
+        width = int(video_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(video_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        numFrames = int(video_cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        fps = int(video_cap.get(cv2.CAP_PROP_FPS))
+        return width, height, numFrames, fps
+
+    @staticmethod
+    def get_video_writer(save_path, width, height, fps):
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        frameSize = (width, height)
+        video_writer = cv2.VideoWriter(save_path, fourcc, fps, frameSize)
+        print("video:width:{},height:{},fps:{}".format(width, height, fps))
+        return video_writer
+
+    def write_video(self, img):
+        self.video_writer.write(img)
+
+    def do_something(self, frame):
+        # TODO
+        return frame
+
+
 if __name__ == "__main__":
     image_path = "/media/dm/dm1/git/python-learning-notes/dataset/dataset/A/test1.jpg"
     image = read_image(image_path, 400, 400)
@@ -1462,7 +1541,7 @@ if __name__ == "__main__":
     # center_image = center_crop(roi, center_crop_size)
     show_image("roi:{}".format(roi.shape), roi)
     show_image("center_image:{}".format(center_image.shape), center_image)
-    show_image("image_dict:{}".format(image.shape), image)
+    show_image("image:{}".format(image.shape), image)
 
     rect_image = show_image_boxes("rect", image, boxes_list=[bbox], waitKey=1)
     show_image("rect_image:{}".format(rect_image.shape), rect_image)
