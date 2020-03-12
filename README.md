@@ -1,14 +1,34 @@
-# tools
-> 自己封装的工具类函数
+# python-learning-notes
 
-## Linux
-```bash
-nohup python custom_train.py --batch_size=8 1>> train.log &
-jobs -l
-ps aux|grep python
-kill 7080
-nvidia-smi
 ```
+    ├── dataset
+    ├── modules
+    ├── demo
+    ├── script
+    ├── utils
+    ├── coco_demo.py
+    ├── convert_voc_to_line_dataset.py
+    ├── convert_voc_to_text_dataset.py
+    ├── face_body_text_dataset.py
+    ├── demo_test.py
+    ├── README.md
+    ├── setup.py
+    └── voc_demo.py
+```
+
+
+## Linux CMD
+
+- remove git cached
+> git rm -r --cached .              <br/>
+> git add .                         <br/>
+> git commit -m 'update .gitignore' <br/>
+
+- 统计当前文件夹下文件的个数，包括子文件夹里的
+> ls -lR|grep "^-"|wc -l
+- 统计文件夹下目录的个数，包括子文件夹里的
+> ls -lR|grep "^d"|wc -l
+
 
 
 
