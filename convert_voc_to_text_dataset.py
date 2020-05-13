@@ -10,7 +10,7 @@ import os
 import random
 from utils import file_processing, image_processing
 from modules.dataset_tool import comment
-from modules.dataset_tool.voc import pascal_voc
+from modules.dataset_tool.voc_tools import pascal_voc
 
 
 # for SSD  label，the first label is BACKGROUND：
@@ -20,7 +20,7 @@ from modules.dataset_tool.voc import pascal_voc
 #            "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
 # for wall
 # classes = ["PCwall"]
-# classes = ["BACKGROUND","person", "dog"]
+classes = ["BACKGROUND","person"]
 # print("class_name:{}".format(classes))
 
 
@@ -101,7 +101,7 @@ def text_dataset_for_annotation(annotations_dir, image_dir, label_out_dir, out_t
         random.shuffle(annotations_list)
 
     # 分割成train和val数据集
-    factor = 1.0
+    factor = 0.8
     train_num = int(factor * len(annotations_list))
     train_annotations_list = annotations_list[:train_num]
     val_annotations_list = annotations_list[train_num:]
@@ -160,7 +160,9 @@ def convert_voc_to_textdataset_for_image(image_list, annotations_dir, label_out_
             print("no annotations:{}".format(annotations_file))
             continue
         out_file = os.path.join(label_out_dir, name_id + ".txt")
-        rects, class_name, class_id = pascal_voc.get_annotation(annotations_file, class_names, minAreaTH=500,
+        rects, class_name, class_id = pascal_voc.get_annotation(annotations_file,
+                                                                class_names,
+                                                                minAreaTH=500,
                                                                 coordinatesType=coordinatesType)
         if len(rects) == 0 or len(class_name) == 0 or len(class_id) == 0:
             print("no class in annotations:{}".format(annotations_file))
@@ -269,7 +271,8 @@ def xmc_data():
 
 
 def voc_data():
-    dataset = "/media/dm/dm/project/dataset/voc/VOCdevkit/VOC2007"
+    # dataset = "/media/dm/dm2/project/dataset/voc/VOCdevkit/VOC2012"
+    dataset = "/media/dm/dm2/project/dataset/voc/VOCdevkit/VOC2007"
     annotations_dir = os.path.join(dataset, "Annotations")
     label_out_dir = os.path.join(dataset, "label")
     image_dir = os.path.join(dataset, "JPEGImages")
@@ -293,19 +296,19 @@ if __name__ == "__main__":
     # classes = ["BACKGROUND", 'PCwall']
     # classes = ["BACKGROUND","aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
 
-    # annotations_dir = '/media/dm/dm2/project/dataset/face/Annotations'
-    # label_out_dir = '/media/dm/dm2/project/dataset/face/label'
-    # image_dir = "/media/dm/dm2/project/dataset/face/JPEGImages"
-    # out_train_val_path = "/media/dm/dm2/project/dataset/face/"  # 输出 train/val 文件
-
+    # annotations_dir = '/media/dm/dm2/project/dataset/voc/VOCdevkit/VOC2007/Annotations'
+    # label_out_dir = '/media/dm/dm2/project/dataset/voc/VOCdevkit/VOC2007/label'
+    # image_dir = "/media/dm/dm2/project/dataset/voc/VOCdevkit/VOC2007/JPEGImages"
+    # out_train_val_path = "/media/dm/dm2/project/dataset/voc/VOCdevkit/VOC2007"  # 输出 train/val 文件
+    #
     # coordinatesType = "SSD"
     # show = False
     # labelType="class_id"
-    # text_dataset_for_annotation(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,labelType=labelType,
-    #                             show=show)
+    # # text_dataset_for_annotation(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,labelType=labelType,
+    # #                             show=show)
     # text_dataset_for_image(annotations_dir, image_dir, label_out_dir, out_train_val_path, classes, coordinatesType,
     #                        show=show)
-
+    #
     # batch_label_test(label_out_dir, image_dir, classes=classes)
-    xmc_data()
-    # voc_data()
+    # xmc_data()
+    voc_data()

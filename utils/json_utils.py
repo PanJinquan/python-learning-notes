@@ -36,6 +36,7 @@ def load_config(config_file='config.yaml'):
 
 def print_dict(dict_data, save_path=None):
     list_config = []
+    print("--" * 30)
     for key in dict_data:
         info = "{}: {}".format(key, dict_data[key])
         print(info)
@@ -44,6 +45,7 @@ def print_dict(dict_data, save_path=None):
         with open(save_path, "w") as f:
             for info in list_config:
                 f.writelines(info + "\n")
+    print("--" * 30)
 
 
 if __name__ == '__main__':

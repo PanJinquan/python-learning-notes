@@ -9,6 +9,7 @@
 # 导入需要用到的库
 import numpy as np
 import matplotlib.pyplot as plt
+import PIL.Image as Image
 
 
 def plot_bar(x_data, y_data, title, xlabel, ylabel, isshow=False):
@@ -28,6 +29,7 @@ def plot_bar(x_data, y_data, title, xlabel, ylabel, isshow=False):
     plt.title(title)
     plt.legend(loc="lower right")  # "upper right"
     # plt.legend(loc="upper right")#"upper right"
+    plt.grid(True)  # 显示网格;
     plt.savefig('out.png')
     if isshow:
         plt.show()
@@ -58,8 +60,10 @@ def plot_multi_line(x_data_list, y_data_list, line_names=None, title="", xlabel=
             ylim_min = min(y)
     # plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
     # plt.plot([0, 1], [1, 0], color='navy', lw=lw, linestyle='--')  # 绘制y=1-x的直线
-    plt.xlim([xlim_min - 0.05, xlim_max + 0.5])
-    plt.ylim([ylim_min - 0.05, ylim_max + 0.5])
+    x_deta = xlim_max - xlim_min
+    y_deta = ylim_max - ylim_min
+    plt.xlim([xlim_min - 0.01 * x_deta, xlim_max + 0.1 * x_deta])
+    plt.ylim([ylim_min - 0.01 * y_deta, ylim_max + 0.1 * y_deta])
     # 设置横纵坐标的名称以及对应字体格式
     font = {'family': 'Times New Roman',
             'weight': 'normal',
@@ -71,4 +75,27 @@ def plot_multi_line(x_data_list, y_data_list, line_names=None, title="", xlabel=
     plt.title(title)
     plt.legend(loc="lower right")  # "upper right"
     # plt.legend(loc="upper right")#"upper right"
+    plt.grid(True)  # 显示网格;
     plt.show()
+
+
+def demo(image1, image2):
+    fig = plt.figure(2)  # 新开一个窗口
+    # fig1
+    ax1 = fig.add_subplot(1, 2, 1)
+    ax1.imshow(image1)
+    ax1.set_title("image1")
+
+    # fig2
+    ax2 = fig.add_subplot(1, 2, 2)
+    ax2.imshow(image2)
+    ax2.set_title("image2")
+    plt.show()
+
+
+if __name__ == "__main__":
+    import cv2
+    image_path="/media/dm/dm1/git/python-learning-notes/dataset/test_image/1.jpg"
+    image=cv2.imread(image_path)
+    image1=cv2.resize(image,dsize=(100,100))
+    demo(image, image1)

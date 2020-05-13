@@ -1,0 +1,240 @@
+Video Frame / Video Frame - Predicted Frame / File
+2357 	1 	S9 Directions 1
+2360 	4 	S9 Directions 1
+2360 	4 	S9 Directions 1
+2357 	1 	S9 Directions 1
+2701 	2 	S9 Directions
+2704 	5 	S9 Directions
+2704 	5 	S9 Directions
+2701 	2 	S9 Directions
+5875 	2 	S9 Discussion 1
+5879 	6 	S9 Discussion 1
+5879 	6 	S9 Discussion 1
+5875 	2 	S9 Discussion 1
+5307 	1 	S9 Discussion 2
+5311 	5 	S9 Discussion 2
+5311 	5 	S9 Discussion 2
+5307 	1 	S9 Discussion 2
+2664 	1 	S9 Eating 1
+2667 	4 	S9 Eating 1
+2667 	4 	S9 Eating 1
+2664 	1 	S9 Eating 1
+2687 	1 	S9 Eating
+2691 	5 	S9 Eating
+2691 	5 	S9 Eating
+2687 	1 	S9 Eating
+2712 	1 	S9 Greeting 1
+2715 	4 	S9 Greeting 1
+2715 	4 	S9 Greeting 1
+2712 	1 	S9 Greeting 1
+2899 	1452 	S9 Greeting
+2902 	1455 	S9 Greeting
+2902 	1455 	S9 Greeting
+2899 	1452 	S9 Greeting
+3822 	1 	S9 Phoning 1
+3825 	4 	S9 Phoning 1
+3825 	4 	S9 Phoning 1
+3822 	1 	S9 Phoning 1
+3465 	146 	S9 Phoning
+3468 	149 	S9 Phoning
+3468 	149 	S9 Phoning
+3465 	146 	S9 Phoning
+1450 	1 	S9 Photo 1
+1453 	4 	S9 Photo 1
+1453 	4 	S9 Photo 1
+1450 	1 	S9 Photo 1
+2347 	1 	S9 Photo
+2350 	4 	S9 Photo
+2350 	4 	S9 Photo
+2347 	1 	S9 Photo
+1969 	1 	S9 Posing 1
+1971 	3 	S9 Posing 1
+1971 	3 	S9 Posing 1
+1969 	1 	S9 Posing 1
+1965 	1 	S9 Posing
+1968 	4 	S9 Posing
+1968 	4 	S9 Posing
+1965 	1 	S9 Posing
+1227 	1 	S9 Purchases 1
+1228 	2 	S9 Purchases 1
+1228 	2 	S9 Purchases 1
+1227 	1 	S9 Purchases 1
+1530 	1 	S9 Purchases
+1533 	4 	S9 Purchases
+1533 	4 	S9 Purchases
+1530 	1 	S9 Purchases
+3073 	2 	S9 Sitting 1
+3076 	5 	S9 Sitting 1
+3076 	5 	S9 Sitting 1
+3073 	2 	S9 Sitting 1
+2963 	1 	S9 Sitting
+2968 	6 	S9 Sitting
+2968 	6 	S9 Sitting
+2963 	1 	S9 Sitting
+2788 	1234 	S9 SittingDown 1
+2791 	1237 	S9 SittingDown 1
+2791 	1237 	S9 SittingDown 1
+2788 	1234 	S9 SittingDown 1
+2933 	1 	S9 SittingDown
+2936 	4 	S9 SittingDown
+2936 	4 	S9 SittingDown
+2933 	1 	S9 SittingDown
+4378 	1 	S9 Smoking 1
+4383 	6 	S9 Smoking 1
+4383 	6 	S9 Smoking 1
+4378 	1 	S9 Smoking 1
+4336 	2 	S9 Smoking
+4340 	6 	S9 Smoking
+4340 	6 	S9 Smoking
+4336 	2 	S9 Smoking
+3390 	1778 	S9 Waiting 1
+3393 	1781 	S9 Waiting 1
+3393 	1781 	S9 Waiting 1
+3390 	1778 	S9 Waiting 1
+3313 	1 	S9 Waiting
+3316 	4 	S9 Waiting
+3316 	4 	S9 Waiting
+3313 	1 	S9 Waiting
+2218 	1 	S9 WalkDog 1
+2221 	4 	S9 WalkDog 1
+2221 	4 	S9 WalkDog 1
+2218 	1 	S9 WalkDog 1
+2239 	2 	S9 WalkDog
+2242 	5 	S9 WalkDog
+2242 	5 	S9 WalkDog
+2239 	2 	S9 WalkDog
+1686 	1 	S9 WalkTogether 1
+1688 	3 	S9 WalkTogether 1
+1688 	3 	S9 WalkTogether 1
+1686 	1 	S9 WalkTogether 1
+1704 	1 	S9 WalkTogether
+1706 	3 	S9 WalkTogether
+1706 	3 	S9 WalkTogether
+1704 	1 	S9 WalkTogether
+2447 	1 	S9 Walking 1
+2450 	4 	S9 Walking 1
+2450 	4 	S9 Walking 1
+2447 	1 	S9 Walking 1
+3115 	1503 	S9 Walking
+3117 	1505 	S9 Walking
+3117 	1505 	S9 Walking
+3115 	1503 	S9 Walking
+1553 	1 	S11 Directions 1
+1560 	8 	S11 Directions 1
+1560 	8 	S11 Directions 1
+1553 	1 	S11 Directions 1
+1828 	3 	S11 Directions
+1828 	3 	S11 Directions
+1826 	1 	S11 Directions
+2685 	1 	S11 Discussion 1
+2688 	4 	S11 Discussion 1
+2688 	4 	S11 Discussion 1
+2685 	1 	S11 Discussion 1
+2199 	1 	S11 Discussion 2
+2202 	4 	S11 Discussion 2
+2202 	4 	S11 Discussion 2
+2199 	1 	S11 Discussion 2
+2276 	1 	S11 Eating 1
+2278 	3 	S11 Eating 1
+2278 	3 	S11 Eating 1
+2276 	1 	S11 Eating 1
+2205 	2 	S11 Eating
+2207 	4 	S11 Eating
+2207 	4 	S11 Eating
+2205 	2 	S11 Eating
+1696 	1 	S11 Greeting 2
+1699 	4 	S11 Greeting 2
+1699 	4 	S11 Greeting 2
+1696 	1 	S11 Greeting 2
+1809 	1 	S11 Greeting
+1812 	4 	S11 Greeting
+1812 	4 	S11 Greeting
+1809 	1 	S11 Greeting
+3493 	1 	S11 Phoning 2
+3496 	4 	S11 Phoning 2
+3496 	4 	S11 Phoning 2
+3493 	1 	S11 Phoning 2
+3391 	1 	S11 Phoning 3
+3394 	4 	S11 Phoning 3
+3394 	4 	S11 Phoning 3
+3391 	1 	S11 Phoning 3
+1546 	1 	S11 Photo 1
+1548 	3 	S11 Photo 1
+1548 	3 	S11 Photo 1
+1546 	1 	S11 Photo 1
+1992 	2 	S11 Photo
+1994 	4 	S11 Photo
+1994 	4 	S11 Photo
+1992 	2 	S11 Photo
+1482 	1 	S11 Posing 1
+1484 	3 	S11 Posing 1
+1484 	3 	S11 Posing 1
+1482 	1 	S11 Posing 1
+1407 	0 	S11 Posing
+1409 	2 	S11 Posing
+1409 	2 	S11 Posing
+1407 	0 	S11 Posing
+1027 	1 	S11 Purchases 1
+1029 	3 	S11 Purchases 1
+1029 	3 	S11 Purchases 1
+1027 	1 	S11 Purchases 1
+1042 	2 	S11 Purchases
+1044 	4 	S11 Purchases
+1044 	4 	S11 Purchases
+1042 	2 	S11 Purchases
+1859 	2 	S11 Sitting 1
+1861 	4 	S11 Sitting 1
+1861 	4 	S11 Sitting 1
+1859 	2 	S11 Sitting 1
+2180 	1 	S11 Sitting
+2182 	3 	S11 Sitting
+2182 	3 	S11 Sitting
+2180 	1 	S11 Sitting
+2005 	1 	S11 SittingDown 1
+2008 	4 	S11 SittingDown 1
+2008 	4 	S11 SittingDown 1
+2005 	1 	S11 SittingDown 1
+1842 	1 	S11 SittingDown
+1844 	3 	S11 SittingDown
+1844 	3 	S11 SittingDown
+1842 	1 	S11 SittingDown
+2768 	1 	S11 Smoking 2
+2772 	5 	S11 Smoking 2
+2772 	5 	S11 Smoking 2
+2768 	1 	S11 Smoking 2
+2410 	0 	S11 Smoking
+2414 	4 	S11 Smoking
+2414 	4 	S11 Smoking
+2410 	0 	S11 Smoking
+2281 	1 	S11 Waiting 1
+2283 	3 	S11 Waiting 1
+2283 	3 	S11 Waiting 1
+2281 	1 	S11 Waiting 1
+2263 	1 	S11 Waiting
+2266 	4 	S11 Waiting
+2266 	4 	S11 Waiting
+2263 	1 	S11 Waiting
+1188 	1 	S11 WalkDog 1
+1191 	4 	S11 WalkDog 1
+1191 	4 	S11 WalkDog 1
+1188 	1 	S11 WalkDog 1
+1436 	1 	S11 WalkDog
+1438 	3 	S11 WalkDog
+1438 	3 	S11 WalkDog
+1436 	1 	S11 WalkDog
+1794 	1 	S11 WalkTogether 1
+1796 	3 	S11 WalkTogether 1
+1796 	3 	S11 WalkTogether 1
+1794 	1 	S11 WalkTogether 1
+1361 	1 	S11 WalkTogether
+1362 	2 	S11 WalkTogether
+1362 	2 	S11 WalkTogether
+1361 	1 	S11 WalkTogether
+1638 	1 	S11 Walking 1
+1640 	3 	S11 Walking 1
+1640 	3 	S11 Walking 1
+1638 	1 	S11 Walking 1
+1622 	1 	S11 Walking
+1624 	3 	S11 Walking
+1624 	3 	S11 Walking
+1622 	1 	S11 Walking

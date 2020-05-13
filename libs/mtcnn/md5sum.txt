@@ -1,0 +1,3 @@
+8fb3010a2d22924b3b923410fd4418eb  X2-face-detection-pnet.pth.tar
+d3b6a5de9fc3dbd922fe76f165349e2a  X2-face-detection-rnet.pth.tar
+20bafd84a8c2ae7f268c2797b54f4bb2  X2-face-detection-onet.pth.tar

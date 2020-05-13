@@ -10,7 +10,7 @@ import os
 import random
 from utils import file_processing, image_processing
 from modules.dataset_tool import face_body
-from modules.dataset_tool.voc import pascal_voc
+from modules.dataset_tool.voc_tools import pascal_voc
 
 
 # for SSD  label，the first label is BACKGROUND：

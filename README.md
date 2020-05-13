@@ -3,7 +3,7 @@
 ```
     ├── dataset
     ├── modules
-    ├── demo
+    ├── tutorial
     ├── script
     ├── utils
     ├── coco_demo.py
@@ -15,7 +15,11 @@
     ├── setup.py
     └── voc_demo.py
 ```
-
+##
+- line_dataset
+> [image_path,boxes_nums,x1, y1, w, h, label_id,x1, y1, w, h, label_id,...]
+- text_dataset
+> [label_id,x,y,w,h]
 
 ## Linux CMD
 
@@ -28,9 +32,23 @@
 > ls -lR|grep "^-"|wc -l
 - 统计文件夹下目录的个数，包括子文件夹里的
 > ls -lR|grep "^d"|wc -l
+- 软链接文件:“ln –s 源文件 目标文件”(类似与windows的快捷方式)
+> ln -s / /home/good/linkname
+- get `val2017_gt` `file list` and save in val2017_gt.txt
+> ls val2017_gt|less > val2017_gt.txt
+- get `val2017_gt` `file list ID` and save in val2017_gt.txt
+> ls val2017_gt|awk -F "." '{print $1}'|less > val2017_gt.txt
+-
+> ls facebank_DMFR_V1|head -n 3000 |awk '{print "cp -rf facebank_DMFR_V1/"$0, "DMAI" }'|sh
+- Bash shell中的位置参数
+```bash
+$0是脚本本身的名字
+$1是传递给该shell脚本的第一个参数
+$2是传递给该shell脚本的第二个参数
+```
 
-
-
+## Train
+- OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 CUDA_VISIBLE_DEVICES=4,5,6,7 python demo.py
 
 ## pyinstaller打包
 ### 常用命令：pyinstaller -F -w  pyinstaller_demo.py

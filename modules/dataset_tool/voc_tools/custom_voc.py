@@ -48,11 +48,13 @@ class CustomVoc():
         """
         xml_path = os.path.join(xml_dir, "*.xml")
         xml_list = glob.glob(xml_path)
+        xml_list=sorted(xml_list)
         return xml_list
 
     @staticmethod
     def read_xml2json(xml_file):
         """
+        import xmltodict
         :param xml_file:
         :return:
         """
@@ -93,7 +95,8 @@ class CustomVoc():
             area = (xmax - xmin) * (ymax - ymin)
         return seg, area
 
-    def get_annotation(self, xml_file):
+    @staticmethod
+    def get_annotation(xml_file):
         """
         keypoints = object["keypoints"]
         joint = np.asarray(keypoints).reshape(17, 3)
@@ -101,7 +104,7 @@ class CustomVoc():
         :param xml_file:
         :return:
         """
-        content = self.read_xml2json(xml_file)
+        content = CustomVoc.read_xml2json(xml_file)
         annotation = content["annotation"]
         # get image shape
         width = int(annotation["size"]["width"])
@@ -109,7 +112,7 @@ class CustomVoc():
         depth = int(annotation["size"]["depth"])
 
         filename = annotation["filename"]
-        self.check_image(filename, shape=(height, width, depth))
+        # self.check_image(filename, shape=(height, width, depth))
 
         objects_list = []
         objects = annotation["object"]
@@ -146,20 +149,22 @@ class CustomVoc():
         :return:
         """
         for xml_file in self.xml_list:
-            anns = self.get_annotation(xml_file)
+            anns = CustomVoc.get_annotation(xml_file)
             filename = anns["image"]
             object = anns["object"]
             keypoints = []
             bboxes = []
+            class_name = []
             for item in object:
                 joint = item["keypoints"]
                 joint = np.asarray(joint).reshape(17, 3)
                 joint = joint[:, 0:2]
                 keypoints.append(joint.tolist())
                 bboxes.append(item["bbox"])
+                class_name.append(item["class_name"])
             image_path = os.path.join(self.image_dir, filename)
             image = image_processing.read_image(image_path)
-            self.show(filename, image, keypoints, bboxes, vis=True)
+            self.show(filename, image, keypoints, bboxes, class_name, vis=True)
 
     def write_to_json(self, json_dir):
         file_processing.create_dir(json_dir)
@@ -169,35 +174,38 @@ class CustomVoc():
             json_path = os.path.join(json_dir, name + ".json")
             file_processing.write_json_path(json_path, anns)
 
-    def show(self, filename, image, keypoints, bboxes, vis=True):
-        save_image = True
+    def show(self, filename, image, keypoints, bboxes, class_name, vis=True):
+        is_save = True
         for i, joints in enumerate(keypoints):
             if np.sum(np.asarray(joints[5])) == 0 or np.sum(np.asarray(joints[6])) == 0 or \
                     np.sum(np.asarray(joints[11])) == 0 or np.sum(np.asarray(joints[12])) == 0:
-                save_image = False
+                is_save = False
             else:
-                save_image = True
+                is_save = True
             chest_joint = (np.asarray(joints[5]) + np.asarray(joints[6])) / 2
             hip_joint = (np.asarray(joints[11]) + np.asarray(joints[12])) / 2
             keypoints[i].append(chest_joint.tolist())
             keypoints[i].append(hip_joint.tolist())
 
         if vis:
-            image_processing.show_image_boxes(None, image, bboxes)
+            image_processing.draw_image_bboxes_text(image, bboxes, class_name)
             # image_processing.show_image_boxes(None, image, joints_bbox, color=(255, 0, 0))
             image = image_processing.draw_key_point_in_image(image, keypoints, pointline=self.skeleton)
             # image_processing.cv_show_image("Det", image, waitKey=0)
-            if save_image:
-                out_dir = "/media/dm/dm/project/dataset/COCO/HumanPose/LeXue_teacher/Posture/1"
-                out_dir = file_processing.create_dir(out_dir)
-                out_image_path = os.path.join(out_dir, filename)
-                image_processing.save_image(out_image_path, image)
-            else:
-                out_dir = "/media/dm/dm/project/dataset/COCO/HumanPose/LeXue_teacher/Posture/unknown/1"
-                out_dir = file_processing.create_dir(out_dir)
-                out_image_path = os.path.join(out_dir, filename)
-                image_processing.save_image(out_image_path, image)
+            # self.save_images(image, filename, is_save)
+            image_processing.cv_show_image("Det", image)
 
+    def save_images(self, image, filename, is_save):
+        if is_save:
+            out_dir = "/media/dm/dm/project/dataset/COCO/HumanPose/LeXue_teacher/Posture/1"
+            out_dir = file_processing.create_dir(out_dir)
+            out_image_path = os.path.join(out_dir, filename)
+            image_processing.save_image(out_image_path, image)
+        else:
+            out_dir = "/media/dm/dm/project/dataset/COCO/HumanPose/LeXue_teacher/Posture/unknown/1"
+            out_dir = file_processing.create_dir(out_dir)
+            out_image_path = os.path.join(out_dir, filename)
+            image_processing.save_image(out_image_path, image)
 
 
 if __name__ == '__main__':
@@ -208,8 +216,6 @@ if __name__ == '__main__':
 
     image_dir = "/media/dm/dm/project/dataset/COCO/HumanPose/LeXue_teacher/images/1"
     anno_dir = "/media/dm/dm/project/dataset/COCO/HumanPose/LeXue_teacher/annotations/src/1"
-    label_file = "/media/dm/dm/project/dataset/COCO/HumanPose/LeXue_teacher/annotations/src/1_bbox.txt"
-    out_voc_ann = "/media/dm/dm/project/dataset/COCO/HumanPose/LeXue_teacher/annotations/voc/1"
     #
-    VOC2coco = CustomVoc(out_voc_ann, image_dir=image_dir, seg_dir=None)
+    VOC2coco = CustomVoc(anno_dir, image_dir=image_dir, seg_dir=None)
     VOC2coco.decode_voc()

@@ -43,6 +43,14 @@ def set_class_set(class_set=set()):
 COLOR_MAP = get_color_map(200)
 CLASS_SET = set()
 
+cmap = plt.get_cmap('rainbow')
+
+
+def get_colors(nums):
+    colors = [cmap(i) for i in np.linspace(0, 1, nums + 2)]
+    colors = [(c[2], c[1], c[0]) for c in colors]
+    return colors
+
 
 def convert_color_map(color, colorType="BGR"):
     '''
@@ -104,7 +112,7 @@ def get_image_tensor(image_path, image_size, transpose=False):
     image = center_crop(image, crop_size=image_size)
     image_tensor = image_normalization(image, mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
     if transpose:
-        image_tensor = image_tensor.transpose(2, 0, 1)
+        image_tensor = image_tensor.transpose(2, 0, 1)  # NHWC->NCHW
     image_tensor = image_tensor[np.newaxis, :]
     # std = np.std(torch_image-image_tensor)
     return image_tensor
@@ -705,19 +713,19 @@ def show_image_boxes(win_name, image, boxes_list, color=(0, 0, 255), waitKey=0):
     return image
 
 
-def draw_image_bboxes_text(rgb_image, boxes, boxes_name, color=None, drawType="custom", top=True):
-    '''
+def draw_image_bboxes_text(rgb_img, boxes, boxes_name, color=None, drawType="custom", top=True):
+    """
     :param boxes_name:
     :param bgr_image: bgr image
     :param color: BGR color:[B,G,R]
     :param boxes: [[x1,y1,x2,y2],[x1,y1,x2,y2]]
     :return:
-    '''
+    """
+    rgb_image = rgb_img.copy()
     # color_map=list(matplotlib.colors.cnames.values())
     # color_map=list(reversed(color_map))
-    class_set = list(CLASS_SET)
-    if not class_set:
-        class_set = list(set(boxes_name))
+    if not color:
+        class_set = list(CLASS_SET) if CLASS_SET else list(set(boxes_name))
     set_color = color
     for name, box in zip(boxes_name, boxes):
         if not color:
@@ -891,16 +899,17 @@ def show_boxList(win_name, boxList, rgb_image, waitKey=0):
     return rgb_image
 
 
-def draw_landmark(img, landmarks_list):
-    image = copy.copy(img)
+def draw_landmark(image, landmarks_list, point_color=(0, 0, 255), vis_id=False):
+    image = copy.copy(image)
     point_size = 1
-    point_color = (0, 0, 255)  # BGR
     thickness = 4  # 可以为 0 、4、8
     for landmarks in landmarks_list:
-        for landmark in landmarks:
+        for i, landmark in enumerate(landmarks):
             # 要画的点的坐标
             point = (int(landmark[0]), int(landmark[1]))
             cv2.circle(image, point, point_size, point_color, thickness)
+            if vis_id:
+                image = draw_points_text(image, [point], texts=str(i), color=point_color, drawType="simple")
     return image
 
 
@@ -918,7 +927,7 @@ def show_landmark_boxes(win_name, img, landmarks_list, boxes):
     return image
 
 
-def show_landmark(win_name, img, landmarks_list, waitKey=0):
+def show_landmark(win_name, img, landmarks_list, vis_id=False, waitKey=0):
     '''
     显示landmark和boxex
     :param win_name:
@@ -926,7 +935,7 @@ def show_landmark(win_name, img, landmarks_list, waitKey=0):
     :param landmarks_list: [[x1, y1], [x2, y2]]
     :return:
     '''
-    image = draw_landmark(img, landmarks_list)
+    image = draw_landmark(img, landmarks_list, vis_id=vis_id)
     cv_show_image(win_name, image, waitKey=waitKey)
     return image
 
@@ -938,7 +947,7 @@ def draw_points_text(img, points, texts=None, color=(0, 0, 255), drawType="custo
     :param points:
     :param texts:
     :param color:
-    :param drawType: custom or custom
+    :param drawType: custom or simple
     :return:
     '''
     thickness = 5
@@ -956,7 +965,7 @@ def draw_text(img, point, text, bg_color=(255, 0, 0), drawType="custom"):
     :param img:
     :param point:
     :param text:
-    :param drawType: custom or custom
+    :param drawType: custom or simple
     :return:
     '''
     fontScale = 0.4
@@ -973,7 +982,7 @@ def draw_text(img, point, text, bg_color=(255, 0, 0), drawType="custom"):
         cv2.putText(img, str(text), (text_loc[0], text_loc[1] + baseline), fontFace, fontScale,
                     (255, 255, 255), text_thickness, 8)
     elif drawType == "simple":
-        cv2.putText(img, '%d' % (text), point, fontFace, 0.5, (255, 0, 0))
+        cv2.putText(img, str(text), point, fontFace, 0.5, (255, 0, 0))
     return img
 
 
@@ -1042,7 +1051,7 @@ def draw_point_line(img, points, pointline=[], color=(0, 255, 0), texts=None, dr
         if check:
             if point1 is None or point2 is None:
                 continue
-            if sum(point1) == 0 or sum(point2) == 0:
+            if sum(point1) <= 0 or sum(point2) <= 0:
                 continue
         cv2.line(image, point1, point2, color, line_thickness)  # 绿色，3个像素宽度
     return image
@@ -1260,29 +1269,6 @@ def bin2image(bin_data, resize_height=None, resize_width=None, normalization=Fal
     return image
 
 
-def extend_boxes(faces_boxes, width_factor=1.0, height_factor=1.0):
-    '''
-    extend boxes ,such as extend faces_boxes to body_boxes
-    :param faces_boxes:
-    :param width_factor:
-    :param height_factor:
-    :return:
-    '''
-    body_boxes = []
-    for face_box in faces_boxes:
-        [x1, y1, x2, y2] = face_box
-        w = (x2 - x1)
-        h = (y2 - y1)
-        x1 = x1 - width_factor * w
-        y1 = y1 - width_factor * h
-        x1 = np.where(x1 > 0, x1, 0)
-        y1 = np.where(y1 > 0, y1, 0)
-        w = 3 * width_factor * w
-        h = height_factor * h
-        body_boxes.append([x1, y1, x1 + w, y1 + h])
-    return body_boxes
-
-
 def post_process(input, axis=1):
     '''
     l2_norm
@@ -1428,6 +1414,144 @@ def center_crop_padding(image, crop_size):
     return roi_image
 
 
+def extend_face2body_bboxes(faces_boxes, width_factor=1.0, height_factor=1.0):
+    '''
+    extend boxes ,such as extend faces_boxes to body_boxes
+    :param faces_boxes:
+    :param width_factor:
+    :param height_factor:
+    :return:
+    '''
+    body_boxes = []
+    for face_box in faces_boxes:
+        [x1, y1, x2, y2] = face_box
+        w = (x2 - x1)
+        h = (y2 - y1)
+        x1 = x1 - width_factor * w
+        y1 = y1 - width_factor * h
+        x1 = np.where(x1 > 0, x1, 0)
+        y1 = np.where(y1 > 0, y1, 0)
+        w = 3 * width_factor * w
+        h = height_factor * h
+        body_boxes.append([x1, y1, x1 + w, y1 + h])
+    return body_boxes
+
+
+def extend_rects(rects, scale=[1.0, 1.0]):
+    """
+    :param rects:
+    :param scale: [sx,sy]==>(W,H)
+    :return:
+    """
+    bboxes = rects2bboxes(rects)
+    out_bboxes = extend_bboxes(bboxes, scale)
+    out_rects = bboxes2rects(out_bboxes)
+    return out_rects
+
+
+def extend_bboxes(bboxes, scale=[1.0, 1.0]):
+    """
+    :param bboxes: [[xmin, ymin, xmax, ymax]]
+    :param scale: [sx,sy]==>(W,H)
+    :return:
+    """
+    out_bboxes = []
+    sx = scale[0]
+    sy = scale[1]
+    for box in bboxes:
+        xmin, ymin, xmax, ymax = box
+        cx = (xmin + xmax) / 2
+        cy = (ymin + ymax) / 2
+
+        ex_w = (xmax - xmin) * sx
+        ex_h = (ymax - ymin) * sy
+        ex_xmin = cx - 0.5 * ex_w
+        ex_ymin = cy - 0.5 * ex_h
+        ex_xmax = ex_xmin + ex_w
+        ex_ymax = ex_ymin + ex_h
+        ex_box = [ex_xmin, ex_ymin, ex_xmax, ex_ymax]
+        out_bboxes.append(ex_box)
+    return out_bboxes
+
+
+def get_square_bboxes(bboxes, fixed="H"):
+    '''
+    :param bboxes:
+    :param fixed: (W)width (H)height,(L) longest edge
+    :return:
+    '''
+    new_bboxes = []
+    for bbox in bboxes:
+        xmin, ymin, xmax, ymax = bbox
+        w = xmax - xmin
+        h = ymax - ymin
+        cx, cy = (int((xmin + xmax) / 2), int((ymin + ymax) / 2))
+        if fixed in ["H", "h"]:
+            dd = h / 2
+        elif fixed in ["W", "w"]:
+            dd = w / 2
+        elif fixed in ["L", "l"]:
+            l = max(w, h)
+            dd = l / 2
+        else:
+            l = max(w, h)
+            dd = l / 2 * fixed
+        fxmin = int(cx - dd)
+        fymin = int(cy - dd)
+        fxmax = int(cx + dd)
+        fymax = int(cy + dd)
+        new_bbox = (fxmin, fymin, fxmax, fymax)
+        new_bboxes.append(new_bbox)
+    return new_bboxes
+
+
+def get_square_rects(rects, fixed="H"):
+    """
+    ------------------------
+    e.g.:
+    image_path = "../dataset/dataset/A/test1.jpg"
+    image = read_image(image_path, 400, 400)
+    rects = [[100, 50, 180, 50]]
+    print(rects)
+    rect_image = show_image_rects("rect", image, rects, waitKey=1)
+    rects2 = get_square_rects(rects, fixed="h")
+    # red is square_rects
+    rect_image = show_image_rects("rect", rect_image, rects2, color=(255, 0, 0), waitKey=0)
+    ------------------------
+    :param rects:
+    :param fixed:
+    :return:
+    """
+    bboxes = rects2bboxes(rects)
+    out_bboxes = get_square_bboxes(bboxes, fixed)
+    out_rects = bboxes2rects(out_bboxes)
+    return out_rects
+
+
+def fig2data(fig):
+    """
+    fig = plt.figure()
+    image = fig2data(fig)
+    @brief Convert a Matplotlib figure to a 4D numpy array with RGBA channels and return it
+    @param fig a matplotlib figure
+    @return a numpy 3D array of RGBA values
+    """
+    # draw the renderer
+    fig.canvas.draw()
+
+    # Get the RGBA buffer from the figure
+    w, h = fig.canvas.get_width_height()
+    buf = np.fromstring(fig.canvas.tostring_argb(), dtype=np.uint8)
+    buf.shape = (w, h, 4)
+
+    # canvas.tostring_argb give pixmap in ARGB mode. Roll the ALPHA channel to have it in RGBA mode
+    buf = np.roll(buf, 3, axis=2)
+    image = Image.frombytes("RGBA", (w, h), buf.tostring())
+    image = np.asarray(image)
+    image = cv2.cvtColor(image, cv2.COLOR_RGBA2RGB)
+    return image
+
+
 def addMouseCallback(winname, param, callbackFunc=None):
     '''
      添加点击事件
@@ -1472,6 +1596,44 @@ class EventCv():
         cv2.setMouseCallback(winname, callbackFunc, param=param)
 
 
+def get_video_capture(video_path, width=640, height=480):
+    """
+     --   7W   Pix--> width=320,height=240
+     --   30W  Pix--> width=640,height=480
+     720P,100W Pix--> width=1280,height=720
+     960P,130W Pix--> width=1280,height=1024
+    1080P,200W Pix--> width=1920,height=1080
+    :param video_path:
+    :param width:
+    :param height:
+    :return:
+    """
+    video_cap = cv2.VideoCapture(video_path)
+    # 设置分辨率
+    video_cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+    video_cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+    fps = int(video_cap.get(cv2.CAP_PROP_FPS))
+    print("video:width:{},height:{},fps:{}".format(width, height, fps))
+    return video_cap
+
+
+def get_video_info(video_cap):
+    width = int(video_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    numFrames = int(video_cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    fps = int(video_cap.get(cv2.CAP_PROP_FPS))
+    print("video:width:{},height:{},fps:{}".format(width, height, fps))
+    return width, height, numFrames, fps
+
+
+def get_video_writer(save_path, width, height, fps):
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    frameSize = (int(width), int(height))
+    video_writer = cv2.VideoWriter(save_path, fourcc, fps, frameSize)
+    print("video:width:{},height:{},fps:{}".format(width, height, fps))
+    return video_writer
+
+
 class CVVideo():
     def __init__(self):
         pass
@@ -1484,10 +1646,11 @@ class CVVideo():
         :param detect_freq:
         :return:
         """
-        video_cap = self.get_get_video_capture(video_path)
-        width, height, numFrames, fps = self.get_video_info()
+        # cv2.moveWindow("test", 1000, 100)
+        video_cap = get_video_capture(video_path)
+        width, height, numFrames, fps = get_video_info(video_cap)
         if save_video:
-            self.video_writer = self.get_video_writer(save_video, width, height, fps)
+            self.video_writer = get_video_writer(save_video, width, height, fps)
         # freq = int(fps / detect_freq)
         count = 0
         while True:
@@ -1496,52 +1659,29 @@ class CVVideo():
                 break
             if count % detect_freq == 0:
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                self.do_something(frame)
+                self.task(frame)
             if save_video:
                 self.write_video(frame)
             count += 1
         video_cap.release()
 
-    @staticmethod
-    def get_get_video_capture(video_path):
-        video_cap = cv2.VideoCapture(video_path)
-        return video_cap
+    def write_video(self, frame):
+        self.video_writer.write(frame)
 
-    @staticmethod
-    def get_video_info(video_cap):
-        width = int(video_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height = int(video_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        numFrames = int(video_cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        fps = int(video_cap.get(cv2.CAP_PROP_FPS))
-        return width, height, numFrames, fps
-
-    @staticmethod
-    def get_video_writer(save_path, width, height, fps):
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        frameSize = (width, height)
-        video_writer = cv2.VideoWriter(save_path, fourcc, fps, frameSize)
-        print("video:width:{},height:{},fps:{}".format(width, height, fps))
-        return video_writer
-
-    def write_video(self, img):
-        self.video_writer.write(img)
-
-    def do_something(self, frame):
+    def task(self, frame):
         # TODO
+        cv2.imshow("image", frame)
+        cv2.moveWindow("image", 0, 0)
+        cv2.waitKey(10)
         return frame
 
 
 if __name__ == "__main__":
-    image_path = "/media/dm/dm1/git/python-learning-notes/dataset/dataset/A/test1.jpg"
+    image_path = "../dataset/dataset/A/test1.jpg"
     image = read_image(image_path, 400, 400)
-    bbox = [100, 50, 280, 240]
-    roi = get_bbox_crop_padding(image, bbox)
-    center_crop_size = [300, 200]
-    center_image = center_crop_padding(roi, center_crop_size)
-    # center_image = center_crop(roi, center_crop_size)
-    show_image("roi:{}".format(roi.shape), roi)
-    show_image("center_image:{}".format(center_image.shape), center_image)
-    show_image("image:{}".format(image.shape), image)
-
-    rect_image = show_image_boxes("rect", image, boxes_list=[bbox], waitKey=1)
-    show_image("rect_image:{}".format(rect_image.shape), rect_image)
+    rects = [[100, 50, 180, 50]]
+    print(rects)
+    rect_image = show_image_rects("rect", image, rects, waitKey=1)
+    rects2 = get_square_rects(rects, fixed="h")
+    # red is square_rects
+    rect_image = show_image_rects("rect", rect_image, rects2, color=(255, 0, 0), waitKey=0)

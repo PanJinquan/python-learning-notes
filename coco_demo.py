@@ -95,7 +95,7 @@ class COCO_Instances(object):
             anns = self.coco.loadAnns(annIds)
             # 根据anns获得rects, category_id
             rects, category_id = self.get_anns_bbox_list(anns)
-            # rects, category_id = self.filter_rects(rects, category_id, minAreaTH=200)
+            rects, category_id = self.filter_rects(rects, category_id, minAreaTH=200)
             if rects == [] and category_id == []:
                 continue
             # 将id映射为对应的名称
@@ -348,7 +348,7 @@ class COCO_Instances(object):
             out_rects.append(r)
         return out_rects, out_labels
 
-    def write_info(self, save_dir, info_list):
+    def save_text_dataset(self, save_dir, info_list):
         '''
         保存COCO的label，rects和file_name信息，类似于VOC数据集，每张图片的信息保存一个TXT文件，
         其中文件名为file_name.txt,文件内容格式为:
@@ -373,7 +373,15 @@ class COCO_Instances(object):
             image_id.append(basename)
         return image_id
 
-    def save_train_val(self, info_list, out_train_val_path, label_out_dir, shuffle=True):
+    def save_train_val_text_dataset(self, info_list, out_train_val_path, label_out_dir, shuffle=True):
+        """
+        保存COCO的label，rects和file_name信息，类似于VOC数据集，每张图片的信息保存一个TXT文件，
+        :param info_list:
+        :param out_train_val_path:
+        :param label_out_dir:
+        :param shuffle:
+        :return:
+        """
         if shuffle:
             seeds = 100  # 固定种子,只要seed的值一样，后续生成的随机数都一样
             random.seed(seeds)
@@ -386,15 +394,15 @@ class COCO_Instances(object):
 
         print("train_image_list:{}".format(len(train_image_list)))
         print("val_image_list  :{}".format(len(val_image_list)))
-        train_image_id = self.write_info(label_out_dir, train_image_list)
-        val_image_id = self.write_info(label_out_dir, val_image_list)
+        train_image_id = self.save_text_dataset(label_out_dir, train_image_list)
+        val_image_id = self.save_text_dataset(label_out_dir, val_image_list)
         # 保存图片id数据
         train_id_path = os.path.join(out_train_val_path, "train.txt")
         val_id_path = os.path.join(out_train_val_path, "val.txt")
         comment.save_id(train_id_path, train_image_id, val_id_path, val_image_id)
 
 
-def label_test(image_dir, filename, class_names=None):
+def text_dataset_test(image_dir, filename, class_names=None):
     basename = os.path.basename(filename)[:-len('.txt')] + ".jpg"
     image_path = os.path.join(image_dir, basename)
     image = image_processing.read_image(image_path)
@@ -406,30 +414,33 @@ def label_test(image_dir, filename, class_names=None):
     else:
         name_list = label_list
     show_info = ["id:" + str(n) for n in name_list]
-    rgb_image = image_processing.show_image_rects_text("object2", image, rect_list, show_info, color=(0, 0, 255),
-                                                       drawType="custom", waitKey=1)
+    rgb_image = image_processing.show_image_rects_text("object2", image, rect_list, show_info,
+                                                       color=(0, 0, 255),drawType="custom", waitKey=1)
     rgb_image = image_processing.resize_image(rgb_image, 900)
     image_processing.cv_show_image("object2", rgb_image)
 
 
-def batch_label_test(label_dir, image_dir, classes):
+def batch_text_dataset_test(label_dir, image_dir, classes):
     file_list = file_processing.get_files_list(label_dir, postfix=[".txt"])
     for filename in file_list:
-        label_test(image_dir, filename, class_names=classes)
+        text_dataset_test(image_dir, filename, class_names=classes)
 
 
 if __name__ == "__main__":
-    coco_root = "/media/dm/dm2/project/dataset/COCO/"
-    # image_dir = coco_root + 'images/train2017/'
+    # coco_root = "/media/dm/dm2/project/dataset/COCO/"
+    coco_root = "/data0/panjinquan/COCO/"
+    image_dir = coco_root + 'images/train2017/'
+    # image_dir = coco_root + 'images/val2017/'
     # image_dir = coco_root + 'images/lexue_train/'
-    image_dir = coco_root + 'images/lexue_train'
-    # annFile = coco_root + 'annotations/instances_train2017.json'
+    # image_dir = coco_root + 'images/lexue_train'
+    annFile = coco_root + 'annotations/instances_train2017.json'
+    # annFile = coco_root + 'annotations/instances_val2017.json'
     # annFile = coco_root + 'annotations/person_keypoints_train2017.json'
     # annFile = coco_root + 'annotations/person_keypoints_train2017.json'
     # annFile = coco_root + 'annotations/person_keypoints_val2017.json'
     # annFile = coco_root + 'annotations/person_keypoints_val2017_lexue_teacher.json'
     # annFile = coco_root + "annotations/lexue/lexue_train_val.json"
-    annFile = coco_root + "annotations/lexue/lexue_train.json"
+    # annFile = coco_root + "annotations/lexue/lexue_train.json"
 
     # image_dir = "/media/dm/dm1/git/python-learning-notes/dataset/VOC/JPEGImages"
     # annFile = "/media/dm/dm1/git/python-learning-notes/dataset/VOC/voc2coco2.json"
@@ -437,29 +448,29 @@ if __name__ == "__main__":
     # image_dir = "/media/dm/dm/X2/Pose/dataset/KeyPoints-Teacher/images"
     # annFile = '/media/dm/dm/X2/Pose/dataset/KeyPoints-Teacher/teacher_coco.json'  # 这是你要生成的json文件
     # annFile = '/media/dm/dm/X2/Pose/dataset/KeyPoints-Teacher/person_keypoints_lexue_teacher_voc2coco2.json'  # 这是你要生成的json文件
-    # label_out_dir = coco_root + "la
-    # bel"
+    # label_out_dir = coco_root + "images/val2017_gt"
+    label_out_dir = coco_root + "labels"
 
-    # co = COCO_Instances(annFile, image_dir, COCO_NAME)
-    co = COCO_Instances(annFile, image_dir, COCO_NAME=None)
+    co = COCO_Instances(annFile, image_dir, COCO_NAME)
+    # co = COCO_Instances(annFile, image_dir, COCO_NAME=None)
     # 获得所有图像id
     imgIds = co.getImgIds()
     # test_imgIds = imgIds[0:20]
     test_imgIds = imgIds
 
     # 显示目标的bboxes
-    # info_list = co.get_object_rects(test_imgIds, show=True)
-    info_list = co.get_object_keypoints(test_imgIds, show=True)
+    info_list = co.get_object_rects(test_imgIds, show=False)
+    # info_list = co.get_object_keypoints(test_imgIds, show=True)
     # 显示实例分割
     # co.get_object_instance(test_imgIds, show=True)
     # 显示语义分割的mask
     # co.get_object_mask(test_imgIds, show=True)
     # label编码
-    # info_list = co.encode_info(info_list)
+    info_list = co.encode_info(info_list)
     # label解码
-    # info_list = co.decode_info(info_list)
+    info_list = co.decode_info(info_list)
     # print("nums:{}".format(len(info_list)))
     # 保存label等信息
-    # co.write_info(save_dir="./data/coco", info_list=COCO_Label_list)
-    # co.save_train_val(info_list, coco_root, label_out_dir)
-    # batch_label_test(label_out_dir, image_dir, classes=COCO_NAME)
+    co.save_text_dataset(save_dir=label_out_dir, info_list=info_list)
+    co.save_train_val_text_dataset(info_list, coco_root, label_out_dir)
+    batch_text_dataset_test(label_out_dir, image_dir, classes=COCO_NAME)

@@ -88,6 +88,7 @@ def getBoundingBoxes(directory,
     for f in files:
         nameOfImage = f.replace(".txt", "")
         fh1 = open(f, "r")
+        print(f)
         for line in fh1:
             line = line.replace("\n", "")
             if line.replace(' ', '') == '':

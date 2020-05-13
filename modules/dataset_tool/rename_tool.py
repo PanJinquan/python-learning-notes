@@ -12,18 +12,24 @@ import os.path
 from utils import file_processing
 
 
-def rename_image_dir(image_list, prefix="ID_"):
+def rename_image_dir(dataset_dir, prefix="ID", add_sub=False):
+    image_list = file_processing.get_files_list(dataset_dir, postfix=['*.jpg', "*.png"])
     for image_path in image_list:
-        format=os.path.basename(image_path).split(".")[-1]
+        format = os.path.basename(image_path).split(".")[-1]
         dirname = os.path.dirname(image_path)
-        label = image_path.split(os.sep)[-2]
+        sub = image_path.split(os.sep)[-2]
         # basename=os.path.basename(image_path)
         index = 0
-        newName = prefix + label + '_{}.{}'.format(index,format)
+        newName = [prefix]
+        if add_sub:
+            newName += [sub]
+        newName += ['{:0=5}.{}'.format(index, format)]
+        newName = "_".join(newName)
         newpath = os.path.join(dirname, newName)
         while os.path.exists(newpath):
             index += 1
-            newName = prefix + label + '_{}.{}'.format(index,format)
+            newName += ['{:0=5}.{}'.format(index, format)]
+            newName = "_".join(newName)
             newpath = os.path.join(dirname, newName)
 
         print(image_path)
@@ -34,7 +40,8 @@ def rename_image_dir(image_list, prefix="ID_"):
 def rename_sub_directory(dir, postfix=""):
     image_id = file_processing.get_sub_directory_list(dir)
     for id in image_id:
-        new_name = id + "_{}".format(postfix)
+        # new_name = id + "_{}".format(postfix)
+        new_name = "{}_".format(postfix) + id
         src = os.path.join(dir, id)
         dst = os.path.join(dir, new_name)
         os.rename(src, dst)
@@ -48,7 +55,7 @@ def synch_rename_image_dir(src_dir1, src_dir2, dest_dir):
     :param dest_dir:
     :return:
     '''
-    image_list, image_id = file_processing.get_files_labels(src_dir1, postfix=['*.jpg',"*.png"])
+    image_list, image_id = file_processing.get_files_labels(src_dir1, postfix=['*.jpg', "*.png"])
     class_set = list(set(image_id))
     class_set.sort()
     print(class_set)
@@ -71,6 +78,9 @@ def synch_rename_image_dir(src_dir1, src_dir2, dest_dir):
         shutil.copytree(s2, os.path.join(d2, str(id)))
 
 
+
+
+
 if __name__ == '__main__':
     # src_dir1='/media/dm/dm1/FaceDataset/lexue/lexue2/val'
     # src_dir2='/media/dm/dm1/FaceDataset/lexue/lexue2/facebank'
@@ -81,8 +91,11 @@ if __name__ == '__main__':
     # # dataset_dir='F:/clear_data_bzl/val'
     # # dataset_dir='/media/dm/dm/XMC/FaceData/X4/X4_Face132/val'
     # # dataset_dir = '/media/dm/dm1/FaceDataset/lexue/lexue/facebank'
-    dataset_dir = '/media/dm/dm1/FaceDataset/X4/CASIA-FaceV5/facebank'
-    image_list = file_processing.get_files_list(dataset_dir, postfix=['*.jpg',"png"])
-    rename_image_dir(image_list, prefix="ID_")
+    # dataset_dir = '/media/dm/dm2/FaceRecognition/anti-spoofing/dataset/orig/fake_part'
+    dataset_dir = '/media/dm/dm2/FaceRecognition/anti-spoofing/dataset/rgb_ir_dataset/fake_part'
+    rename_image_dir(dataset_dir, prefix="monitor")  # # ["paper(纸)","monitor(显示屏)","mask(面具)"]
     # dir="/media/dm/dm1/FaceDataset/X4/CASIA-FaceV5/trainval"
     # rename_sub_directory(dir, postfix="CASIA")
+    # image_dir="/media/dm/dm/FaceRecognition/face_recognition_system/framework/data/facebank"
+    image_dir = "/media/dm/dm/FaceRecognition/face_recognition_system/framework/data/dmai/facebank"
+    # rename_sub_directory(image_dir,postfix="x4")

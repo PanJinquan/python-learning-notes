@@ -15,8 +15,8 @@ import os
 sys.path.append(os.getcwd())
 import shutil
 import argparse
-from lib.Evaluator import *
-from lib import check
+from modules.evaluation.map_tools.lib.Evaluator import *
+from modules.evaluation.map_tools.lib import check
 
 
 def get_parser():
@@ -168,16 +168,27 @@ def evaluate(allBoundingBoxes, savePath):
 
 
 if __name__ == "__main__":
-    # gtFolder = "/media/dm/dm1/git/python-learning-notes/eval/map_tools/groundtruths"
-    # detFolder = "/media/dm/dm1/git/python-learning-notes/eval/map_tools/detections"
-    # dataroot="/media/dm/dm2/project/pytorch-learning-tutorials/object_detection/Pytorch-SSD/models/mb2-ssd-lite/VOC2007_VOC2012_xmc_det_v3.1.1_voc/mb2-ssd-lite-2019-11-10-10-07/models/VOC2007"
-    # dataroot = "/media/dm/dm2/project/pytorch-learning-tutorials/object_detection/Pytorch-SSD/models/mb2-ssd-lite/voc/models/VOC2007"
-    # dataroot = "/media/dm/dm2/project/pytorch-learning-tutorials/object_detection/Pytorch-SSD/models/mb2-ssd-lite/voc/models/VOC2007"
-    dataroot = "/media/dm/dm2/project/dataset/xmc/xmc_det_banchmark_v2.1/xmc_det_banchmark_v2.1_voc"
+    savePath = os.path.join(os.path.dirname(__file__), "result")
+    # gt_label_dir = "/media/dm/dm2/git/python-learning-notes/modules/evaluation/map_tools/test_data/groundtruths_rel"
+    # dt_label_dir = "/media/dm/dm2/git/python-learning-notes/modules/evaluation/map_tools/test_data/detections_rel"
+    # gt_label_dir = "/media/dm/dm/project/dataset/voc/VOCdevkit/VOC2007/label"
+    # dt_label_dir = "/media/dm/dm/project/dataset/voc/VOCdevkit/VOC2007/dt_label"
 
-    gtFolder = os.path.join(dataroot, "result/gt_result")
-    detFolder = os.path.join(dataroot, "result/dt_result")
-    savePath = os.path.join(dataroot)
+    # gt_label_dir = "/media/dm/dm/project/dataset/voc/VOCdevkit/VOC2007/labels/gt_result"
+    # dt_label_dir = "/media/dm/dm/project/dataset/voc/VOCdevkit/VOC2007/labels/dt_label"
+
+
+    # gt_label_dir = "/media/dm/dm/project/dataset/COCO/labels/val2017_gt"
+    # dt_label_dir = "/media/dm/dm/project/dataset/COCO/labels/val2017_dt"
+    # gt_label_dir = "/media/dm/dm/project/dataset/COCO/labels/gt_result"
+    # dt_label_dir = "/media/dm/dm/project/dataset/COCO/labels/dt_result"
+
+    gt_label_dir = "/media/dm/dm2/project/dataset/VOCdevkit/VOC2007/eval/gt_result"
+    dt_label_dir = "/media/dm/dm2/project/dataset/VOCdevkit/VOC2007/eval/dt_result"
+    #
+    # dataroot = "/media/dm/dm/project/dataset/xmc/xmc_det_banchmark_v2.1/xmc_det_banchmark_v2.1_voc"
+    # gtFolder = os.path.join(dataroot, "result/gt_result")
+    # detFolder = os.path.join(dataroot, "result/dt_result")
 
     args = get_parser()
     showPlot = args.showPlot
@@ -189,6 +200,6 @@ if __name__ == "__main__":
     detCoordType = args.detCoordType
     gtCoordType = args.gtCoordType
     imgSize = args.imgSize
-    allBoundingBoxes, allClasses = get_bboxes_class(gtFolder, gtFormat, gtCoordType, detFolder,
+    allBoundingBoxes, allClasses = get_bboxes_class(gt_label_dir, gtFormat, gtCoordType, dt_label_dir,
                                                     detFormat, detCoordType, imgSize)
     evaluate(allBoundingBoxes, savePath)

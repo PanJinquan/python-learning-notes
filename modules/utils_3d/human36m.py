@@ -10,13 +10,13 @@
 """
 import sys
 import os
-from tools import image_processing
+from utils import image_processing
 
 sys.path.append(os.getcwd())
 import numpy as np
-from modules.utils_3d import vis
+from modules.utils_3d import vis_3d as vis
 
-camera_intrinsic = {
+human36m_camera_intrinsic = {
     # R，旋转矩阵
     "R": [[-0.91536173, 0.40180837, 0.02574754],
           [0.05154812, 0.18037357, -0.98224649],
@@ -30,12 +30,15 @@ camera_intrinsic = {
 
 }
 
+camera_intrinsic = human36m_camera_intrinsic
+
 
 class Human36M(object):
     @staticmethod
     def convert_wc_to_cc(joint_world):
         """
-        世界坐标系 -> 相机坐标系: R * (pt - T)
+        世界坐标系 -> 相机坐标系: R * (pt - T):
+        joint_cam = np.dot(R, (joint_world - T).T).T
         :return:
         """
         joint_world = np.asarray(joint_world)
@@ -47,6 +50,8 @@ class Human36M(object):
         joint_cam = np.zeros((joint_num, 3))  # joint camera
         for i in range(joint_num):  # joint i
             joint_cam[i] = np.dot(R, joint_world[i] - T)  # R * (pt - T)
+        # .T is 转置, T is translation mat
+        # joint_cam = np.dot(R, (joint_world - T).T).T  # R * (pt - T)
         return joint_cam
 
     @staticmethod
@@ -136,7 +141,7 @@ if __name__ == "__main__":
 
     # show in 像素坐标系
     kpt_2d = joint_img[:, 0:2]
-    image_path = "/media/dm/dm1/git/python-learning-notes/modules/utils_3d/s_01_act_02_subact_01_ca_02_000001.jpg"
+    image_path = "data/s_01_act_02_subact_01_ca_02_000001.jpg"
     image = image_processing.read_image(image_path)
     image = image_processing.draw_key_point_in_image(image, key_points=[kpt_2d], pointline=kps_lines)
     image_processing.cv_show_image("image_dict", image)

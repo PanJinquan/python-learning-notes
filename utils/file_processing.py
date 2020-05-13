@@ -20,10 +20,21 @@ import concurrent.futures
 from datetime import datetime
 
 
-def get_time():
-    # return datetime.strftime(datetime.now(), '%Y%m%d_%H%M%S')
-    return datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
-    # return (str(datetime.now())[:-10]).replace(' ', '-').replace(':', '-')
+def get_time(format="S"):
+    """
+    :param format:
+    :return:
+    """
+    if format in ["S", "s"]:
+        # time = datetime.strftime(datetime.now(), '%Y%m%d_%H%M%S')
+        time = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
+    elif format in ["P", "p"]:
+        # 20200508_143059_379116
+        time = datetime.strftime(datetime.now(), '%Y%m%d_%H%M%S_%f')
+        time = time[:-2]
+    else:
+        time = (str(datetime.now())[:-10]).replace(' ', '-').replace(':', '-')
+    return time
 
 
 class WriterTXT(object):
@@ -67,7 +78,7 @@ def write_json_path(out_json_path, json_data):
     :return:
     """
     with open(out_json_path, 'w') as f:
-        json.dump(json_data, f,indent=4)
+        json.dump(json_data, f, indent=4)
 
 
 def write_data(filename, content_list, mode='w'):
@@ -241,16 +252,6 @@ def get_basename(file_list):
     return dest_list
 
 
-def remove_dir(dir):
-    """
-    remove directory
-    :param dir:
-    :return:
-    """
-    if os.path.exists(dir):
-        shutil.rmtree(dir)
-
-
 def randam_select_images(image_list, nums, shuffle=True):
     """
     randam select nums images
@@ -267,6 +268,37 @@ def randam_select_images(image_list, nums, shuffle=True):
         random.shuffle(image_list)
     out = image_list[:nums]
     return out
+
+
+def remove_dir(dir):
+    """
+    remove directory
+    :param dir:
+    :return:
+    """
+    if os.path.exists(dir):
+        shutil.rmtree(dir)
+
+
+def get_prefix_files(file_dir, prefix):
+    """
+    :param file_dir:
+    :param prefix: "best*"
+    :return:
+    """
+    file_list = glob.glob(os.path.join(file_dir, prefix))
+    return file_list
+
+
+def remove_prefix_files(file_dir, prefix):
+    """
+    :param file_dir:
+    :param prefix: "best*"
+    :return:
+    """
+    file_list = get_prefix_files(file_dir, prefix)
+    for file in file_list:
+        remove_file(file)
 
 
 def remove_file(path):
@@ -380,6 +412,17 @@ def copy_file(srcfile, dstfile):
         # time.sleep(1 / 1000.)
 
 
+def copy_file_to_dir(srcfile, des_dir):
+    if not os.path.isfile(srcfile):
+        print("%s not exist!" % (srcfile))
+    else:
+        fpath, fname = os.path.split(srcfile)  # 分离文件名和路径
+        if not os.path.exists(des_dir):
+            os.makedirs(des_dir)  # 创建路径
+        dstfile = os.path.join(des_dir, fname)
+        shutil.copyfile(srcfile, dstfile)  # 复制文件
+
+
 def merge_dir(src, dst, sub, merge_same):
     src_dir = os.path.join(src, sub)
     dst_dir = os.path.join(dst, sub)
@@ -394,7 +437,6 @@ def merge_dir(src, dst, sub, merge_same):
         dst_dir = os.path.join(dst, sub + "_{}".format(t))
         print("have save sub:{}".format(dst_dir))
     copy_dir(src_dir, dst_dir)
-
 
 
 # def merge_dir(src, dst, merge_same=False):
@@ -642,7 +684,7 @@ def read_pair_data(filename, split=True):
     return content_list
 
 
-def check_files(files_list, sizeTh=1*1024, isRemove=False):
+def check_files(files_list, sizeTh=1 * 1024, isRemove=False):
     ''' 去除不存的文件和文件过小的文件列表
     :param files_list:
     :param sizeTh: 文件大小阈值,单位：字节B，默认1000B ,33049513/1024/1024=33.0MB
