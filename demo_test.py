@@ -42,6 +42,9 @@ def remove_prefix_files(file_dir, prefix):
         file_processing.remove_file(file)
 
 
+import tensorflow as tf
+
 if __name__ == "__main__":
-    file_dir = "/media/dm/dm2/FaceRecognition/anti-spoofing/torch-anti-spoofing-pipeline/work_space/multi_mobilenet_v2_color_ir_train_20200511140154/model"
-    remove_prefix_files(file_dir, prefix="best*")
+    path="/1/b/.jpg"
+    path=path.replace("/", "\\")
+    print(path)

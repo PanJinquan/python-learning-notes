@@ -1163,9 +1163,9 @@ def nms_bboxes_cv2(bboxes_list, scores_list, labels_list, width=None, height=Non
     '''
     NMS
     fix a bug: cv2.dnn.NMSBoxe bboxes, scores params must be list and float data,can not be float32 or int
-    :param bboxes_list: must be list->float
-    :param scores_list: must be list->float
-    :param labels_list: must be list
+    :param bboxes_list: [list[xmin,ymin,xmax,ymax],[],,,]
+    :param scores_list: [float,...]
+    :param labels_list: [int,...]
     :param width:
     :param height:
     :param score_threshold:

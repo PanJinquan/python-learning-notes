@@ -532,7 +532,7 @@ def getFilePathList(file_dir):
     '''
     filePath_list = []
     for walk in os.walk(file_dir):
-        part_filePath_list = [os.path.join(walk[0], file) for file in walk[2]]
+        part_filePath_list = [os.path.join(walk[0], file).replace("\\", "/") for file in walk[2]]
         filePath_list.extend(part_filePath_list)
     return filePath_list
 
