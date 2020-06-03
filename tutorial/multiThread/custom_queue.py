@@ -13,7 +13,8 @@ import queue
 from concurrent.futures import ThreadPoolExecutor
 
 threadLock = threading.Lock()
-
+# threadLock.acquire()  # 加锁
+# threadLock.release()  # 释放锁
 
 class CustomQueue():
     '''

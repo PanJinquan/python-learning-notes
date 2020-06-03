@@ -4,6 +4,7 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+from modules.utils_3d.core.camera import image_coordinates
 from utils import image_processing
 import cv2
 import PIL.Image as Image
@@ -425,13 +426,12 @@ def show_batch_2d_pose(pd_pos_2d, res_w=512, res_h=424, is_norm=False, kps_lines
         kps_lines = ((0, 7), (7, 8), (8, 9), (9, 10), (8, 11), (11, 12), (12, 13), (8, 14), (14, 15),
                      (15, 16), (0, 1), (1, 2), (2, 3), (0, 4), (4, 5), (5, 6))
     if is_norm:
-        from common.camera import image_coordinates
         pd_pos_2d = image_coordinates(pd_pos_2d, w=res_w, h=res_h)
     # pd_pos_2d2 = image_coordinates(pd_pos_2d, w=res_h, h=res_w)
     image = np.zeros(shape=(res_h, res_w, 3), dtype=np.uint8) + 255
     for i in range(len(pd_pos_2d)):
         kpt = pd_pos_2d[i, :]
-        vis_2d(image, kpt, kps_lines, title="2D-Pose", waitKey=30)
+        vis_2d(image, [kpt], kps_lines, title="2D-Pose", waitKey=30,isshow=True)
         key = cv2.waitKey(0)
         if key == ord('q'):
             break

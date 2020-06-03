@@ -6,36 +6,48 @@
 # @Date   : 2019-9-20 13:18:34
 # --------------------------------------------------------
 """
-
+import os
 import datetime
 import logging
+import threading
 from logging.handlers import TimedRotatingFileHandler
 from memory_profiler import profile
 
 
-def set_logging(name, level="info", logfile=None):
-    '''
+def set_format(handler, format):
+    # handler.suffix = "%Y%m%d"
+    if format:
+        logFormatter = logging.Formatter("%(asctime)s %(filename)s %(funcName)s %(levelname)s: %(message)s",
+                                         "%Y-%m-%d %H:%M:%S")
+    else:
+        logFormatter = logging.Formatter("%(levelname)s: %(message)s")
+    handler.setFormatter(logFormatter)
+
+
+def set_logger(name, level="info", logfile=None, format=False):
+    """
+    logger = set_logging(name="LOG", level="debug", logfile="log.txt", format=False)
     url:https://cuiqingcai.com/6080.html
     level级别：debug>info>warning>error>critical
     :param level: 设置log输出级别
     :param logfile: log保存路径，如果为None，则在控制台打印log
     :return:
-    '''
-    if logfile is None:
-        handler = logging.StreamHandler()  # 创建一个handler，用于输出到控制台
-    else:
-        # 创建一个handler，用于写入日志文件, logging.FileHandler('test.log')
-        handler = TimedRotatingFileHandler(logfile, when="midnight", interval=1)
-    # setup logging format and logger
-    handler.suffix = "%Y%m%d"
-    logFormatter = logging.Formatter("%(asctime)s %(filename)s %(funcName)s %(lineno)s \
-          %(levelname)s - %(message)s", "%Y-%m-%d %H:%M:%S")
-    handler.setFormatter(logFormatter)
-    # 指定name，返回一个名称为name的Logger实例。如果再次使用相同的名字，是实例化一个对象。
-    # 未指定name，返回Logger实例，名称是root，即根Logger。
+    """
     logger = logging.getLogger(name)
-    logger.addHandler(handler)
+    if logfile and os.path.exists(logfile):
+        os.remove(logfile)
+    # define a FileHandler write messages to file
+    if logfile:
+        # filehandler = logging.handlers.RotatingFileHandler(filename="./log.txt")
+        filehandler = logging.handlers.TimedRotatingFileHandler(logfile, when="midnight", interval=1)
+        set_format(filehandler, format)
+        logger.addHandler(filehandler)
 
+    # define a StreamHandler print messages to console
+    console = logging.StreamHandler()
+    set_format(console, format)
+    logger.addHandler(console)
+    # set initial log level
     if level == 'debug':
         logger.setLevel(logging.DEBUG)
     if level == 'info':
@@ -74,16 +86,13 @@ def run_time_decorator(title=""):
             T0 = TIME()
             result = func(*args, **kwargs)
             T1 = TIME()
-            logger.debug("{}-- function : {}-- rum time : {}ms ".format(title, func.__name__, RUN_TIME(T1 - T0)))
+            print("{}-- function : {}-- rum time : {}ms ".format(title, func.__name__, RUN_TIME(T1 - T0)))
             # logger.debug("{}-- function : {}-- rum time : {}s ".format(title, func.__name__, RUN_TIME(T1 - T0)/1000.0))
             return result
 
         return wrapper
 
     return decorator
-
-
-logger = set_logging(name="LOG", level="debug", logfile=None)
 
 
 @profile(precision=4)
@@ -98,12 +107,14 @@ def memory_test():
     :return:
     """
     c = 0
-    for item in range(100000):
+    for item in range(10):
         c += 1
-    print(c)
+        # logger.error("c:{}".format(c))
+    # print(c)
 
 
 if __name__ == '__main__':
+    logger = set_logger(name="LOG", level="debug", logfile="log.txt", format=False)
     # T0 = TIME()
     # do something
     # T1 = TIME()
@@ -113,4 +124,7 @@ if __name__ == '__main__':
     # t_logger.info('info')
     # t_logger.warning('Warning exists')
     # t_logger.error('Finish')
-    memory_test()
+    # memory_test()
+    logger1 = set_logger(name="LOG", level="debug", logfile="log.txt", format=False)
+    logger1.info("---" * 20)
+    logger1.info("work_space:{}".format("work_dir"))

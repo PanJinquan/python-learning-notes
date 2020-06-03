@@ -1077,6 +1077,41 @@ def circle_line(num_point, iscircle=True):
     return points_line
 
 
+def cv_paste_image(im, mask, start_point=(0, 0)):
+    """
+    :param im:
+    :param start_point:
+    :param mask:
+    :return:
+    """
+    xim, ymin = start_point
+    h, w, d = mask.shape
+    im[ymin:(ymin + h), xim:(xim + w), :] = mask
+    return im
+
+
+def pil_paste_image(im, mask, start_point=(0, 0)):
+    """
+    :param im:
+    :param mask:
+    :param start_point:
+    :return:
+    """
+    out = Image.fromarray(im)
+    mask = Image.fromarray(mask)
+    out.paste(mask, start_point, mask)
+    return np.asarray(out)
+
+
+def cv_rotate(image, angle, center=None, scale=1.0):  # 1
+    (h, w) = image.shape[:2]  # 2
+    if center is None:  # 3
+        center = (w // 2, h // 2)  # 4
+    M = cv2.getRotationMatrix2D(center, angle, scale)  # 5
+    rotated = cv2.warpAffine(image, M, (w, h))  # 6
+    return rotated  # 7
+
+
 def rgb_to_gray(image):
     '''
     RGB to Gray image

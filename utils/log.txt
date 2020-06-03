@@ -1,0 +1,3 @@
+INFO: Init log in debug level
+INFO: ------------------------------------------------------------
+INFO: work_space:work_dir

@@ -215,8 +215,10 @@ def l2(data1, data2):
 def L1_loss(y_true, y_pre):
     return np.sum(np.abs(y_true - y_pre))
 
+
 def L2_loss(y_true, y_pre):
     return np.sum(np.square(y_true - y_pre))
+
 
 def norn(x, ord):
     y = np.linalg.norm(x, ord=ord, axis=1, keepdims=True)
@@ -241,11 +243,73 @@ def load_data(data_path):
     return np.load(data_path)
 
 
-# 矩阵拼接
+def save_bin(data, bin_file, dtype="double"):
+    """
+    https://www.cnblogs.com/yaos/p/12105108.html
+    C++int对应Python np.intc
+    C++float对应Python np.single
+    C++double对应Python np.double
+    :param data:
+    :param bin_file:
+    :param dtype:
+    :return:
+    """
+    data = data.astype(np.double)
+    data.astype(dtype).tofile(bin_file)
+
+
+def load_bin(bin_file, shape=None, dtype="double"):
+    """
+    ==================python load bin data ================
+    bin_file = "data.bin"
+    shape = (2, 5)
+    data1 = np.arange(10, 20).reshape(shape)
+    save_bin(data1, bin_file)
+    data2 = load_bin(bin_file, shape)
+    print(data1)
+    print(data2)
+    ===================C++ load bin data ===================
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    int main()
+    {
+      int row=2;
+      int col=5;
+      double fnum[row][col] = {0};
+      ifstream in("bin/data.bin", ios::in | ios::binary);
+      in.read((char *) &fnum, sizeof fnum);
+      cout << in.gcount() << " bytes read\n";
+      // show values read from file
+      for(int i=0; i<row; i++){
+          for(int j=0;j<col;j++){
+                cout << fnum[i][j] << ",";
+          }
+           std::cout<<endl;
+      }
+      in.close();
+      return 0;
+    }
+    >>result:
+    80 bytes read
+    10,11,12,13,14,
+    15,16,17,18,19,
+    =======================================================
+    :param bin_file:
+    :param dtype:
+    :return:
+    """
+    data = np.fromfile(bin_file, dtype=dtype)
+    if shape:
+        data = np.reshape(data, shape)
+    return data
 
 
 if __name__ == "__main__":
-    data1 = np.arange(0, 10)
-    data1 = data1.reshape([5, 2])
-    y = np.concatenate([data1, data1], 0)
-    print(y)
+    bin_file = "data.bin"
+    shape = (2, 5)
+    data1 = np.arange(10, 20).reshape(shape)
+    save_bin(data1, bin_file)
+    data2 = load_bin(bin_file, shape)
+    print(data1)
+    print(data2)

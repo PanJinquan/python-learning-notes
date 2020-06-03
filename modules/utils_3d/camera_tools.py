@@ -10,11 +10,13 @@
 """
 import sys
 import os
-from utils import image_processing
 
 sys.path.append(os.getcwd())
+
+import cv2
 import numpy as np
 from modules.utils_3d import vis_3d as vis
+from utils import image_processing
 
 human36m_camera_intrinsic = {
     # R，旋转矩阵
@@ -46,10 +48,7 @@ kinect2_camera_intrinsic = {
 }
 
 camera_intrinsic = human36m_camera_intrinsic
-
-
 # camera_intrinsic = kinect2_camera_intrinsic
-
 
 class CameraTools(object):
 
@@ -76,7 +75,7 @@ class CameraTools(object):
     @staticmethod
     def convert_cc_to_wc(joint_world):
         """
-        相机坐标系 -> 世界坐标系: inv(R) * pt +T
+        相机坐标系 -> 世界坐标系: inv(R) * pt +T 
         joint_cam = np.dot(inv(R), joint_world.T)+T
         :return:
         """
@@ -140,9 +139,6 @@ class CameraTools(object):
         return joint_img
 
 
-import cv2
-
-
 def load_data(data_dir, flag):
     align_color_img_path = os.path.join(data_dir, "image", "image_{}.png".format(str(flag)))
     joint_path = os.path.join(data_dir, "joint", "joint_{}.npy".format(str(flag)))
@@ -171,20 +167,21 @@ def demo_for_human36m():
                    [-350.77136, 43.442127, 831.3473],
                    [-102.237045, 197.76935, 1304.0605]]
     joint_world = np.asarray(joint_world)
+    # 关节点连接线
     kps_lines = ((0, 7), (7, 8), (8, 9), (9, 10), (8, 11), (11, 12), (12, 13), (8, 14), (14, 15),
                  (15, 16), (0, 1), (1, 2), (2, 3), (0, 4), (4, 5), (5, 6))
     # show in 世界坐标系
-    vis.vis_3d(joint_world, kps_lines, coordinate="WC", title="WC", isshow=True)
+    vis.vis_3d(joint_world, kps_lines, coordinate="WC", title="WC", set_lim=True, isshow=True)
 
     kp_vis = CameraTools()
 
     # show in 相机坐标系
     joint_cam = kp_vis.convert_wc_to_cc(joint_world)
-    vis.vis_3d(joint_cam, kps_lines, coordinate="CC", title="CC", isshow=True)
+    vis.vis_3d(joint_cam, kps_lines, coordinate="CC", title="CC", set_lim=True, isshow=True)
     joint_img = kp_vis.convert_cc_to_ic(joint_cam)
 
     joint_world1 = kp_vis.convert_cc_to_wc(joint_cam)
-    vis.vis_3d(joint_world1, kps_lines, coordinate="WC", title="WC", isshow=True)
+    vis.vis_3d(joint_world1, kps_lines, coordinate="WC", title="WC", set_lim=True, isshow=True)
 
     # show in 像素坐标系
     kpt_2d = joint_img[:, 0:2]

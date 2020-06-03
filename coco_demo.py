@@ -279,11 +279,8 @@ class COCO_Instances(object):
             info = {'file_name': file_name, "rects": rects, "label": names}
             info_list.append(info)
             if show:
-                skeleton = [[16, 14], [14, 12], [17, 15], [15, 13], [12, 13], [6, 12], [7, 13], [6, 7], [6, 8],
-                            [7, 9], [8, 10], [9, 11], [2, 3], [1, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 7]]
-                # skeleton = [[16, 14], [14, 12], [17, 15], [15, 13], [12, 13], [6, 12], [7, 13], [6, 7], [6, 8],
-                #             [7, 9], [8, 10], [9, 11], [2, 3], [1, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 7]]
-                skeleton = np.asarray(skeleton) - 1
+                skeleton = [[15, 13], [13, 11], [16, 14], [14, 12], [11, 12], [5, 11], [6, 12], [5, 6], [5, 7],
+                            [6, 8], [7, 9], [8, 10], [1, 2], [0, 1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 6]]
                 image_path = os.path.join(self.imge_dir, dirname, file_name)
                 print("file_name:{},rects:{},category_id:{},names:{}".format(file_name, rects, category_id, names))
                 I = io.imread(image_path)

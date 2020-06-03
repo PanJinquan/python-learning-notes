@@ -37,6 +37,18 @@ def get_time(format="S"):
     return time
 
 
+def get_kwargs_name(**kwargs):
+    prefix = []
+    for k, v in kwargs.items():
+        if isinstance(v, list):
+            v = [str(l) for l in v]
+            prefix += v
+        else:
+            prefix.append(str(v))
+    prefix = "_".join(prefix)
+    return prefix
+
+
 class WriterTXT(object):
     """ write data in txt files"""
 
