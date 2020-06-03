@@ -139,6 +139,14 @@ class CameraTools(object):
         return joint_img
 
 
+def load_data(data_dir, flag):
+    align_color_img_path = os.path.join(data_dir, "image", "image_{}.png".format(str(flag)))
+    joint_path = os.path.join(data_dir, "joint", "joint_{}.npy".format(str(flag)))
+    align_color_img = cv2.imread(align_color_img_path)
+    joint3D = np.load(joint_path)
+    return align_color_img, joint3D
+
+
 def demo_for_human36m():
     joint_world = [[-91.679, 154.404, 907.261],
                    [-223.23566, 163.80551, 890.5342],
@@ -183,5 +191,31 @@ def demo_for_human36m():
     image_processing.cv_show_image("image_dict", image)
 
 
+def demo_for_kinect():
+    # data_dir = "E:/git/python-learning-notes/tutorial/kinect2/dataset/kitnect3d"
+    data_dir = "/media/dm/dm/X2/Pose/dataset/kitnet_data/panjinquan"
+    image, joint_world = load_data(data_dir, flag=5)
+    joint_world = -joint_world * 1000
+    kps_lines = [[0, 1], [1, 20], [20, 2], [2, 3],  # Spine
+                 [20, 4], [4, 5], [5, 6], [6, 7], [7, 21], [7, 22],  # Left arm and hand
+                 [20, 8], [8, 9], [9, 10], [10, 11], [11, 23], [11, 24],  # Right arm and hand
+                 [0, 12], [12, 13], [13, 14], [14, 15],  # Left leg
+                 [0, 16], [16, 17], [17, 18], [18, 19]]  # Right leg
+    # show in 世界坐标系
+    vis.vis_3d(joint_world, kps_lines, coordinate="WC", title="WC")
+
+    kp_vis = CameraTools()
+
+    # show in 相机坐标系
+    joint_cam = kp_vis.convert_wc_to_cc(joint_world)
+    vis.vis_3d(joint_cam, kps_lines, coordinate="CC", title="CC")
+    joint_img = kp_vis.convert_cc_to_ic(joint_cam)
+    # show in 像素坐标系
+    kpt_2d = joint_img[:, 0:2]
+    image = image_processing.draw_key_point_in_image(image, key_points=[kpt_2d], pointline=kps_lines)
+    image_processing.cv_show_image("image_dict", image)
+
+
 if __name__ == "__main__":
     demo_for_human36m()
+    # demo_for_kinect()
