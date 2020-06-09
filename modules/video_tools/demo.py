@@ -10,7 +10,7 @@
 from utils import image_processing, file_processing
 import numpy as np
 import cv2
-from libs.ultra_ligh_face.ultra_ligh_face import UltraLightFaceDetector
+from libs.detector.ultra_ligh_face.ultra_ligh_face import UltraLightFaceDetector
 
 
 class CVVideo():
