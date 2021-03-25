@@ -11,5 +11,5 @@ tensorboardX==1.7
 torch==1.2.0
 torchvision==0.4.0
 requests==2.22.0
-PyYAML==5.1.2
+PyYAML==5.4
 bcolz==1.2.1
