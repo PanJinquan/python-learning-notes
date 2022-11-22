@@ -1,4 +1,4 @@
-Pillow==6.0.0
+Pillow==9.3.0
 torch==1.0.1
 torchvision==0.2.2
 numpy==1.16.3
